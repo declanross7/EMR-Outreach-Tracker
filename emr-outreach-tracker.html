@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMR Outreach Tracker</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--primary:#2563eb;--primary-dark:#1d4ed8;--sidebar:#0f172a;--text:#1e293b;--text-light:#64748b;--border:#e2e8f0;--bg:#f1f5f9;--white:#fff;--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--purple:#8b5cf6;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
+.app{display:flex;height:100vh;overflow:hidden;}
+/* SIDEBAR */
+.sidebar{width:240px;background:var(--sidebar);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;}
+.sidebar-brand{padding:20px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,0.08);}
+.brand-icon{width:36px;height:36px;background:var(--primary);border-radius:10px;display:flex;align-items:center;justify-content:center;color:white;font-size:18px;flex-shrink:0;}
+.brand-name{color:white;font-weight:700;font-size:15px;line-height:1.2;}
+.brand-sub{color:#475569;font-size:11px;}
+.sidebar-section{padding:16px 8px 4px;}
+.sidebar-label{color:#475569;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:0 8px;margin-bottom:6px;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;color:#94a3b8;font-size:13px;font-weight:500;transition:all .15s;user-select:none;}
+.nav-item:hover{background:rgba(255,255,255,0.07);color:#e2e8f0;}
+.nav-item.active{background:var(--primary);color:white;}
+.nav-icon{font-size:15px;width:18px;text-align:center;flex-shrink:0;}
+.nav-badge{margin-left:auto;background:rgba(255,255,255,0.12);color:inherit;font-size:11px;padding:1px 7px;border-radius:20px;font-weight:600;}
+.nav-item.active .nav-badge{background:rgba(255,255,255,0.25);}
+/* MAIN */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;}
+.topbar{background:white;border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:12px;}
+.topbar-title{font-size:17px;font-weight:700;white-space:nowrap;}
+.topbar-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.view{flex:1;overflow-y:auto;display:none;flex-direction:column;}
+.view.active{display:flex;}
+.content{padding:24px;flex:1;}
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:24px;}
+.stat-card{background:white;border-radius:12px;padding:18px 20px;box-shadow:0 1px 3px rgba(0,0,0,.06);display:flex;flex-direction:column;gap:8px;}
+.stat-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;}
+.stat-value{font-size:28px;font-weight:800;line-height:1;}
+.stat-label{font-size:12px;color:var(--text-light);font-weight:500;}
+/* CARD */
+.card{background:white;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden;}
+.card-header{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.card-title{font-size:14px;font-weight:700;}
+/* TABLE */
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;}
+th{padding:10px 16px;text-align:left;font-size:11px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.05em;background:#f8fafc;border-bottom:1px solid var(--border);white-space:nowrap;}
+td{padding:11px 16px;border-bottom:1px solid #f1f5f9;vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tbody tr{cursor:pointer;transition:background .1s;}
+tbody tr:hover td{background:#f8fafc;}
+/* BADGES */
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap;}
+.b-ns{background:#f1f5f9;color:#64748b;}
+.b-re{background:#fef3c7;color:#b45309;}
+.b-co{background:#dbeafe;color:#1d4ed8;}
+.b-rs{background:#d1fae5;color:#065f46;}
+.b-me{background:#ede9fe;color:#6d28d9;}
+.b-wo{background:#d1fae5;color:#065f46;}
+.b-lo{background:#fee2e2;color:#b91c1c;}
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s;white-space:nowrap;font-family:inherit;}
+.btn-primary{background:var(--primary);color:white;}
+.btn-primary:hover{background:var(--primary-dark);}
+.btn-ghost{background:white;color:var(--text-light);border:1px solid var(--border);}
+.btn-ghost:hover{background:#f8fafc;color:var(--text);}
+.btn-danger{background:#fee2e2;color:#b91c1c;border:none;}
+.btn-danger:hover{background:#fecaca;}
+.btn-sm{padding:5px 10px;font-size:12px;border-radius:6px;}
+/* SEARCH & FILTER */
+.search-wrap{position:relative;}
+.search-input{padding:8px 12px 8px 34px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;width:220px;font-family:inherit;}
+.search-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1);}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-light);font-size:13px;pointer-events:none;}
+.filter-select,.status-select{padding:7px 10px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;background:white;cursor:pointer;font-family:inherit;}
+.filter-select:focus,.status-select:focus{border-color:var(--primary);}
+/* DETAIL */
+.detail-header{background:white;border-radius:12px;padding:22px 24px;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.detail-company-name{font-size:22px;font-weight:800;}
+.detail-meta{display:flex;gap:18px;margin-top:10px;flex-wrap:wrap;}
+.detail-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-light);}
+.detail-meta-item a{color:var(--primary);text-decoration:none;}
+.detail-meta-item a:hover{text-decoration:underline;}
+/* TABS */
+.tabs{display:flex;gap:4px;background:white;border-radius:12px;padding:6px;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.tab{flex:1;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text-light);text-align:center;transition:all .15s;user-select:none;}
+.tab:hover{background:#f1f5f9;color:var(--text);}
+.tab.active{background:var(--primary);color:white;}
+/* FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.fg{margin-bottom:0;}
+.fg.full{grid-column:1/-1;}
+.form-label{display:block;font-size:11px;font-weight:700;color:var(--text-light);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em;}
+.form-input,.form-select,.form-textarea{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;background:white;font-family:inherit;transition:border-color .15s;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1);}
+.form-textarea{resize:vertical;min-height:80px;}
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:1000;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(3px);}
+.modal-overlay.open{display:flex;}
+.modal{background:white;border-radius:16px;padding:24px;width:100%;max-width:540px;max-height:88vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.18);}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;}
+.modal-title{font-size:17px;font-weight:700;}
+.modal-close{cursor:pointer;color:var(--text-light);font-size:24px;line-height:1;padding:2px 6px;border-radius:6px;}
+.modal-close:hover{background:#f1f5f9;color:var(--text);}
+.modal-footer{margin-top:20px;display:flex;justify-content:flex-end;gap:8px;padding-top:16px;border-top:1px solid var(--border);}
+/* ITEMS */
+.item-list{display:flex;flex-direction:column;gap:10px;}
+.item-card{background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.item-info{flex:1;min-width:0;}
+.item-name{font-size:14px;font-weight:700;}
+.item-role{font-size:12px;color:var(--text-light);margin-top:2px;}
+.item-detail{font-size:12px;color:var(--text-light);margin-top:6px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
+.item-actions{display:flex;gap:6px;flex-shrink:0;}
+.item-note{font-size:12px;color:var(--text-light);margin-top:6px;font-style:italic;}
+/* ACTIVITY */
+.activity-list{display:flex;flex-direction:column;}
+.activity-item{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid #f1f5f9;}
+.activity-item:last-child{border-bottom:none;}
+.activity-dot{width:8px;height:8px;border-radius:50%;background:var(--primary);margin-top:6px;flex-shrink:0;}
+.activity-text{font-size:13px;line-height:1.5;}
+.activity-time{font-size:11px;color:var(--text-light);margin-top:2px;}
+/* NOTES */
+.notes-area{width:100%;min-height:220px;padding:14px;border:1px solid var(--border);border-radius:10px;font-size:14px;line-height:1.7;font-family:inherit;outline:none;resize:vertical;}
+.notes-area:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1);}
+/* IDEA CARDS */
+.idea-card{border-radius:10px;padding:16px;margin-bottom:12px;}
+.idea-title{font-size:14px;font-weight:700;margin-bottom:5px;}
+.idea-body{font-size:13px;color:var(--text-light);line-height:1.65;}
+.sequence-step{display:flex;gap:14px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #f1f5f9;}
+.sequence-step:last-child{border-bottom:none;}
+.step-day{background:var(--primary);color:white;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap;flex-shrink:0;}
+.step-action{font-size:13px;color:var(--text-light);padding-top:3px;line-height:1.5;}
+/* EMPTY */
+.empty-state{text-align:center;padding:44px 24px;}
+.empty-icon{font-size:36px;margin-bottom:10px;}
+.empty-text{font-size:15px;font-weight:600;margin-bottom:4px;}
+.empty-sub{font-size:13px;color:var(--text-light);}
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px;}
+::-webkit-scrollbar-thumb:hover{background:#94a3b8;}
+/* ANIM */
+@keyframes fadeSlide{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.fade-in{animation:fadeSlide .2s ease;}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-icon">🏥</div>
+    <div><div class="brand-name">EMR Outreach</div><div class="brand-sub">Tracker v1.0</div></div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Overview</div>
+    <div class="nav-item active" id="nav-dashboard" onclick="showView('dashboard')">
+      <span class="nav-icon">📊</span> Dashboard
+    </div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Outreach</div>
+    <div class="nav-item" id="nav-companies" onclick="showView('companies')">
+      <span class="nav-icon">🏢</span> Companies <span class="nav-badge" id="badge-companies">29</span>
+    </div>
+    <div class="nav-item" id="nav-contacts" onclick="showView('contacts')">
+      <span class="nav-icon">👤</span> Contacts <span class="nav-badge" id="badge-contacts">0</span>
+    </div>
+    <div class="nav-item" id="nav-investors" onclick="showView('investors')">
+      <span class="nav-icon">💰</span> Investors <span class="nav-badge" id="badge-investors">0</span>
+    </div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Strategy</div>
+    <div class="nav-item" id="nav-ideas" onclick="showView('ideas')">
+      <span class="nav-icon">💡</span> Outreach Playbook
+    </div>
+  </div>
+  <div style="margin-top:auto;padding:16px;border-top:1px solid rgba(255,255,255,.08);">
+    <div style="font-size:11px;color:#475569;line-height:1.6;">Data saved locally in browser.<br>Use Export to back up.</div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- DASHBOARD -->
+  <div id="view-dashboard" class="view active">
+    <div class="topbar">
+      <div class="topbar-title">Dashboard</div>
+      <div class="topbar-actions">
+        <button class="btn btn-ghost btn-sm" onclick="exportCSV()">⬇ Export CSV</button>
+        <button class="btn btn-primary btn-sm" onclick="showView('companies')">View All Companies →</button>
+      </div>
+    </div>
+    <div class="content fade-in">
+      <div class="stats-grid" id="stats-grid"></div>
+      <div style="margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="font-size:15px;font-weight:700;">Company Pipeline</div>
+        <div style="font-size:12px;color:var(--text-light);">Click a row to open company details</div>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Company</th><th>Status</th><th>Contacts</th><th>Investors</th><th>Last Activity</th></tr></thead>
+            <tbody id="dashboard-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPANIES -->
+  <div id="view-companies" class="view">
+    <div class="topbar">
+      <div class="topbar-title">Companies</div>
+      <div class="topbar-actions">
+        <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" class="search-input" id="co-search" placeholder="Search..." oninput="renderCompanies()"></div>
+        <select class="filter-select" id="co-filter" onchange="renderCompanies()">
+          <option value="">All Statuses</option>
+          <option value="not-started">Not Started</option>
+          <option value="researching">Researching</option>
+          <option value="contacted">Contacted</option>
+          <option value="responded">Responded</option>
+          <option value="meeting">Meeting Set</option>
+          <option value="won">Won</option>
+          <option value="lost">Lost</option>
+        </select>
+      </div>
+    </div>
+    <div class="content fade-in">
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Company</th><th>Website</th><th>Status</th><th>Contacts</th><th>Investors</th><th>Notes Preview</th></tr></thead>
+            <tbody id="companies-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAIL -->
+  <div id="view-detail" class="view">
+    <div class="topbar">
+      <div class="topbar-title" id="detail-topbar-title">Company</div>
+      <div class="topbar-actions">
+        <button class="btn btn-ghost btn-sm" onclick="showView('companies')">← Back</button>
+        <select class="status-select" id="detail-status-select" onchange="updateStatus(this.value)">
+          <option value="not-started">○ Not Started</option>
+          <option value="researching">◐ Researching</option>
+          <option value="contacted">✉ Contacted</option>
+          <option value="responded">↩ Responded</option>
+          <option value="meeting">📅 Meeting Set</option>
+          <option value="won">✓ Won</option>
+          <option value="lost">✗ Lost</option>
+        </select>
+      </div>
+    </div>
+    <div class="content fade-in" id="detail-content"></div>
+  </div>
+
+  <!-- CONTACTS -->
+  <div id="view-contacts" class="view">
+    <div class="topbar">
+      <div class="topbar-title">All Contacts</div>
+      <div class="topbar-actions">
+        <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" class="search-input" id="ct-search" placeholder="Search contacts..." oninput="renderContacts()"></div>
+      </div>
+    </div>
+    <div class="content fade-in">
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Name</th><th>Title</th><th>Company</th><th>Type</th><th>Email</th><th>Status</th><th></th></tr></thead>
+            <tbody id="contacts-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INVESTORS -->
+  <div id="view-investors" class="view">
+    <div class="topbar">
+      <div class="topbar-title">Investors</div>
+      <div class="topbar-actions">
+        <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" class="search-input" id="inv-search" placeholder="Search investors..." oninput="renderInvestors()"></div>
+      </div>
+    </div>
+    <div class="content fade-in">
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Investor / Fund</th><th>Type</th><th>Portfolio Companies</th><th>Website</th><th>Key Contact</th><th>Notes</th></tr></thead>
+            <tbody id="investors-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IDEAS -->
+  <div id="view-ideas" class="view">
+    <div class="topbar"><div class="topbar-title">Outreach Playbook</div></div>
+    <div class="content fade-in" id="ideas-content"></div>
+  </div>
+
+</div><!-- /main -->
+</div><!-- /app -->
+
+<!-- CONTACT MODAL -->
+<div class="modal-overlay" id="modal-contact">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="contact-modal-title">Add Contact</div>
+      <span class="modal-close" onclick="closeModal('modal-contact')">×</span>
+    </div>
+    <div class="form-grid">
+      <div class="fg"><label class="form-label">Full Name *</label><input type="text" class="form-input" id="c-name" placeholder="Jane Smith"></div>
+      <div class="fg"><label class="form-label">Title / Role</label><input type="text" class="form-input" id="c-title" placeholder="CEO"></div>
+      <div class="fg"><label class="form-label">Contact Type</label>
+        <select class="form-select" id="c-type">
+          <option value="executive">👔 Executive (C-Suite / VP)</option>
+          <option value="partnerships">🤝 Partnerships / BD</option>
+          <option value="product">📦 Product</option>
+          <option value="strategy">♟ Strategy</option>
+          <option value="sales">💼 Sales</option>
+          <option value="other">👤 Other</option>
+        </select>
+      </div>
+      <div class="fg"><label class="form-label">Outreach Status</label>
+        <select class="form-select" id="c-status">
+          <option value="not-contacted">Not Contacted</option>
+          <option value="contacted">Contacted</option>
+          <option value="responded">Responded</option>
+          <option value="meeting">Meeting Set</option>
+        </select>
+      </div>
+      <div class="fg"><label class="form-label">Email</label><input type="email" class="form-input" id="c-email" placeholder="jane@company.com"></div>
+      <div class="fg"><label class="form-label">Phone</label><input type="text" class="form-input" id="c-phone" placeholder="+1 555-000-0000"></div>
+      <div class="fg full"><label class="form-label">LinkedIn URL</label><input type="url" class="form-input" id="c-linkedin" placeholder="https://linkedin.com/in/..."></div>
+      <div class="fg full"><label class="form-label">Notes</label><textarea class="form-textarea" id="c-notes" placeholder="Best way to reach, relationship context, notes..."></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-contact')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveContact()">Save Contact</button>
+    </div>
+  </div>
+</div>
+
+<!-- INVESTOR MODAL -->
+<div class="modal-overlay" id="modal-investor">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="investor-modal-title">Add Investor</div>
+      <span class="modal-close" onclick="closeModal('modal-investor')">×</span>
+    </div>
+    <div class="form-grid">
+      <div class="fg full"><label class="form-label">Investor / Fund Name *</label><input type="text" class="form-input" id="i-name" placeholder="General Catalyst"></div>
+      <div class="fg"><label class="form-label">Type</label>
+        <select class="form-select" id="i-type">
+          <option value="vc">🏦 Venture Capital</option>
+          <option value="pe">🏛 Private Equity</option>
+          <option value="angel">👼 Angel Investor</option>
+          <option value="strategic">🤝 Strategic Investor</option>
+          <option value="debt">💳 Debt / Lending</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="fg"><label class="form-label">Round / Stage</label><input type="text" class="form-input" id="i-round" placeholder="Series A, Seed, Growth..."></div>
+      <div class="fg"><label class="form-label">Amount (optional)</label><input type="text" class="form-input" id="i-amount" placeholder="$10M"></div>
+      <div class="fg"><label class="form-label">Year</label><input type="text" class="form-input" id="i-year" placeholder="2022"></div>
+      <div class="fg full"><label class="form-label">Website</label><input type="url" class="form-input" id="i-website" placeholder="https://..."></div>
+      <div class="fg full"><label class="form-label">Key Contact at Fund</label><input type="text" class="form-input" id="i-contact" placeholder="Managing Partner / Associate name"></div>
+      <div class="fg full"><label class="form-label">Intro Strategy / Notes</label><textarea class="form-textarea" id="i-notes" placeholder="Mutual connections, warm intro path, LinkedIn URL..."></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-investor')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveInvestor()">Save Investor</button>
+    </div>
+  </div>
+</div>
+
+<!-- ACTIVITY MODAL -->
+<div class="modal-overlay" id="modal-activity">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Log Activity</div>
+      <span class="modal-close" onclick="closeModal('modal-activity')">×</span>
+    </div>
+    <div class="form-grid">
+      <div class="fg"><label class="form-label">Activity Type</label>
+        <select class="form-select" id="a-type">
+          <option value="email">📧 Email Sent</option>
+          <option value="linkedin">💼 LinkedIn Message</option>
+          <option value="call">📞 Phone Call</option>
+          <option value="meeting">🤝 Meeting / Demo</option>
+          <option value="note">📝 Note</option>
+          <option value="research">🔍 Research</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="fg"><label class="form-label">Contact (optional)</label><input type="text" class="form-input" id="a-contact" placeholder="Name of person"></div>
+      <div class="fg full"><label class="form-label">Description *</label><textarea class="form-textarea" id="a-desc" placeholder="What happened? Key points, follow-ups needed..."></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-activity')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveActivity()">Log Activity</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const DEFAULT_COMPANIES = [
+  {id:1,name:"HiRasmus",website:"hirasmus.com",linkedin:"https://www.linkedin.com/company/hi-rasmus",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:2,name:"Behavioral Health Connect",website:"behavioralhealthconnect.com",linkedin:"https://www.linkedin.com/company/behavioral-health-connections",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:3,name:"Ensora",website:"ensora.co",linkedin:"https://www.linkedin.com/company/ensora",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:4,name:"HCHB",website:"hchb.com",linkedin:"https://www.linkedin.com/company/hchb-llc",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:5,name:"ABA Matrix",website:"abamatrix.com",linkedin:"https://www.linkedin.com/company/aba-matrix",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:6,name:"Kipu Health",website:"kipu.com",linkedin:"https://www.linkedin.com/company/kipuhealth",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:7,name:"Catalyst",website:"ctlyst.id",linkedin:"https://www.linkedin.com/company/pci-geomatics",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:8,name:"Credible",website:"crediblebh.com",linkedin:"https://www.linkedin.com/company/crediblelabs",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:9,name:"Care Logic",website:"qualifacts.com",linkedin:"https://www.linkedin.com/company/care-logic-inc.",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:10,name:"InSync",website:"insync.com.au",linkedin:"https://www.linkedin.com/company/insyncau",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:11,name:"Theralytics",website:"theralytics.net",linkedin:"https://www.linkedin.com/company/theralytics-software",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:12,name:"drchrono",website:"drchrono.com",linkedin:"https://www.linkedin.com/company/drchrono",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:13,name:"Notable Health",website:"notablehealth.com",linkedin:"https://www.linkedin.com/company/notablehealth",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:14,name:"Jane App",website:"jane.app",linkedin:"https://www.linkedin.com/company/jane-app",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:15,name:"Pimsy EHR",website:"pimsyehr.com",linkedin:"https://www.linkedin.com/company/pimsyehr",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:16,name:"TherapyNotes",website:"therapynotes.com",linkedin:"https://www.linkedin.com/company/therapynotes-llc",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:17,name:"Tebra",website:"tebra.com",linkedin:"https://www.linkedin.com/company/tebra",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:18,name:"eMedical Practice",website:"emedpractice.com",linkedin:"https://www.linkedin.com/company/emedical-group",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:19,name:"Lightning Step",website:"lightningstep.com",linkedin:"https://www.linkedin.com/company/lightningstep",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:20,name:"AlohaABA",website:"alohaaba.com",linkedin:"https://www.linkedin.com/company/alohaaba",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:21,name:"MeasurePM",website:"measurepm.com",linkedin:"",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:22,name:"Artemis ABA",website:"artemissp.com",linkedin:"https://www.linkedin.com/company/artemissp",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:23,name:"Raven Health",website:"ravenhealth.com",linkedin:"https://www.linkedin.com/company/theravenbank",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:24,name:"ABA Desk",website:"abadesk.com",linkedin:"https://www.linkedin.com/company/g-latas-consultoria-e-servi-os-de-seguran-a",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:25,name:"Office Puzzle",website:"officepuzzle.com",linkedin:"https://www.linkedin.com/company/officepuzzle",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:26,name:"Lumary ABA",website:"lumary.com",linkedin:"https://www.linkedin.com/company/lumaryau",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:27,name:"Portia Pro",website:"portiapro.com",linkedin:"https://www.linkedin.com/company/portia-productions",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:28,name:"Skills Global",website:"skillsforautism.com",linkedin:"https://www.linkedin.com/company/skills-global-the-online-autism-solution",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+  {id:29,name:"Spectrum AI",website:"spectrumai.tech",linkedin:"https://www.linkedin.com/company/spectrum-ai-ltd",status:"not-started",contacts:[],investors:[],activities:[],notes:""},
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let S = { companies:[], view:'dashboard', companyId:null, tab:'contacts', editContactId:null, editInvestorId:null };
+
+function load(){
+  try{
+    const d = JSON.parse(localStorage.getItem('emr-v1'));
+    if(d && d.companies) S.companies = d.companies;
+    else S.companies = JSON.parse(JSON.stringify(DEFAULT_COMPANIES));
+  }catch(e){ S.companies = JSON.parse(JSON.stringify(DEFAULT_COMPANIES)); }
+}
+
+function save(){ try{localStorage.setItem('emr-v1',JSON.stringify({companies:S.companies}));}catch(e){} }
+
+// ============================================================
+// HELPERS
+// ============================================================
+const STATUS_MAP = {
+  'not-started':['b-ns','○ Not Started'],
+  'researching':['b-re','◐ Researching'],
+  'contacted':['b-co','✉ Contacted'],
+  'responded':['b-rs','↩ Responded'],
+  'meeting':['b-me','📅 Meeting Set'],
+  'won':['b-wo','✓ Won'],
+  'lost':['b-lo','✗ Lost'],
+};
+const CS_MAP = { 'not-contacted':['b-ns','Not Contacted'],'contacted':['b-co','Contacted'],'responded':['b-rs','Responded'],'meeting':['b-me','Meeting Set'] };
+const TYPE_LABELS = { executive:'👔 Executive', partnerships:'🤝 Partnerships', product:'📦 Product', strategy:'♟ Strategy', sales:'💼 Sales/BD', other:'👤 Other', vc:'🏦 VC', pe:'🏛 PE', angel:'👼 Angel', strategic:'🤝 Strategic', debt:'💳 Debt' };
+
+function badge(status, map){ const [c,l]=map[status]||map[Object.keys(map)[0]]; return `<span class="badge ${c}">${l}</span>`; }
+function statusBadge(s){ return badge(s, STATUS_MAP); }
+function csBadge(s){ return badge(s, CS_MAP); }
+function tLabel(t){ return TYPE_LABELS[t]||t; }
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2); }
+function timeAgo(d){
+  if(!d) return '—';
+  const s=Math.floor((Date.now()-new Date(d))/1000);
+  if(s<60) return 'Just now'; if(s<3600) return Math.floor(s/60)+'m ago';
+  if(s<86400) return Math.floor(s/3600)+'h ago'; if(s<604800) return Math.floor(s/86400)+'d ago';
+  return new Date(d).toLocaleDateString();
+}
+function lastAct(c){ return c.activities?.length ? c.activities[c.activities.length-1].date : null; }
+function co(){ return S.companies.find(c=>c.id===S.companyId); }
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function showView(v, id){
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+  S.view=v;
+  const vEl=document.getElementById('view-'+v); if(vEl) vEl.classList.add('active');
+  const navId = v==='detail'?'companies':v;
+  const nEl=document.getElementById('nav-'+navId); if(nEl) nEl.classList.add('active');
+  if(v==='detail'){ S.companyId=id; S.tab='contacts'; renderDetail(); }
+  else if(v==='dashboard') renderDashboard();
+  else if(v==='companies') renderCompanies();
+  else if(v==='contacts') renderContacts();
+  else if(v==='investors') renderInvestors();
+  else if(v==='ideas') renderIdeas();
+  updateBadges();
+}
+
+function updateBadges(){
+  const cs=S.companies;
+  document.getElementById('badge-companies').textContent=cs.length;
+  document.getElementById('badge-contacts').textContent=cs.reduce((s,c)=>s+(c.contacts?.length||0),0);
+  document.getElementById('badge-investors').textContent=cs.reduce((s,c)=>s+(c.investors?.length||0),0);
+}
+
+// ============================================================
+// DASHBOARD
+// ============================================================
+function renderDashboard(){
+  const cs=S.companies;
+  const reached=cs.filter(c=>['contacted','responded','meeting','won'].includes(c.status)).length;
+  const totC=cs.reduce((s,c)=>s+(c.contacts?.length||0),0);
+  const totI=cs.reduce((s,c)=>s+(c.investors?.length||0),0);
+  document.getElementById('stats-grid').innerHTML=`
+    <div class="stat-card"><div class="stat-icon" style="background:#dbeafe">🏢</div><div class="stat-value">${cs.length}</div><div class="stat-label">Total Companies</div></div>
+    <div class="stat-card"><div class="stat-icon" style="background:#d1fae5">📬</div><div class="stat-value">${reached}</div><div class="stat-label">Reached Out To</div></div>
+    <div class="stat-card"><div class="stat-icon" style="background:#ede9fe">👥</div><div class="stat-value">${totC}</div><div class="stat-label">Contacts Added</div></div>
+    <div class="stat-card"><div class="stat-icon" style="background:#fef3c7">💰</div><div class="stat-value">${totI}</div><div class="stat-label">Investors Tracked</div></div>
+  `;
+  document.getElementById('dashboard-tbody').innerHTML=cs.map(c=>`
+    <tr onclick="showView('detail',${c.id})">
+      <td><strong>${c.name}</strong></td>
+      <td>${statusBadge(c.status)}</td>
+      <td>${c.contacts?.length||0}</td>
+      <td>${c.investors?.length||0}</td>
+      <td style="color:var(--text-light);font-size:12px">${timeAgo(lastAct(c))}</td>
+    </tr>`).join('');
+}
+
+// ============================================================
+// COMPANIES
+// ============================================================
+function renderCompanies(){
+  const q=(document.getElementById('co-search')?.value||'').toLowerCase();
+  const sf=document.getElementById('co-filter')?.value||'';
+  let cs=S.companies;
+  if(q) cs=cs.filter(c=>c.name.toLowerCase().includes(q)||c.website.toLowerCase().includes(q));
+  if(sf) cs=cs.filter(c=>c.status===sf);
+  document.getElementById('companies-tbody').innerHTML=cs.length?cs.map(c=>`
+    <tr onclick="showView('detail',${c.id})">
+      <td><strong>${c.name}</strong></td>
+      <td><a href="https://${c.website}" target="_blank" onclick="event.stopPropagation()" style="color:var(--primary);font-size:12px">${c.website}</a></td>
+      <td>${statusBadge(c.status)}</td>
+      <td style="font-size:13px">${c.contacts?.length||0}</td>
+      <td style="font-size:13px">${c.investors?.length||0}</td>
+      <td style="color:var(--text-light);font-size:12px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.notes||'—'}</td>
+    </tr>`).join(''):
+    `<tr><td colspan="6"><div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">No matches</div></div></td></tr>`;
+}
+
+// ============================================================
+// CONTACTS VIEW
+// ============================================================
+function renderContacts(){
+  const q=(document.getElementById('ct-search')?.value||'').toLowerCase();
+  let rows=[];
+  S.companies.forEach(company=>{
+    (company.contacts||[]).forEach(c=>{
+      if(!q||c.name.toLowerCase().includes(q)||company.name.toLowerCase().includes(q)||(c.title||'').toLowerCase().includes(q))
+        rows.push({...c,companyName:company.name,companyId:company.id});
+    });
+  });
+  document.getElementById('contacts-tbody').innerHTML=rows.length?rows.map(c=>`
+    <tr>
+      <td><strong>${c.name}</strong></td>
+      <td style="color:var(--text-light)">${c.title||'—'}</td>
+      <td><span style="color:var(--primary);cursor:pointer" onclick="showView('detail',${c.companyId})">${c.companyName}</span></td>
+      <td style="font-size:12px">${tLabel(c.type)}</td>
+      <td>${c.email?`<a href="mailto:${c.email}" style="color:var(--primary)">${c.email}</a>`:'—'}</td>
+      <td>${csBadge(c.status)}</td>
+      <td><button class="btn btn-ghost btn-sm" onclick="showView('detail',${c.companyId})">Open →</button></td>
+    </tr>`).join(''):
+    `<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">👤</div><div class="empty-text">No contacts yet</div><div class="empty-sub">Add contacts from company detail pages</div></div></td></tr>`;
+}
+
+// ============================================================
+// INVESTORS VIEW
+// ============================================================
+function renderInvestors(){
+  const q=(document.getElementById('inv-search')?.value||'').toLowerCase();
+  const map={};
+  S.companies.forEach(co=>{
+    (co.investors||[]).forEach(inv=>{
+      const k=inv.name.toLowerCase();
+      if(!map[k]) map[k]={...inv,companies:[]};
+      map[k].companies.push(co.name);
+    });
+  });
+  let rows=Object.values(map);
+  if(q) rows=rows.filter(r=>r.name.toLowerCase().includes(q)||r.companies.join(' ').toLowerCase().includes(q));
+  document.getElementById('investors-tbody').innerHTML=rows.length?rows.map(inv=>`
+    <tr>
+      <td><strong>${inv.name}</strong></td>
+      <td style="font-size:12px">${tLabel(inv.type)}</td>
+      <td style="font-size:12px;color:var(--text-light)">${inv.companies.join(', ')}</td>
+      <td>${inv.website?`<a href="${inv.website}" target="_blank" style="color:var(--primary);font-size:12px">${inv.website.replace(/https?:\/\//,'')}</a>`:'—'}</td>
+      <td style="font-size:12px">${inv.contact||'—'}</td>
+      <td style="font-size:12px;color:var(--text-light);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${inv.notes||'—'}</td>
+    </tr>`).join(''):
+    `<tr><td colspan="6"><div class="empty-state"><div class="empty-icon">💰</div><div class="empty-text">No investors tracked yet</div><div class="empty-sub">Add investors from each company's detail page</div></div></td></tr>`;
+}
+
+// ============================================================
+// DETAIL
+// ============================================================
+function renderDetail(){
+  const c=co(); if(!c) return;
+  document.getElementById('detail-topbar-title').textContent=c.name;
+  document.getElementById('detail-status-select').value=c.status;
+  document.getElementById('detail-content').innerHTML=`
+    <div class="detail-header">
+      <div class="detail-company-name">${c.name}</div>
+      <div class="detail-meta">
+        <div class="detail-meta-item">🌐 <a href="https://${c.website}" target="_blank">${c.website}</a></div>
+        ${c.linkedin?`<div class="detail-meta-item">💼 <a href="${c.linkedin}" target="_blank">LinkedIn</a></div>`:''}
+        <div class="detail-meta-item">${statusBadge(c.status)}</div>
+      </div>
+    </div>
+    <div class="tabs">
+      <div class="tab ${S.tab==='contacts'?'active':''}" onclick="switchTab('contacts')">👤 Contacts (${c.contacts?.length||0})</div>
+      <div class="tab ${S.tab==='investors'?'active':''}" onclick="switchTab('investors')">💰 Investors (${c.investors?.length||0})</div>
+      <div class="tab ${S.tab==='activity'?'active':''}" onclick="switchTab('activity')">📋 Activity (${c.activities?.length||0})</div>
+      <div class="tab ${S.tab==='notes'?'active':''}" onclick="switchTab('notes')">📝 Notes</div>
+    </div>
+    ${S.tab==='contacts'?tabContacts(c):S.tab==='investors'?tabInvestors(c):S.tab==='activity'?tabActivity(c):tabNotes(c)}
+  `;
+}
+
+function switchTab(t){ S.tab=t; renderDetail(); }
+function updateStatus(v){ const c=co(); if(c){c.status=v;save();renderDetail();} }
+
+function tabContacts(c){
+  return `<div class="card"><div class="card-header"><div class="card-title">Contacts</div><button class="btn btn-primary btn-sm" onclick="openContactModal()">+ Add Contact</button></div>
+  <div style="padding:16px">
+  ${!c.contacts?.length?`<div class="empty-state"><div class="empty-icon">👤</div><div class="empty-text">No contacts yet</div><div class="empty-sub">Add executives, partnership leads, product heads</div></div>`:`
+  <div class="item-list">${c.contacts.map(ct=>`
+    <div class="item-card">
+      <div class="item-info">
+        <div class="item-name">${ct.name}</div>
+        <div class="item-role">${ct.title||''} ${ct.title&&ct.type?'·':''} ${tLabel(ct.type)}</div>
+        <div class="item-detail">
+          ${ct.email?`<span>✉ <a href="mailto:${ct.email}" style="color:var(--primary)">${ct.email}</a></span>`:''}
+          ${ct.phone?`<span>📞 ${ct.phone}</span>`:''}
+          ${ct.linkedin?`<span>💼 <a href="${ct.linkedin}" target="_blank" style="color:var(--primary)">LinkedIn</a></span>`:''}
+          <span>${csBadge(ct.status)}</span>
+        </div>
+        ${ct.notes?`<div class="item-note">${ct.notes}</div>`:''}
+      </div>
+      <div class="item-actions">
+        <button class="btn btn-ghost btn-sm" onclick="openContactModal('${ct.id}')">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteContact('${ct.id}')">×</button>
+      </div>
+    </div>`).join('')}</div>`}
+  </div></div>`;
+}
+
+function tabInvestors(c){
+  return `<div class="card"><div class="card-header"><div class="card-title">Investors & Backers</div><button class="btn btn-primary btn-sm" onclick="openInvestorModal()">+ Add Investor</button></div>
+  <div style="padding:16px">
+  ${!c.investors?.length?`<div class="empty-state"><div class="empty-icon">💰</div><div class="empty-text">No investors tracked</div><div class="empty-sub">Add known investors to map warm intro paths</div></div>`:`
+  <div class="item-list">${c.investors.map(inv=>`
+    <div class="item-card">
+      <div class="item-info">
+        <div class="item-name">${inv.name}</div>
+        <div class="item-role">${tLabel(inv.type)}${inv.round?' · '+inv.round:''}${inv.amount?' · '+inv.amount:''}${inv.year?' ('+inv.year+')':''}</div>
+        <div class="item-detail">
+          ${inv.website?`<span>🌐 <a href="${inv.website}" target="_blank" style="color:var(--primary)">${inv.website.replace(/https?:\/\//,'')}</a></span>`:''}
+          ${inv.contact?`<span>👤 ${inv.contact}</span>`:''}
+        </div>
+        ${inv.notes?`<div class="item-note">${inv.notes}</div>`:''}
+      </div>
+      <div class="item-actions">
+        <button class="btn btn-ghost btn-sm" onclick="openInvestorModal('${inv.id}')">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteInvestor('${inv.id}')">×</button>
+      </div>
+    </div>`).join('')}</div>`}
+  </div></div>`;
+}
+
+function tabActivity(c){
+  const acts=[...(c.activities||[])].reverse();
+  const typeEmoji={email:'📧',linkedin:'💼',call:'📞',meeting:'🤝',note:'📝',research:'🔍',other:'•'};
+  return `<div class="card"><div class="card-header"><div class="card-title">Activity Log</div><button class="btn btn-primary btn-sm" onclick="openActivityModal()">+ Log Activity</button></div>
+  <div style="padding:16px">
+  ${!acts.length?`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">No activity yet</div><div class="empty-sub">Log emails, calls, meetings as you do them</div></div>`:`
+  <div class="activity-list">${acts.map(a=>`
+    <div class="activity-item">
+      <div class="activity-dot"></div>
+      <div>
+        <div class="activity-text">${typeEmoji[a.rawType]||'📝'} <strong>${a.type}</strong>${a.contact?' — with '+a.contact:''}: ${a.description}</div>
+        <div class="activity-time">${timeAgo(a.date)}</div>
+      </div>
+    </div>`).join('')}</div>`}
+  </div></div>`;
+}
+
+function tabNotes(c){
+  return `<div class="card"><div class="card-header"><div class="card-title">Notes</div><button class="btn btn-primary btn-sm" onclick="saveNotes(this)">Save Notes</button></div>
+  <div style="padding:16px"><textarea class="notes-area" id="co-notes" placeholder="Company notes, strategy, key people, news...">${c.notes||''}</textarea></div></div>`;
+}
+
+function saveNotes(btn){
+  const c=co(); if(!c) return;
+  c.notes=document.getElementById('co-notes')?.value||'';
+  save();
+  const o=btn.textContent; btn.textContent='✓ Saved!';
+  setTimeout(()=>btn.textContent=o,1500);
+}
+
+// ============================================================
+// CONTACTS CRUD
+// ============================================================
+function openContactModal(id){
+  S.editContactId=id||null;
+  const c=co(); const ct=id?c?.contacts?.find(x=>x.id===id):null;
+  document.getElementById('contact-modal-title').textContent=ct?'Edit Contact':'Add Contact';
+  document.getElementById('c-name').value=ct?.name||'';
+  document.getElementById('c-title').value=ct?.title||'';
+  document.getElementById('c-type').value=ct?.type||'executive';
+  document.getElementById('c-status').value=ct?.status||'not-contacted';
+  document.getElementById('c-email').value=ct?.email||'';
+  document.getElementById('c-phone').value=ct?.phone||'';
+  document.getElementById('c-linkedin').value=ct?.linkedin||'';
+  document.getElementById('c-notes').value=ct?.notes||'';
+  openModal('modal-contact');
+}
+
+function saveContact(){
+  const name=document.getElementById('c-name').value.trim();
+  if(!name){alert('Name is required');return;}
+  const c=co(); if(!c) return;
+  const data={
+    id:S.editContactId||uid(), name,
+    title:document.getElementById('c-title').value.trim(),
+    type:document.getElementById('c-type').value,
+    status:document.getElementById('c-status').value,
+    email:document.getElementById('c-email').value.trim(),
+    phone:document.getElementById('c-phone').value.trim(),
+    linkedin:document.getElementById('c-linkedin').value.trim(),
+    notes:document.getElementById('c-notes').value.trim(),
+  };
+  if(S.editContactId){ const i=c.contacts.findIndex(x=>x.id===S.editContactId); if(i>=0) c.contacts[i]=data; }
+  else { c.contacts.push(data); logAct(c,'Contact Added','Added '+name+' ('+data.type+')',null,'note'); }
+  save(); closeModal('modal-contact'); renderDetail(); updateBadges();
+}
+
+function deleteContact(id){
+  if(!confirm('Delete this contact?')) return;
+  const c=co(); if(c){ c.contacts=c.contacts.filter(x=>x.id!==id); save(); renderDetail(); updateBadges(); }
+}
+
+// ============================================================
+// INVESTORS CRUD
+// ============================================================
+function openInvestorModal(id){
+  S.editInvestorId=id||null;
+  const c=co(); const inv=id?c?.investors?.find(x=>x.id===id):null;
+  document.getElementById('investor-modal-title').textContent=inv?'Edit Investor':'Add Investor';
+  document.getElementById('i-name').value=inv?.name||'';
+  document.getElementById('i-type').value=inv?.type||'vc';
+  document.getElementById('i-round').value=inv?.round||'';
+  document.getElementById('i-amount').value=inv?.amount||'';
+  document.getElementById('i-year').value=inv?.year||'';
+  document.getElementById('i-website').value=inv?.website||'';
+  document.getElementById('i-contact').value=inv?.contact||'';
+  document.getElementById('i-notes').value=inv?.notes||'';
+  openModal('modal-investor');
+}
+
+function saveInvestor(){
+  const name=document.getElementById('i-name').value.trim();
+  if(!name){alert('Investor name is required');return;}
+  const c=co(); if(!c) return;
+  const data={
+    id:S.editInvestorId||uid(), name,
+    type:document.getElementById('i-type').value,
+    round:document.getElementById('i-round').value.trim(),
+    amount:document.getElementById('i-amount').value.trim(),
+    year:document.getElementById('i-year').value.trim(),
+    website:document.getElementById('i-website').value.trim(),
+    contact:document.getElementById('i-contact').value.trim(),
+    notes:document.getElementById('i-notes').value.trim(),
+  };
+  if(S.editInvestorId){ const i=c.investors.findIndex(x=>x.id===S.editInvestorId); if(i>=0) c.investors[i]=data; }
+  else c.investors.push(data);
+  save(); closeModal('modal-investor'); renderDetail(); updateBadges();
+}
+
+function deleteInvestor(id){
+  if(!confirm('Delete this investor?')) return;
+  const c=co(); if(c){ c.investors=c.investors.filter(x=>x.id!==id); save(); renderDetail(); updateBadges(); }
+}
+
+// ============================================================
+// ACTIVITY
+// ============================================================
+function openActivityModal(){
+  document.getElementById('a-type').value='email';
+  document.getElementById('a-contact').value='';
+  document.getElementById('a-desc').value='';
+  openModal('modal-activity');
+}
+
+function saveActivity(){
+  const desc=document.getElementById('a-desc').value.trim();
+  if(!desc){alert('Description required');return;}
+  const c=co(); if(!c) return;
+  const rawType=document.getElementById('a-type').value;
+  const typeLabels={email:'Email',linkedin:'LinkedIn Message',call:'Phone Call',meeting:'Meeting',note:'Note',research:'Research',other:'Activity'};
+  logAct(c,typeLabels[rawType]||rawType,desc,document.getElementById('a-contact').value.trim(),rawType);
+  save(); closeModal('modal-activity'); renderDetail();
+}
+
+function logAct(c,type,description,contact,rawType){
+  c.activities.push({id:uid(),date:new Date().toISOString(),type,description,contact:contact||'',rawType:rawType||'note'});
+}
+
+// ============================================================
+// MODALS
+// ============================================================
+function openModal(id){ document.getElementById(id).classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+document.addEventListener('click',e=>{ if(e.target.classList.contains('modal-overlay')) e.target.classList.remove('open'); });
+
+// ============================================================
+// IDEAS
+// ============================================================
+function renderIdeas(){
+  const ideas1=[
+    {t:"The Investor Opener",b:`Research who invested in the EMR. Find that investor on LinkedIn. Open with: "I saw [Fund X] backed you in [round] — I'm reaching out because I think what you're building fits perfectly with why they invested." Investor backing = credibility + instant relevance.`},
+    {t:"Warm Intro via the Fund",b:`Go to each VC/PE fund's team page. Find the partner or associate who covers health IT or sits on the board. Email or DM them: "Do you think it makes sense to intro me to the team at [portfolio company]?" Investors love making connections that add value to their portfolio.`},
+    {t:"The Fund's LP Network",b:`Many funds have LP newsletters or events. Attend or engage with the fund's content publicly (comments, shares). Build a relationship with the fund first — they become a distribution channel into their portfolio.`},
+    {t:"Crunchbase / PitchBook Reverse Lookup",b:`Find every fund that has invested in this specific EMR vertical (behavioral health, ABA, home health). Then approach the fund with a portfolio framing: "You've invested in X, Y, Z EMRs — we're working with all of them and would love to be introduced across your portfolio."`},
+  ];
+  const ideas2=[
+    {t:"The Revenue Hook (Subject: 'Adding revenue to [Company]')",b:`Never pitch features — pitch dollars. Lead with ROI: "We've helped 3 behavioral health EMRs each add $2M+ in net new revenue annually by..." Executives skip vendor emails but open revenue emails.`},
+    {t:"Loom Video Outreach",b:`Record a 90-second personalized Loom video for each exec. Reference their recent LinkedIn post, company news, or something specific. Video DMs on LinkedIn get 3–5x the reply rate of text. Rare = memorable.`},
+    {t:"The '2-Sentence' LinkedIn DM",b:`"[Name] — I've been following [Company]'s growth in the ABA space. Do you have 15 minutes this week? I think I can show you something that would matter to your product roadmap." Short, curious, no pitch. Reply bait.`},
+    {t:"The Competitor Name-Drop",b:`"I just had a conversation with [competitor] — ultimately wasn't a fit for them, but as I learned more I actually think you'd be the better home for what we're doing." Creates FOMO and curiosity simultaneously.`},
+    {t:"Integration / Partnership Frame",b:`Instead of a sales email, frame as a partnership or integration exploration. "We have significant overlap in customers — would love to explore a co-sell or integration." Gets past spam filters AND sales skeptics.`},
+  ];
+  const ideas3=[
+    {t:"Publish a State of the Market Report",b:`Write a free 'ABA & Behavioral Health EMR Market Report' that features and quotes these companies. Send each company their mention with a personal note. Decision-makers love being cited. Doors open.`},
+    {t:"LinkedIn Engagement Before Outreach",b:`Spend 2 weeks before cold outreach commenting thoughtfully (3–5 sentences, not just 'Great post!') on posts from target executives. When you DM them, they recognize your name. Warm cold outreach.`},
+    {t:"Host a Roundtable / Invite Them to Speak",b:`Host a virtual EMR leadership roundtable and invite these execs as panelists or speakers. No pitch, just connection. You become the connector in the industry. They come to you.`},
+    {t:"Conference Attack Plan",b:`Map which executives from each company are attending HIMSS, ViVE, HLTH, or BCBA conferences. Book meetings 3 weeks before. In-person conversations convert at 10x cold email. Show up where they are.`},
+    {t:"Use Apollo + Clay + Smartlead at Scale",b:`Pull verified emails for all Partnerships, Product, Strategy, and C-suite at these 30 companies using Apollo.io or Clay. Build a personalized email sequence in Smartlead or Instantly. 30 companies × ~5 targets = 150 contacts. At 5% reply rate = 7–8 real conversations.`},
+  ];
+  const seq=[
+    {d:'Day 1',a:"Connect on LinkedIn with a personalized note — don't pitch yet. Just a genuine reason for connecting."},
+    {d:'Day 3',a:"Like or comment thoughtfully on their most recent LinkedIn post. Build name recognition."},
+    {d:'Day 5',a:"Cold email. Subject: 'Quick question about [Company]'. 3 sentences max. No attachments."},
+    {d:'Day 8',a:"LinkedIn DM follow-up: 'Sent you an email a few days ago — did it land in spam?'"},
+    {d:'Day 12',a:"Try a different contact at the company (Product, Partnerships, or Strategy lead)."},
+    {d:'Day 18',a:"Breakup email: 'I'll stop following up after this — last chance to connect if the timing is right.'"},
+    {d:'Day 30+',a:"Re-engage with a news hook: their funding, product launch, hiring, or industry news."},
+  ];
+
+  document.getElementById('ideas-content').innerHTML=`
+    <div style="max-width:820px;display:flex;flex-direction:column;gap:20px">
+      <div class="card">
+        <div class="card-header"><div class="card-title">💰 Investor-Angle Strategies</div></div>
+        <div style="padding:16px 20px;display:flex;flex-direction:column;gap:14px">
+          ${ideas1.map(i=>`<div style="border-left:3px solid var(--primary);padding-left:14px"><div class="idea-title">${i.t}</div><div class="idea-body">${i.b}</div></div>`).join('')}
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">📧 Direct Outreach Angles</div></div>
+        <div style="padding:16px 20px;display:flex;flex-direction:column;gap:14px">
+          ${ideas2.map(i=>`<div style="border-left:3px solid var(--success);padding-left:14px"><div class="idea-title">${i.t}</div><div class="idea-body">${i.b}</div></div>`).join('')}
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">🏆 High-Effort, High-Return Plays</div></div>
+        <div style="padding:16px 20px;display:flex;flex-direction:column;gap:14px">
+          ${ideas3.map(i=>`<div style="border-left:3px solid var(--warning);padding-left:14px"><div class="idea-title">${i.t}</div><div class="idea-body">${i.b}</div></div>`).join('')}
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">📋 Recommended Outreach Sequence</div></div>
+        <div style="padding:16px 20px">
+          ${seq.map(s=>`<div class="sequence-step"><div class="step-day">${s.d}</div><div class="step-action">${s.a}</div></div>`).join('')}
+        </div>
+      </div>
+    </div>`;
+}
+
+// ============================================================
+// EXPORT
+// ============================================================
+function exportCSV(){
+  const rows=[['Company','Website','LinkedIn','Status','Contacts','Investors','Notes']];
+  S.companies.forEach(c=>{
+    rows.push([c.name,c.website,c.linkedin,c.status,
+      (c.contacts||[]).map(x=>x.name+' ('+x.title+')').join('; '),
+      (c.investors||[]).map(x=>x.name).join('; '),
+      c.notes||''
+    ]);
+  });
+  const csv=rows.map(r=>r.map(v=>`"${String(v||'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download='emr-outreach-'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();
+}
+
+// ============================================================
+// INIT
+// ============================================================
+load();
+showView('dashboard');
+</script>
+</body>
+</html>
