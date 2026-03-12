@@ -9,7 +9,6 @@
 :root{--primary:#2563eb;--primary-dark:#1d4ed8;--sidebar:#0f172a;--text:#1e293b;--text-light:#64748b;--border:#e2e8f0;--bg:#f1f5f9;--white:#fff;--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--purple:#8b5cf6;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
 .app{display:flex;height:100vh;overflow:hidden;}
-/* SIDEBAR */
 .sidebar{width:240px;background:var(--sidebar);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;}
 .sidebar-brand{padding:20px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,0.08);}
 .brand-icon{width:36px;height:36px;background:var(--primary);border-radius:10px;display:flex;align-items:center;justify-content:center;color:white;font-size:18px;flex-shrink:0;}
@@ -23,7 +22,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 .nav-icon{font-size:15px;width:18px;text-align:center;flex-shrink:0;}
 .nav-badge{margin-left:auto;background:rgba(255,255,255,0.12);color:inherit;font-size:11px;padding:1px 7px;border-radius:20px;font-weight:600;}
 .nav-item.active .nav-badge{background:rgba(255,255,255,0.25);}
-/* MAIN */
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;}
 .topbar{background:white;border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:12px;}
 .topbar-title{font-size:17px;font-weight:700;white-space:nowrap;}
@@ -31,17 +29,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 .view{flex:1;overflow-y:auto;display:none;flex-direction:column;}
 .view.active{display:flex;}
 .content{padding:24px;flex:1;}
-/* STATS */
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:24px;}
 .stat-card{background:white;border-radius:12px;padding:18px 20px;box-shadow:0 1px 3px rgba(0,0,0,.06);display:flex;flex-direction:column;gap:8px;}
 .stat-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;}
 .stat-value{font-size:28px;font-weight:800;line-height:1;}
 .stat-label{font-size:12px;color:var(--text-light);font-weight:500;}
-/* CARD */
 .card{background:white;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden;}
 .card-header{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
 .card-title{font-size:14px;font-weight:700;}
-/* TABLE */
 .table-wrap{overflow-x:auto;}
 table{width:100%;border-collapse:collapse;}
 th{padding:10px 16px;text-align:left;font-size:11px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.05em;background:#f8fafc;border-bottom:1px solid var(--border);white-space:nowrap;}
@@ -49,7 +44,6 @@ td{padding:11px 16px;border-bottom:1px solid #f1f5f9;vertical-align:middle;}
 tr:last-child td{border-bottom:none;}
 tbody tr{cursor:pointer;transition:background .1s;}
 tbody tr:hover td{background:#f8fafc;}
-/* BADGES */
 .badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap;}
 .b-ns{background:#f1f5f9;color:#64748b;}
 .b-re{background:#fef3c7;color:#b45309;}
@@ -58,7 +52,7 @@ tbody tr:hover td{background:#f8fafc;}
 .b-me{background:#ede9fe;color:#6d28d9;}
 .b-wo{background:#d1fae5;color:#065f46;}
 .b-lo{background:#fee2e2;color:#b91c1c;}
-/* BUTTONS */
+.b-br{background:#ecfdf5;color:#047857;border:1px solid #6ee7b7;font-size:10px;padding:3px 8px;white-space:normal;line-height:1.4;cursor:help;}
 .btn{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s;white-space:nowrap;font-family:inherit;}
 .btn-primary{background:var(--primary);color:white;}
 .btn-primary:hover{background:var(--primary-dark);}
@@ -67,25 +61,21 @@ tbody tr:hover td{background:#f8fafc;}
 .btn-danger{background:#fee2e2;color:#b91c1c;border:none;}
 .btn-danger:hover{background:#fecaca;}
 .btn-sm{padding:5px 10px;font-size:12px;border-radius:6px;}
-/* SEARCH & FILTER */
 .search-wrap{position:relative;}
 .search-input{padding:8px 12px 8px 34px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;width:220px;font-family:inherit;}
 .search-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1);}
 .filter-select,.status-select{padding:7px 10px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;background:white;cursor:pointer;font-family:inherit;}
 .filter-select:focus,.status-select:focus{border-color:var(--primary);}
-/* DETAIL */
 .detail-header{background:white;border-radius:12px;padding:22px 24px;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
 .detail-company-name{font-size:22px;font-weight:800;}
 .detail-meta{display:flex;gap:18px;margin-top:10px;flex-wrap:wrap;}
 .detail-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-light);}
 .detail-meta-item a{color:var(--primary);text-decoration:none;}
 .detail-meta-item a:hover{text-decoration:underline;}
-/* TABS */
 .tabs{display:flex;gap:4px;background:white;border-radius:12px;padding:6px;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
 .tab{flex:1;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text-light);text-align:center;transition:all .15s;user-select:none;}
 .tab:hover{background:#f1f5f9;color:var(--text);}
 .tab.active{background:var(--primary);color:white;}
-/* FORM */
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 .fg{margin-bottom:0;}
 .fg.full{grid-column:1/-1;}
@@ -93,7 +83,6 @@ tbody tr:hover td{background:#f8fafc;}
 .form-input,.form-select,.form-textarea{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;background:white;font-family:inherit;transition:border-color .15s;}
 .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1);}
 .form-textarea{resize:vertical;min-height:80px;}
-/* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:1000;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(3px);}
 .modal-overlay.open{display:flex;}
 .modal{background:white;border-radius:16px;padding:24px;width:100%;max-width:540px;max-height:88vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.18);}
@@ -102,7 +91,6 @@ tbody tr:hover td{background:#f8fafc;}
 .modal-close{cursor:pointer;color:var(--text-light);font-size:24px;line-height:1;padding:2px 6px;border-radius:6px;}
 .modal-close:hover{background:#f1f5f9;color:var(--text);}
 .modal-footer{margin-top:20px;display:flex;justify-content:flex-end;gap:8px;padding-top:16px;border-top:1px solid var(--border);}
-/* ITEMS */
 .item-list{display:flex;flex-direction:column;gap:10px;}
 .item-card{background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
 .item-info{flex:1;min-width:0;}
@@ -111,17 +99,15 @@ tbody tr:hover td{background:#f8fafc;}
 .item-detail{font-size:12px;color:var(--text-light);margin-top:6px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
 .item-actions{display:flex;gap:6px;flex-shrink:0;}
 .item-note{font-size:12px;color:var(--text-light);margin-top:6px;font-style:italic;}
-/* ACTIVITY */
+.brellium-link-badge{display:inline-flex;align-items:center;gap:4px;background:#ecfdf5;color:#047857;border:1px solid #6ee7b7;border-radius:6px;padding:3px 8px;font-size:10px;font-weight:700;margin-top:6px;cursor:help;line-height:1.4;}
 .activity-list{display:flex;flex-direction:column;}
 .activity-item{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid #f1f5f9;}
 .activity-item:last-child{border-bottom:none;}
 .activity-dot{width:8px;height:8px;border-radius:50%;background:var(--primary);margin-top:6px;flex-shrink:0;}
 .activity-text{font-size:13px;line-height:1.5;}
 .activity-time{font-size:11px;color:var(--text-light);margin-top:2px;}
-/* NOTES */
 .notes-area{width:100%;min-height:220px;padding:14px;border:1px solid var(--border);border-radius:10px;font-size:14px;line-height:1.7;font-family:inherit;outline:none;resize:vertical;}
 .notes-area:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1);}
-/* IDEA CARDS */
 .idea-card{border-radius:10px;padding:16px;margin-bottom:12px;}
 .idea-title{font-size:14px;font-weight:700;margin-bottom:5px;}
 .idea-body{font-size:13px;color:var(--text-light);line-height:1.65;}
@@ -129,17 +115,14 @@ tbody tr:hover td{background:#f8fafc;}
 .sequence-step:last-child{border-bottom:none;}
 .step-day{background:var(--primary);color:white;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap;flex-shrink:0;}
 .step-action{font-size:13px;color:var(--text-light);padding-top:3px;line-height:1.5;}
-/* EMPTY */
 .empty-state{text-align:center;padding:44px 24px;}
 .empty-icon{font-size:36px;margin-bottom:10px;}
 .empty-text{font-size:15px;font-weight:600;margin-bottom:4px;}
 .empty-sub{font-size:13px;color:var(--text-light);}
-/* SCROLLBAR */
 ::-webkit-scrollbar{width:5px;height:5px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px;}
 ::-webkit-scrollbar-thumb:hover{background:#94a3b8;}
-/* ANIM */
 @keyframes fadeSlide{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 .fade-in{animation:fadeSlide .2s ease;}
 </style>
@@ -147,7 +130,6 @@ tbody tr:hover td{background:#f8fafc;}
 <body>
 <div class="app">
 
-<!-- SIDEBAR -->
 <nav class="sidebar">
   <div class="sidebar-brand">
     <div class="brand-icon">🏥</div>
@@ -188,10 +170,8 @@ tbody tr:hover td{background:#f8fafc;}
   </div>
 </nav>
 
-<!-- MAIN -->
 <div class="main">
 
-  <!-- DASHBOARD -->
   <div id="view-dashboard" class="view active">
     <div class="topbar">
       <div class="topbar-title">Dashboard</div>
@@ -218,7 +198,6 @@ tbody tr:hover td{background:#f8fafc;}
     </div>
   </div>
 
-  <!-- COMPANIES -->
   <div id="view-companies" class="view">
     <div class="topbar">
       <div class="topbar-title">Companies</div>
@@ -248,7 +227,6 @@ tbody tr:hover td{background:#f8fafc;}
     </div>
   </div>
 
-  <!-- DETAIL -->
   <div id="view-detail" class="view">
     <div class="topbar">
       <div class="topbar-title" id="detail-topbar-title">Company</div>
@@ -268,7 +246,6 @@ tbody tr:hover td{background:#f8fafc;}
     <div class="content fade-in" id="detail-content"></div>
   </div>
 
-  <!-- CONTACTS -->
   <div id="view-contacts" class="view">
     <div class="topbar">
       <div class="topbar-title">All Contacts</div>
@@ -288,7 +265,7 @@ tbody tr:hover td{background:#f8fafc;}
     </div>
   </div>
 
-  <!-- INVESTORS -->
+  <!-- INVESTORS VIEW — now with Brellium Connection column -->
   <div id="view-investors" class="view">
     <div class="topbar">
       <div class="topbar-title">Investors</div>
@@ -297,10 +274,11 @@ tbody tr:hover td{background:#f8fafc;}
       </div>
     </div>
     <div class="content fade-in">
+      <div id="inv-brellium-banner"></div>
       <div class="card">
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Investor / Fund</th><th>Type</th><th>Portfolio Companies</th><th>Website</th><th>Key Contact</th><th>Notes</th></tr></thead>
+            <thead><tr><th>Investor / Fund</th><th>Type</th><th>Portfolio Companies</th><th>Website</th><th>Key Contact</th><th>Notes</th><th>🔗 Brellium Connection</th></tr></thead>
             <tbody id="investors-tbody"></tbody>
           </table>
         </div>
@@ -308,13 +286,11 @@ tbody tr:hover td{background:#f8fafc;}
     </div>
   </div>
 
-  <!-- IDEAS -->
   <div id="view-ideas" class="view">
     <div class="topbar"><div class="topbar-title">Outreach Playbook</div></div>
     <div class="content fade-in" id="ideas-content"></div>
   </div>
 
-  <!-- SETTINGS -->
   <div id="view-settings" class="view">
     <div class="topbar">
       <div class="topbar-title">GitHub Sync Settings</div>
@@ -339,7 +315,7 @@ tbody tr:hover td{background:#f8fafc;}
               <label class="form-label">Personal Access Token (PAT) *</label>
               <input type="password" class="form-input" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
               <div style="font-size:11px;color:var(--text-light);margin-top:5px;">
-                Create one at <a href="https://github.com/settings/tokens/new?scopes=repo&description=EMR+Tracker+Sync" target="_blank" style="color:var(--primary)">github.com/settings/tokens</a> — enable the <strong>repo</strong> scope. It stays in your browser only.
+                Create one at <a href="https://github.com/settings/tokens/new?scopes=repo&description=EMR+Tracker+Sync" target="_blank" style="color:var(--primary)">github.com/settings/tokens</a> — enable the <strong>repo</strong> scope.
               </div>
             </div>
             <div class="fg">
@@ -352,7 +328,7 @@ tbody tr:hover td{background:#f8fafc;}
             </div>
             <div class="fg full" style="display:flex;align-items:center;gap:10px;padding-top:4px;">
               <input type="checkbox" id="gh-autosync" style="width:16px;height:16px;cursor:pointer;">
-              <label for="gh-autosync" style="font-size:13px;font-weight:600;cursor:pointer;">Auto-sync on every save (pushes to GitHub automatically as you work)</label>
+              <label for="gh-autosync" style="font-size:13px;font-weight:600;cursor:pointer;">Auto-sync on every save</label>
             </div>
           </div>
         </div>
@@ -366,15 +342,15 @@ tbody tr:hover td{background:#f8fafc;}
         </div>
         <div class="card" style="padding:20px 24px;">
           <div style="font-size:14px;font-weight:700;margin-bottom:8px;color:#b91c1c;">⚠️ Reset Data</div>
-          <div style="font-size:13px;color:var(--text-light);margin-bottom:12px;">This will wipe all your local tracker data and reload the original company list with pre-populated investors. Use with caution.</div>
+          <div style="font-size:13px;color:var(--text-light);margin-bottom:12px;">This will wipe all local tracker data and reload the original company list with pre-populated investors.</div>
           <button class="btn btn-danger" onclick="resetData()">Reset to Default Data</button>
         </div>
       </div>
     </div>
   </div>
 
-</div><!-- /main -->
-</div><!-- /app -->
+</div>
+</div>
 
 <!-- CONTACT MODAL -->
 <div class="modal-overlay" id="modal-contact">
@@ -608,6 +584,108 @@ const STATUS_MAP = {
 const CS_MAP = { 'not-contacted':['b-ns','Not Contacted'],'contacted':['b-co','Contacted'],'responded':['b-rs','Responded'],'meeting':['b-me','Meeting Set'] };
 const TYPE_LABELS = { executive:'👔 Executive', partnerships:'🤝 Partnerships', product:'📦 Product', strategy:'♟ Strategy', sales:'💼 Sales/BD', other:'👤 Other', vc:'🏦 VC', pe:'🏛 PE', angel:'👼 Angel', strategic:'🤝 Strategic', debt:'💳 Debt' };
 
+// ============================================================
+// BRELLIUM INVESTOR CONNECTIONS
+// Brellium investors: First Round Capital (lead), Left Lane Capital (co-lead),
+// Menlo Ventures, Digital Health Venture Partners, Kearny Jackson, Necessary Ventures
+// Angels: Andrew Adams (Headway CEO), Fiat Ventures, Cory Levy (Z Fellows)
+// Left Lane also backs: Talkiatry (behavioral health), Mindbloom (mental health)
+// First Round also backs: Alma (behavioral health), Rupa Health, PatientPing
+// KEY: TCV backed Headway (behavioral health) → Headway CEO is Brellium angel → 3-hop chain
+// ============================================================
+const BRELLIUM_CONNECTIONS = {
+  "tcv (technology crossover ventures)": {
+    label: "🔗 Direct Ecosystem Link",
+    via: "TCV → Headway CEO → Brellium",
+    detail: "STRONGEST CONNECTION: TCV (investor in Kipu + Jane App) also backed Headway (behavioral health platform). Headway's CEO Andrew Adams is a direct Brellium angel investor. This creates a 3-hop warm intro chain: you → TCV portfolio company → Headway → Brellium angel → Brellium. Highest-value relationship on this entire list."
+  },
+  "general catalyst": {
+    label: "🔗 Tier-1 VC Peers",
+    via: "First Round Capital",
+    detail: "General Catalyst and First Round Capital (Brellium Series A lead) are tier-1 VC peers with deeply overlapping health AI and enterprise software portfolios. Both have backed AI-powered healthcare platforms. GC backed drchrono; First Round backed Brellium, Alma (behavioral health), Rupa Health, PatientPing. Warm intro likely through shared LP and co-investor networks."
+  },
+  "greylock partners": {
+    label: "🔗 Tier-1 VC Peers",
+    via: "Menlo Ventures",
+    detail: "Greylock Partners and Menlo Ventures (Brellium investor) are both legacy Silicon Valley tier-1 VCs with enterprise SaaS and health tech portfolios. Shared LP base and co-investment history creates strong warm intro pathways into each other's networks."
+  },
+  "f-prime capital": {
+    label: "🔗 Healthcare VC Peers",
+    via: "Digital Health Venture Partners",
+    detail: "F-Prime Capital (Fidelity's VC arm) is a direct sector peer of Digital Health Venture Partners (Brellium investor). Both are dedicated healthcare VCs backing behavioral health and clinical AI platforms. F-Prime invests in 2 companies on this list (Notable Health + Spectrum AI) — extremely high-value intro pathway."
+  },
+  "transformation capital": {
+    label: "🔗 Healthcare VC Peers",
+    via: "Digital Health Venture Partners",
+    detail: "Transformation Capital and Digital Health Venture Partners (Brellium investor) are both dedicated healthcare VCs investing in digital health and compliance SaaS tools. They operate in the same deal circuits — HLTH, HIMSS, JPMorgan Healthcare Conference — creating strong warm intro potential."
+  },
+  "frist cressey ventures": {
+    label: "🔗 Healthcare VC Peers",
+    via: "Kearny Jackson + Digital Health VP",
+    detail: "Frist Cressey Ventures is a direct sector peer of both Kearny Jackson and Digital Health Venture Partners (Brellium investors). All three are healthcare-focused VCs investing in clinical software and compliance tools. Very tight, interconnected Nashville/health IT VC network — ideal for warm intros."
+  },
+  "autism impact fund": {
+    label: "🔗 ABA Sector Direct",
+    via: "Brellium Customer Base",
+    detail: "Autism Impact Fund backs ABA tech companies — Brellium's primary customer vertical. Brellium's ABA clients include Hopebridge, Action Behavior Centers, Compass ABA, Thrive ABA. Brellium's investors (Digital Health VP, Kearny Jackson) are direct sector peers of Autism Impact Fund. Intro through Brellium itself may be the most direct path."
+  },
+  "cvs health ventures": {
+    label: "🔗 Strategic Health Peers",
+    via: "Digital Health Venture Partners",
+    detail: "CVS Health Ventures and Digital Health Venture Partners (Brellium investor) are both strategic healthcare investors backing AI-powered clinical compliance and quality management tools. Near-identical investment theses in behavioral health AI and documentation automation."
+  },
+  "openview venture partners": {
+    label: "🔗 SaaS Growth Peers",
+    via: "Left Lane Capital",
+    detail: "OpenView Venture Partners and Left Lane Capital (Brellium Series A co-lead) are both PLG and SaaS-focused growth investors. Left Lane has a proven behavioral health thesis — backing Talkiatry ($245M raised), Mindbloom, and Brellium. Shared SaaS portfolio networks create warm intro pathways."
+  },
+  "psg (providence strategic growth)": {
+    label: "🔗 Vertical SaaS Peers",
+    via: "Left Lane Capital",
+    detail: "PSG and Left Lane Capital (Brellium Series A co-lead) both specialize in vertical software and SaaS growth investments. Left Lane's behavioral health thesis (Talkiatry, Brellium) overlaps directly with PSG-backed Ensora's behavioral health EMR market."
+  },
+  "oak hc/ft": {
+    label: "🔗 Healthcare VC Peers",
+    via: "Digital Health Venture Partners",
+    detail: "Oak HC/FT is a direct sector peer of Digital Health Venture Partners (Brellium investor). Both are dedicated healthcare & fintech VCs with behavioral health portfolio companies. Oak HC/FT invests in 2 companies on this list (Ensora + Notable Health) — very high-value relationship to build for warm intros."
+  },
+  "vivo capital": {
+    label: "🔗 Healthcare VC Peers",
+    via: "Digital Health Venture Partners",
+    detail: "Vivo Capital and Digital Health Venture Partners (Brellium investor) are both healthcare-dedicated investors with overlapping sector focus in digital health and healthcare IT. Shared conference circuits and LP networks create warm intro potential."
+  },
+  "stripes group": {
+    label: "🔗 Health SaaS Peers",
+    via: "Left Lane Capital",
+    detail: "Stripes Group focuses on tech-enabled healthcare SaaS — the same segment Left Lane Capital (Brellium Series A co-lead) invests in. Left Lane's active behavioral health portfolio (Talkiatry, Mindbloom, Brellium) directly overlaps with Stripes-backed Tebra's ambulatory care market."
+  },
+  "8vc": {
+    label: "🔗 Enterprise Tech Peers",
+    via: "Menlo Ventures",
+    detail: "8VC (Joe Lonsdale, Palantir co-founder) and Menlo Ventures (Brellium investor) both focus on enterprise tech-enabled services with health and compliance software portfolios. Warm intro potential through enterprise software co-investor networks."
+  },
+  "jmi equity": {
+    label: "🔗 Software Growth Peers",
+    via: "Left Lane Capital",
+    detail: "JMI Equity and Left Lane Capital (Brellium Series A co-lead) are both pure-play software growth investors that operate in the same deal circuits and co-invest regularly. Warm intro potential through shared SaaS portfolio networks."
+  },
+  "iconiq growth": {
+    label: "🔗 Health AI Peers",
+    via: "First Round Capital",
+    detail: "ICONIQ Growth and First Round Capital (Brellium Series A lead) both back AI-powered health tech platforms at scale. ICONIQ's Notable Health and Brellium are both in clinical AI automation — potential co-sell ecosystem. First Round's healthcare portfolio (Alma, Rupa Health, Brellium) creates mutual intro potential."
+  },
+  "tidemark": {
+    label: "🔗 SaaS Growth Peers",
+    via: "Left Lane Capital",
+    detail: "Tidemark and Left Lane Capital (Brellium Series A co-lead) both invest in profitable, capital-efficient SaaS businesses with recurring revenue models. Warm intro potential through shared software growth co-investor networks."
+  },
+  "maverick ventures": {
+    label: "🔗 Growth VC Peers",
+    via: "Left Lane Capital",
+    detail: "Maverick Ventures is a growth equity peer of Left Lane Capital (Brellium Series A co-lead). Both invest in high-growth SaaS and digital health platforms, creating warm intro potential through shared portfolio networks and co-investment relationships."
+  }
+};
+
 function badge(status, map){ const [c,l]=map[status]||map[Object.keys(map)[0]]; return `<span class="badge ${c}">${l}</span>`; }
 function statusBadge(s){ return badge(s, STATUS_MAP); }
 function csBadge(s){ return badge(s, CS_MAP); }
@@ -721,7 +799,7 @@ function renderContacts(){
 }
 
 // ============================================================
-// INVESTORS VIEW
+// INVESTORS VIEW — with Brellium Connection column
 // ============================================================
 function renderInvestors(){
   const q=(document.getElementById('inv-search')?.value||'').toLowerCase();
@@ -735,16 +813,37 @@ function renderInvestors(){
   });
   let rows=Object.values(map);
   if(q) rows=rows.filter(r=>r.name.toLowerCase().includes(q)||r.companies.join(' ').toLowerCase().includes(q));
-  document.getElementById('investors-tbody').innerHTML=rows.length?rows.map(inv=>`
+
+  // Count connections for banner
+  const connCount = rows.filter(r=>BRELLIUM_CONNECTIONS[r.name.toLowerCase()]).length;
+  const banner = document.getElementById('inv-brellium-banner');
+  if(banner && connCount > 0){
+    banner.innerHTML=`<div style="background:#ecfdf5;border:1px solid #6ee7b7;border-radius:10px;padding:12px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px;">
+      <span style="font-size:20px">🔗</span>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:#047857">${connCount} investor${connCount!==1?'s':''} linked to Brellium's network</div>
+        <div style="font-size:12px;color:#065f46;margin-top:2px;">Hover the green badges below for full connection details. Sorted by intro warmth. TCV = strongest chain (TCV → Headway CEO → Brellium angel).</div>
+      </div>
+    </div>`;
+  } else if(banner){ banner.innerHTML=''; }
+
+  document.getElementById('investors-tbody').innerHTML=rows.length?rows.map(inv=>{
+    const conn=BRELLIUM_CONNECTIONS[inv.name.toLowerCase()];
+    return `
     <tr>
       <td><strong>${inv.name}</strong></td>
       <td style="font-size:12px">${tLabel(inv.type)}</td>
       <td style="font-size:12px;color:var(--text-light)">${inv.companies.join(', ')}</td>
       <td>${inv.website?`<a href="${inv.website}" target="_blank" style="color:var(--primary);font-size:12px">${inv.website.replace(/https?:\/\//,'')}</a>`:'—'}</td>
       <td style="font-size:12px">${inv.contact||'—'}</td>
-      <td style="font-size:12px;color:var(--text-light);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${inv.notes||'—'}</td>
-    </tr>`).join(''):
-    `<tr><td colspan="6"><div class="empty-state"><div class="empty-icon">💰</div><div class="empty-text">No investors tracked yet</div><div class="empty-sub">Add investors from each company's detail page</div></div></td></tr>`;
+      <td style="font-size:12px;color:var(--text-light);max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${inv.notes||'—'}</td>
+      <td style="min-width:140px">${conn?`
+        <span class="badge b-br" title="Via: ${conn.via}&#10;&#10;${conn.detail}">${conn.label}</span>
+        <div style="font-size:10px;color:#047857;margin-top:3px;font-weight:600;">via ${conn.via}</div>
+      `:`<span style="color:#cbd5e1;font-size:12px">—</span>`}</td>
+    </tr>`;
+  }).join(''):
+  `<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">💰</div><div class="empty-text">No investors tracked yet</div><div class="empty-sub">Add investors from each company's detail page</div></div></td></tr>`;
 }
 
 // ============================================================
@@ -805,7 +904,9 @@ function tabInvestors(c){
   return `<div class="card"><div class="card-header"><div class="card-title">Investors & Backers</div><button class="btn btn-primary btn-sm" onclick="openInvestorModal()">+ Add Investor</button></div>
   <div style="padding:16px">
   ${!c.investors?.length?`<div class="empty-state"><div class="empty-icon">💰</div><div class="empty-text">No investors tracked</div><div class="empty-sub">Add known investors to map warm intro paths</div></div>`:`
-  <div class="item-list">${c.investors.map(inv=>`
+  <div class="item-list">${c.investors.map(inv=>{
+    const conn=BRELLIUM_CONNECTIONS[inv.name.toLowerCase()];
+    return `
     <div class="item-card">
       <div class="item-info">
         <div class="item-name">${inv.name}</div>
@@ -815,12 +916,14 @@ function tabInvestors(c){
           ${inv.contact?`<span>👤 ${inv.contact}</span>`:''}
         </div>
         ${inv.notes?`<div class="item-note">${inv.notes}</div>`:''}
+        ${conn?`<div class="brellium-link-badge" title="Via: ${conn.via}&#10;&#10;${conn.detail}">${conn.label} <span style="font-weight:400;opacity:0.8">· via ${conn.via}</span></div>`:''}
       </div>
       <div class="item-actions">
         <button class="btn btn-ghost btn-sm" onclick="openInvestorModal('${inv.id}')">Edit</button>
         <button class="btn btn-danger btn-sm" onclick="deleteInvestor('${inv.id}')">×</button>
       </div>
-    </div>`).join('')}</div>`}
+    </div>`;
+  }).join('')}</div>`}
   </div></div>`;
 }
 
@@ -1200,7 +1303,6 @@ function resetData(){
 async function init(){
   load();
   updateSyncUI();
-  // If GitHub is configured, try to pull latest data in background
   const cfg = getGHConfig();
   if(cfg.token && cfg.owner && cfg.repo){
     try{
@@ -1218,5 +1320,3 @@ init();
 </script>
 </body>
 </html>
-
-  
