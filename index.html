@@ -9,6 +9,7 @@
 :root{--primary:#2563eb;--primary-dark:#1d4ed8;--sidebar:#0f172a;--text:#1e293b;--text-light:#64748b;--border:#e2e8f0;--bg:#f1f5f9;--white:#fff;--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--purple:#8b5cf6;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
 .app{display:flex;height:100vh;overflow:hidden;}
+/* SIDEBAR */
 .sidebar{width:240px;background:var(--sidebar);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;}
 .sidebar-brand{padding:20px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,0.08);}
 .brand-icon{width:36px;height:36px;background:var(--primary);border-radius:10px;display:flex;align-items:center;justify-content:center;color:white;font-size:18px;flex-shrink:0;}
@@ -22,6 +23,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 .nav-icon{font-size:15px;width:18px;text-align:center;flex-shrink:0;}
 .nav-badge{margin-left:auto;background:rgba(255,255,255,0.12);color:inherit;font-size:11px;padding:1px 7px;border-radius:20px;font-weight:600;}
 .nav-item.active .nav-badge{background:rgba(255,255,255,0.25);}
+/* MAIN */
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;}
 .topbar{background:white;border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:12px;}
 .topbar-title{font-size:17px;font-weight:700;white-space:nowrap;}
@@ -29,14 +31,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 .view{flex:1;overflow-y:auto;display:none;flex-direction:column;}
 .view.active{display:flex;}
 .content{padding:24px;flex:1;}
+/* STATS */
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:24px;}
 .stat-card{background:white;border-radius:12px;padding:18px 20px;box-shadow:0 1px 3px rgba(0,0,0,.06);display:flex;flex-direction:column;gap:8px;}
 .stat-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;}
 .stat-value{font-size:28px;font-weight:800;line-height:1;}
 .stat-label{font-size:12px;color:var(--text-light);font-weight:500;}
+/* CARD */
 .card{background:white;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden;}
 .card-header{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
 .card-title{font-size:14px;font-weight:700;}
+/* TABLE */
 .table-wrap{overflow-x:auto;}
 table{width:100%;border-collapse:collapse;}
 th{padding:10px 16px;text-align:left;font-size:11px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.05em;background:#f8fafc;border-bottom:1px solid var(--border);white-space:nowrap;}
@@ -44,6 +49,7 @@ td{padding:11px 16px;border-bottom:1px solid #f1f5f9;vertical-align:middle;}
 tr:last-child td{border-bottom:none;}
 tbody tr{cursor:pointer;transition:background .1s;}
 tbody tr:hover td{background:#f8fafc;}
+/* BADGES */
 .badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap;}
 .b-ns{background:#f1f5f9;color:#64748b;}
 .b-re{background:#fef3c7;color:#b45309;}
@@ -52,7 +58,7 @@ tbody tr:hover td{background:#f8fafc;}
 .b-me{background:#ede9fe;color:#6d28d9;}
 .b-wo{background:#d1fae5;color:#065f46;}
 .b-lo{background:#fee2e2;color:#b91c1c;}
-.b-br{background:#ecfdf5;color:#047857;border:1px solid #6ee7b7;font-size:10px;padding:3px 8px;white-space:normal;line-height:1.4;cursor:help;}
+/* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s;white-space:nowrap;font-family:inherit;}
 .btn-primary{background:var(--primary);color:white;}
 .btn-primary:hover{background:var(--primary-dark);}
@@ -61,21 +67,25 @@ tbody tr:hover td{background:#f8fafc;}
 .btn-danger{background:#fee2e2;color:#b91c1c;border:none;}
 .btn-danger:hover{background:#fecaca;}
 .btn-sm{padding:5px 10px;font-size:12px;border-radius:6px;}
+/* SEARCH & FILTER */
 .search-wrap{position:relative;}
 .search-input{padding:8px 12px 8px 34px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;width:220px;font-family:inherit;}
 .search-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1);}
 .filter-select,.status-select{padding:7px 10px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;background:white;cursor:pointer;font-family:inherit;}
 .filter-select:focus,.status-select:focus{border-color:var(--primary);}
+/* DETAIL */
 .detail-header{background:white;border-radius:12px;padding:22px 24px;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
 .detail-company-name{font-size:22px;font-weight:800;}
 .detail-meta{display:flex;gap:18px;margin-top:10px;flex-wrap:wrap;}
 .detail-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-light);}
 .detail-meta-item a{color:var(--primary);text-decoration:none;}
 .detail-meta-item a:hover{text-decoration:underline;}
+/* TABS */
 .tabs{display:flex;gap:4px;background:white;border-radius:12px;padding:6px;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
 .tab{flex:1;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text-light);text-align:center;transition:all .15s;user-select:none;}
 .tab:hover{background:#f1f5f9;color:var(--text);}
 .tab.active{background:var(--primary);color:white;}
+/* FORM */
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 .fg{margin-bottom:0;}
 .fg.full{grid-column:1/-1;}
@@ -83,6 +93,7 @@ tbody tr:hover td{background:#f8fafc;}
 .form-input,.form-select,.form-textarea{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;background:white;font-family:inherit;transition:border-color .15s;}
 .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1);}
 .form-textarea{resize:vertical;min-height:80px;}
+/* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:1000;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(3px);}
 .modal-overlay.open{display:flex;}
 .modal{background:white;border-radius:16px;padding:24px;width:100%;max-width:540px;max-height:88vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.18);}
@@ -91,6 +102,7 @@ tbody tr:hover td{background:#f8fafc;}
 .modal-close{cursor:pointer;color:var(--text-light);font-size:24px;line-height:1;padding:2px 6px;border-radius:6px;}
 .modal-close:hover{background:#f1f5f9;color:var(--text);}
 .modal-footer{margin-top:20px;display:flex;justify-content:flex-end;gap:8px;padding-top:16px;border-top:1px solid var(--border);}
+/* ITEMS */
 .item-list{display:flex;flex-direction:column;gap:10px;}
 .item-card{background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
 .item-info{flex:1;min-width:0;}
@@ -99,15 +111,17 @@ tbody tr:hover td{background:#f8fafc;}
 .item-detail{font-size:12px;color:var(--text-light);margin-top:6px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
 .item-actions{display:flex;gap:6px;flex-shrink:0;}
 .item-note{font-size:12px;color:var(--text-light);margin-top:6px;font-style:italic;}
-.brellium-link-badge{display:inline-flex;align-items:center;gap:4px;background:#ecfdf5;color:#047857;border:1px solid #6ee7b7;border-radius:6px;padding:3px 8px;font-size:10px;font-weight:700;margin-top:6px;cursor:help;line-height:1.4;}
+/* ACTIVITY */
 .activity-list{display:flex;flex-direction:column;}
 .activity-item{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid #f1f5f9;}
 .activity-item:last-child{border-bottom:none;}
 .activity-dot{width:8px;height:8px;border-radius:50%;background:var(--primary);margin-top:6px;flex-shrink:0;}
 .activity-text{font-size:13px;line-height:1.5;}
 .activity-time{font-size:11px;color:var(--text-light);margin-top:2px;}
+/* NOTES */
 .notes-area{width:100%;min-height:220px;padding:14px;border:1px solid var(--border);border-radius:10px;font-size:14px;line-height:1.7;font-family:inherit;outline:none;resize:vertical;}
 .notes-area:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1);}
+/* IDEA CARDS */
 .idea-card{border-radius:10px;padding:16px;margin-bottom:12px;}
 .idea-title{font-size:14px;font-weight:700;margin-bottom:5px;}
 .idea-body{font-size:13px;color:var(--text-light);line-height:1.65;}
@@ -115,14 +129,17 @@ tbody tr:hover td{background:#f8fafc;}
 .sequence-step:last-child{border-bottom:none;}
 .step-day{background:var(--primary);color:white;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap;flex-shrink:0;}
 .step-action{font-size:13px;color:var(--text-light);padding-top:3px;line-height:1.5;}
+/* EMPTY */
 .empty-state{text-align:center;padding:44px 24px;}
 .empty-icon{font-size:36px;margin-bottom:10px;}
 .empty-text{font-size:15px;font-weight:600;margin-bottom:4px;}
 .empty-sub{font-size:13px;color:var(--text-light);}
+/* SCROLLBAR */
 ::-webkit-scrollbar{width:5px;height:5px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px;}
 ::-webkit-scrollbar-thumb:hover{background:#94a3b8;}
+/* ANIM */
 @keyframes fadeSlide{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 .fade-in{animation:fadeSlide .2s ease;}
 </style>
@@ -130,6 +147,7 @@ tbody tr:hover td{background:#f8fafc;}
 <body>
 <div class="app">
 
+<!-- SIDEBAR -->
 <nav class="sidebar">
   <div class="sidebar-brand">
     <div class="brand-icon">🏥</div>
@@ -170,8 +188,10 @@ tbody tr:hover td{background:#f8fafc;}
   </div>
 </nav>
 
+<!-- MAIN -->
 <div class="main">
 
+  <!-- DASHBOARD -->
   <div id="view-dashboard" class="view active">
     <div class="topbar">
       <div class="topbar-title">Dashboard</div>
@@ -198,6 +218,7 @@ tbody tr:hover td{background:#f8fafc;}
     </div>
   </div>
 
+  <!-- COMPANIES -->
   <div id="view-companies" class="view">
     <div class="topbar">
       <div class="topbar-title">Companies</div>
@@ -227,6 +248,7 @@ tbody tr:hover td{background:#f8fafc;}
     </div>
   </div>
 
+  <!-- DETAIL -->
   <div id="view-detail" class="view">
     <div class="topbar">
       <div class="topbar-title" id="detail-topbar-title">Company</div>
@@ -246,6 +268,7 @@ tbody tr:hover td{background:#f8fafc;}
     <div class="content fade-in" id="detail-content"></div>
   </div>
 
+  <!-- CONTACTS -->
   <div id="view-contacts" class="view">
     <div class="topbar">
       <div class="topbar-title">All Contacts</div>
@@ -265,7 +288,7 @@ tbody tr:hover td{background:#f8fafc;}
     </div>
   </div>
 
-  <!-- INVESTORS VIEW — now with Brellium Connection column -->
+  <!-- INVESTORS -->
   <div id="view-investors" class="view">
     <div class="topbar">
       <div class="topbar-title">Investors</div>
@@ -274,11 +297,10 @@ tbody tr:hover td{background:#f8fafc;}
       </div>
     </div>
     <div class="content fade-in">
-      <div id="inv-brellium-banner"></div>
       <div class="card">
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Investor / Fund</th><th>Type</th><th>Portfolio Companies</th><th>Website</th><th>Key Contact</th><th>Notes</th><th>🔗 Brellium Connection</th></tr></thead>
+            <thead><tr><th>Investor / Fund</th><th>Type</th><th>Portfolio Companies</th><th>Website</th><th>Key Contact</th><th>Notes</th></tr></thead>
             <tbody id="investors-tbody"></tbody>
           </table>
         </div>
@@ -286,11 +308,13 @@ tbody tr:hover td{background:#f8fafc;}
     </div>
   </div>
 
+  <!-- IDEAS -->
   <div id="view-ideas" class="view">
     <div class="topbar"><div class="topbar-title">Outreach Playbook</div></div>
     <div class="content fade-in" id="ideas-content"></div>
   </div>
 
+  <!-- SETTINGS -->
   <div id="view-settings" class="view">
     <div class="topbar">
       <div class="topbar-title">GitHub Sync Settings</div>
@@ -315,7 +339,7 @@ tbody tr:hover td{background:#f8fafc;}
               <label class="form-label">Personal Access Token (PAT) *</label>
               <input type="password" class="form-input" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
               <div style="font-size:11px;color:var(--text-light);margin-top:5px;">
-                Create one at <a href="https://github.com/settings/tokens/new?scopes=repo&description=EMR+Tracker+Sync" target="_blank" style="color:var(--primary)">github.com/settings/tokens</a> — enable the <strong>repo</strong> scope.
+                Create one at <a href="https://github.com/settings/tokens/new?scopes=repo&description=EMR+Tracker+Sync" target="_blank" style="color:var(--primary)">github.com/settings/tokens</a> — enable the <strong>repo</strong> scope. It stays in your browser only.
               </div>
             </div>
             <div class="fg">
@@ -328,7 +352,7 @@ tbody tr:hover td{background:#f8fafc;}
             </div>
             <div class="fg full" style="display:flex;align-items:center;gap:10px;padding-top:4px;">
               <input type="checkbox" id="gh-autosync" style="width:16px;height:16px;cursor:pointer;">
-              <label for="gh-autosync" style="font-size:13px;font-weight:600;cursor:pointer;">Auto-sync on every save</label>
+              <label for="gh-autosync" style="font-size:13px;font-weight:600;cursor:pointer;">Auto-sync on every save (pushes to GitHub automatically as you work)</label>
             </div>
           </div>
         </div>
@@ -342,15 +366,15 @@ tbody tr:hover td{background:#f8fafc;}
         </div>
         <div class="card" style="padding:20px 24px;">
           <div style="font-size:14px;font-weight:700;margin-bottom:8px;color:#b91c1c;">⚠️ Reset Data</div>
-          <div style="font-size:13px;color:var(--text-light);margin-bottom:12px;">This will wipe all local tracker data and reload the original company list with pre-populated investors.</div>
+          <div style="font-size:13px;color:var(--text-light);margin-bottom:12px;">This will wipe all your local tracker data and reload the original company list with pre-populated investors. Use with caution.</div>
           <button class="btn btn-danger" onclick="resetData()">Reset to Default Data</button>
         </div>
       </div>
     </div>
   </div>
 
-</div>
-</div>
+</div><!-- /main -->
+</div><!-- /app -->
 
 <!-- CONTACT MODAL -->
 <div class="modal-overlay" id="modal-contact">
@@ -459,11 +483,26 @@ tbody tr:hover td{background:#f8fafc;}
 // DATA
 // ============================================================
 const DEFAULT_COMPANIES = [
-  {id:1,name:"HiRasmus",website:"hirasmus.com",linkedin:"https://www.linkedin.com/company/hi-rasmus",status:"not-started",contacts:[],investors:[
+  {id:1,name:"HiRasmus",website:"hirasmus.com",linkedin:"https://www.linkedin.com/company/hi-rasmus",status:"not-started",contacts:[
+    {id:"ct_hirasmus_1",name:"Rachel Dowse",title:"Chief Commercial Officer & Advocate for 1 Million Kids",type:"executive",status:"not-contacted",email:"rachel@hirasmus.com",phone:"+1 615-972-3555",linkedin:"https://www.linkedin.com/in/rachel-dowse-aa823410",notes:""},
+    {id:"ct_hirasmus_2",name:"Jenna Simard",title:"Director, Customer Success",type:"sales",status:"not-contacted",email:"jenna@hirasmus.com",phone:"+1 734-276-5106",linkedin:"https://www.linkedin.com/in/jennalsimard",notes:""},
+    {id:"ct_hirasmus_3",name:"Nikolaj Hendriksen",title:"Founder & CEO",type:"executive",status:"not-contacted",email:"nikolaj@hirasmus.com",phone:"+45 42 42 45 45",linkedin:"https://www.linkedin.com/in/nhendriksen",notes:""},
+    {id:"ct_hirasmus_4",name:"Mark Rosenvinge",title:"Chief Technology Officer",type:"executive",status:"not-contacted",email:"mark@hirasmus.com",phone:"+45 27 51 38 10",linkedin:"https://www.linkedin.com/in/mark-rosenvinge-788408b8",notes:""},
+    {id:"ct_hirasmus_5",name:"Cate Davis",title:"Director of Research and Outcomes",type:"other",status:"not-contacted",email:"cate@hirasmus.com",phone:"",linkedin:"https://www.linkedin.com/in/cate-davis-phd-bcba-d-lba-413274207",notes:""},
+    {id:"ct_hirasmus_6",name:"Christine Danh",title:"Lead Product Designer",type:"product",status:"not-contacted",email:"christine@hirasmus.com",phone:"",linkedin:"https://www.linkedin.com/in/cdanh",notes:""}
+  ],investors:[
     {id:"inv_hirasmus_1",name:"Undisclosed Grant Investor",type:"other",round:"Grant / Prize Money",amount:"Undisclosed",year:"2020",website:"",contact:"",notes:"1 institutional investor + 1 angel investor. Grant/prize money round on Jun 2, 2020. Founded 2019 in Copenhagen, Denmark. Telehealth for autism/ABA — parents connect with physicians via video."}
   ],activities:[],notes:"Copenhagen-based ABA/autism telehealth. Founded 2019 by Nikolaj Hendriksen. 44 employees. Grant-funded only."},
   {id:2,name:"Behavioral Health Connect",website:"behavioralhealthconnect.com",linkedin:"https://www.linkedin.com/company/behavioral-health-connections",status:"not-started",contacts:[],investors:[],activities:[],notes:"No publicly disclosed VC/PE investors found. Appears to be bootstrapped or privately held."},
-  {id:3,name:"Ensora",website:"ensora.co",linkedin:"https://www.linkedin.com/company/ensora",status:"not-started",contacts:[],investors:[
+  {id:3,name:"Ensora",website:"ensora.co",linkedin:"https://www.linkedin.com/company/ensora",status:"not-started",contacts:[
+    {id:"ct_ensora_1",name:"Robin Fisher",title:"Sr. Director CX Strategy & Ops",type:"other",status:"not-contacted",email:"robin.fisher@therapybrands.com",phone:"+1 888-478-4711",linkedin:"https://www.linkedin.com/in/fisherrrobin",notes:""},
+    {id:"ct_ensora_2",name:"John Damgaard",title:"CEO",type:"executive",status:"not-contacted",email:"john.damgaard@ensorahealth.com",phone:"+1 888-478-4711",linkedin:"https://www.linkedin.com/in/john-damgaard-5876814",notes:""},
+    {id:"ct_ensora_3",name:"Lynn Carroll",title:"VP of Product Management",type:"product",status:"not-contacted",email:"lynn.carroll@ensorahealth.com",phone:"+1 888-478-4711",linkedin:"https://www.linkedin.com/in/lynntcarroll",notes:""},
+    {id:"ct_ensora_4",name:"Fred Varpahovsky",title:"VP Engineering Operations",type:"executive",status:"not-contacted",email:"fred.varpahovsky@ensorahealth.com",phone:"+1 800-840-9152",linkedin:"https://www.linkedin.com/in/fvarpaho",notes:""},
+    {id:"ct_ensora_5",name:"Aaron Bruneau",title:"CIO",type:"executive",status:"not-contacted",email:"aaron.bruneau@therapybrands.com",phone:"+1 800-840-9152",linkedin:"https://www.linkedin.com/in/aaron-bruneau",notes:""},
+    {id:"ct_ensora_6",name:"Danielle Shelley",title:"Director of Strategic Partnerships",type:"partnerships",status:"not-contacted",email:"",phone:"+1 888-478-4711",linkedin:"https://www.linkedin.com/in/danishelley",notes:""},
+    {id:"ct_ensora_7",name:"Thuong Le",title:"CTO",type:"executive",status:"not-contacted",email:"",phone:"+1 888-478-4711",linkedin:"https://www.linkedin.com/in/thuongvanle",notes:""}
+  ],investors:[
     {id:"inv_ensora_1",name:"KKR",type:"pe",round:"Acquisition",amount:"$1.25B",year:"2021",website:"https://www.kkr.com",contact:"",notes:"KKR acquired Therapy Brands (now rebranded as Ensora) for $1.25B in May 2021. One of the world's largest PE firms. KKR has deep healthcare IT conviction — great firm for warm intros across their portfolio."},
     {id:"inv_ensora_2",name:"Lightyear Capital",type:"pe",round:"Growth Equity (pre-KKR)",amount:"Undisclosed",year:"2019",website:"https://www.lightyearcapital.com",contact:"",notes:"Led pre-KKR growth round for Therapy Brands. Focus: financial services and healthcare technology. Good warm intro target via their portco network."},
     {id:"inv_ensora_3",name:"Oak HC/FT",type:"vc",round:"Co-Investor (pre-KKR)",amount:"Undisclosed",year:"2019",website:"https://www.oakhcft.com",contact:"",notes:"Co-invested in Therapy Brands alongside Lightyear Capital. Also invested in Notable Health — strong EMR/behavioral health portfolio overlap. Target for warm intro to multiple companies."},
@@ -473,12 +512,38 @@ const DEFAULT_COMPANIES = [
     {id:"inv_hchb_1",name:"Hearst Corporation",type:"strategic",round:"Majority Acquisition (~85%)",amount:"Undisclosed",year:"2013",website:"https://www.hearst.com",contact:"",notes:"Hearst Corporation acquired an ~85% stake in HCHB in 2013 from Cressey & Company. Hearst is a major media/information conglomerate. Reach their Corporate Development or Ventures division for a warm intro into HCHB leadership."},
     {id:"inv_hchb_2",name:"Cressey & Company",type:"pe",round:"Prior PE Backer (pre-Hearst)",amount:"Undisclosed",year:"Pre-2013",website:"https://www.cressey.com",contact:"",notes:"Healthcare-focused PE firm that backed HCHB before Hearst acquisition. Strong healthcare IT and home health network."}
   ],activities:[],notes:"Home health EMR. Majority owned by Hearst Corporation since 2013. Originally backed by Cressey & Company."},
-  {id:5,name:"ABA Matrix",website:"abamatrix.com",linkedin:"https://www.linkedin.com/company/aba-matrix",status:"not-started",contacts:[],investors:[],activities:[],notes:"Owned by parent company Hex Matrix. Independently operated — no public VC/PE backing. They actively market themselves as investor-independent vs. VC-backed competitors. Bootstrapped."},
-  {id:6,name:"Kipu Health",website:"kipu.com",linkedin:"https://www.linkedin.com/company/kipuhealth",status:"not-started",contacts:[],investors:[
+  {id:5,name:"ABA Matrix",website:"abamatrix.com",linkedin:"https://www.linkedin.com/company/aba-matrix",status:"not-started",contacts:[
+    {id:"ct_abamatrix_1",name:"Jorge Concepcion",title:"CEO",type:"executive",status:"not-contacted",email:"jorge@abamatrix.com",phone:"+1 850-391-4353",linkedin:"https://www.linkedin.com/in/jorge-concepcion-600b2914a",notes:""},
+    {id:"ct_abamatrix_2",name:"Ivett Herrera",title:"Software Developer",type:"other",status:"not-contacted",email:"",phone:"",linkedin:"",notes:""},
+    {id:"ct_abamatrix_3",name:"Ernesto Lopez",title:"Co-Founder",type:"executive",status:"not-contacted",email:"",phone:"",linkedin:"",notes:""},
+    {id:"ct_abamatrix_4",name:"Lisandra Cardoso",title:"Software Developer",type:"other",status:"not-contacted",email:"lisandra@abamatrix.com",phone:"+1 888-383-4630",linkedin:"https://www.linkedin.com/in/lisandra-cardoso-2b22401b9",notes:""},
+    {id:"ct_abamatrix_5",name:"Victor Martinez",title:"CTO",type:"executive",status:"not-contacted",email:"victor@hexmatrix.net",phone:"",linkedin:"https://www.linkedin.com/in/victor-martinez-343074b3",notes:""},
+    {id:"ct_abamatrix_6",name:"Damaris Rodriguez",title:"Medical Billing Consultant",type:"other",status:"not-contacted",email:"damaris@abamatrix.com",phone:"+1 888-383-4630",linkedin:"https://www.linkedin.com/in/damaris-rodriguez-9a1442217",notes:""}
+  ],investors:[],activities:[],notes:"Owned by parent company Hex Matrix. Independently operated — no public VC/PE backing. They actively market themselves as investor-independent vs. VC-backed competitors. Bootstrapped."},
+  {id:6,name:"Kipu Health",website:"kipu.com",linkedin:"https://www.linkedin.com/company/kipuhealth",status:"not-started",contacts:[
+    {id:"ct_kipu_1",name:"Cliff Levine",title:"SVP Business Development",type:"partnerships",status:"not-contacted",email:"cliff@kipuhealth.com",phone:"+1 561-349-5901",linkedin:"https://www.linkedin.com/in/cliff-levine-38580a41",notes:""},
+    {id:"ct_kipu_2",name:"Joan Leroux",title:"CRO",type:"executive",status:"not-contacted",email:"joan.leroux@kipuhealth.com",phone:"+1 561-349-5901",linkedin:"https://www.linkedin.com/in/joanleroux",notes:""},
+    {id:"ct_kipu_3",name:"Sally Abu-Moustafa",title:"EVP Product Management",type:"product",status:"not-contacted",email:"sally@kipuhealth.com",phone:"+1 267-566-5456",linkedin:"https://www.linkedin.com/in/sally-abu-moustafa-33067428",notes:""},
+    {id:"ct_kipu_4",name:"Prabhat Bhattarai",title:"Chief Architect & VP Engineering",type:"executive",status:"not-contacted",email:"prabhat.bhattarai@kipu.health",phone:"+1 561-349-5901",linkedin:"https://www.linkedin.com/in/pbhattarai",notes:""},
+    {id:"ct_kipu_5",name:"Rick Pharr",title:"COO",type:"executive",status:"not-contacted",email:"rick.pharr@kipuhealth.com",phone:"+1 561-349-5901",linkedin:"https://www.linkedin.com/in/rickpharr",notes:""},
+    {id:"ct_kipu_6",name:"Kurt Connolly",title:"SVP Corporate Development & Partnerships",type:"partnerships",status:"not-contacted",email:"kurt.connolly@kipuhealth.com",phone:"+1 816-885-4315",linkedin:"https://www.linkedin.com/in/kurt-connolly",notes:""},
+    {id:"ct_kipu_7",name:"Christina Rosenberg",title:"Director of Clinical Compliance",type:"other",status:"not-contacted",email:"christina.rosenberg@kipuhealth.com",phone:"+1 561-349-5901",linkedin:"https://www.linkedin.com/in/christinarosenberglmhc",notes:""},
+    {id:"ct_kipu_8",name:"Carina Edwards",title:"CEO",type:"executive",status:"not-contacted",email:"carina.edwards@kipuhealth.com",phone:"+1 561-349-5901",linkedin:"https://www.linkedin.com/in/carina-edwards",notes:""},
+    {id:"ct_kipu_9",name:"Russell Olsen",title:"Chief Product & Technology Officer",type:"executive",status:"not-contacted",email:"russell.olsen@kipuhealth.com",phone:"+1 561-349-5901",linkedin:"https://www.linkedin.com/in/russgolsen",notes:""},
+    {id:"ct_kipu_10",name:"Chris Duncombe",title:"CIO",type:"executive",status:"not-contacted",email:"chris.duncombe@kipuhealth.com",phone:"+1 561-349-5901",linkedin:"https://www.linkedin.com/in/chris-duncombe",notes:""}
+  ],investors:[
     {id:"inv_kipu_1",name:"TCV (Technology Crossover Ventures)",type:"vc",round:"Strategic Investment",amount:"$108M total",year:"2021",website:"https://www.tcv.com",contact:"",notes:"TCV made a $108M strategic investment in Kipu Health in 2021. TCV is one of the top growth-stage VCs (Netflix, Spotify, Facebook pre-IPO). Also invested in Jane App — creating direct portfolio overlap with another target on this list. Building a TCV relationship = warm intro to both Kipu and Jane."}
   ],activities:[],notes:"Addiction treatment and behavioral health EMR. TCV-backed with $108M strategic investment."},
   {id:7,name:"Catalyst",website:"ctlyst.id",linkedin:"https://www.linkedin.com/company/pci-geomatics",status:"not-started",contacts:[],investors:[],activities:[],notes:"WARNING: LinkedIn URL in source data (pci-geomatics) appears incorrect — PCI Geomatics is a different company. Verify the correct Catalyst entity and LinkedIn before outreach."},
-  {id:8,name:"Credible",website:"crediblebh.com",linkedin:"https://www.linkedin.com/company/crediblelabs",status:"not-started",contacts:[],investors:[
+  {id:8,name:"Credible",website:"crediblebh.com",linkedin:"https://www.linkedin.com/company/crediblelabs",status:"not-started",contacts:[
+    {id:"ct_credible_1",name:"John McPeak",title:"Vice President of Partner and Business Development",type:"partnerships",status:"not-contacted",email:"john.mcpeak@qualifacts.com",phone:"+1 866-386-6755",linkedin:"https://www.linkedin.com/in/john-mcpeak-9513266",notes:""},
+    {id:"ct_credible_2",name:"Carrie Lazorchak",title:"Chief Revenue Officer (CRO)",type:"executive",status:"not-contacted",email:"carrie.lazorchak@qualifacts.com",phone:"+1 866-386-6755",linkedin:"https://www.linkedin.com/in/carrie-lazorchak-153b0a12",notes:""},
+    {id:"ct_credible_3",name:"Jeremy Landa",title:"Chief Financial Officer",type:"executive",status:"not-contacted",email:"jeremy.landa@qualifacts.com",phone:"+1 866-386-6755",linkedin:"https://www.linkedin.com/in/jeremy-landa-6314224",notes:""},
+    {id:"ct_credible_4",name:"Josh Latta",title:"Director, Integration and Reporting Services",type:"other",status:"not-contacted",email:"josh.latta@qualifacts.com",phone:"+1 866-386-6755",linkedin:"https://www.linkedin.com/in/joshlatta",notes:""},
+    {id:"ct_credible_5",name:"Karen Baker",title:"CIO",type:"executive",status:"not-contacted",email:"karen.baker@qualifacts.com",phone:"+1 866-386-6755",linkedin:"https://www.linkedin.com/in/karen-baker-cio",notes:""},
+    {id:"ct_credible_6",name:"Nicholas Chepesiuk",title:"Vice President, Innovation",type:"executive",status:"not-contacted",email:"nicholas.chepesiuk@qualifacts.com",phone:"+1 866-386-6755",linkedin:"https://www.linkedin.com/in/nicholas-chepesiuk-29069432",notes:""},
+    {id:"ct_credible_7",name:"Josh Schoeller",title:"Chief Executive Officer",type:"executive",status:"not-contacted",email:"josh.schoeller@qualifacts.com",phone:"+1 866-386-6755",linkedin:"https://www.linkedin.com/in/josh-schoeller-8566a8",notes:""}
+  ],investors:[
     {id:"inv_credible_1",name:"Martis Capital",type:"pe",round:"Growth Equity",amount:"Undisclosed",year:"2018",website:"https://www.martiscapital.com",contact:"",notes:"Martis Capital backed Credible BH before its acquisition by Qualifacts in Aug 2020. Healthcare-focused middle-market PE. Now part of the Warburg Pincus portfolio (via Qualifacts)."},
     {id:"inv_credible_2",name:"Goldman Sachs (Asset Management)",type:"pe",round:"Co-Investor",amount:"Undisclosed",year:"2018",website:"https://www.goldmansachs.com",contact:"",notes:"Goldman Sachs Asset Management co-invested alongside Martis Capital in Credible BH. Now part of Warburg Pincus portfolio via Qualifacts acquisition (Aug 2020)."},
     {id:"inv_credible_3",name:"Qualifacts / Warburg Pincus",type:"pe",round:"Acquisition",amount:"Undisclosed",year:"2020",website:"https://www.qualifacts.com",contact:"",notes:"Qualifacts (backed by Warburg Pincus) acquired Credible BH in August 2020. Same ownership group as Care Logic and InSync. Warburg Pincus is building an EMR roll-up strategy in behavioral health."}
@@ -490,13 +555,29 @@ const DEFAULT_COMPANIES = [
   {id:10,name:"InSync",website:"insync.com.au",linkedin:"https://www.linkedin.com/company/insyncau",status:"not-started",contacts:[],investors:[
     {id:"inv_insync_1",name:"Qualifacts / Warburg Pincus",type:"pe",round:"Acquisition",amount:"Undisclosed",year:"2021",website:"https://www.qualifacts.com",contact:"",notes:"Qualifacts (Warburg Pincus) acquired InSync Healthcare Solutions in December 2021. Terms not disclosed. InSync is now part of the Warburg Pincus EMR roll-up alongside Care Logic and Credible BH."}
   ],activities:[],notes:"Acquired by Qualifacts (Warburg Pincus) in Dec 2021. Now part of the same PE-backed behavioral health EMR roll-up as Care Logic and Credible."},
-  {id:11,name:"Theralytics",website:"theralytics.net",linkedin:"https://www.linkedin.com/company/theralytics-software",status:"not-started",contacts:[],investors:[],activities:[],notes:"Miami, FL. Founded by BCBAs. ONC Certified and SOC 2 Type II. Award-winning ABA practice management software. No publicly disclosed VC/PE funding — appears bootstrapped."},
-  {id:12,name:"drchrono",website:"drchrono.com",linkedin:"https://www.linkedin.com/company/drchrono",status:"not-started",contacts:[],investors:[
+  {id:11,name:"Theralytics",website:"theralytics.net",linkedin:"https://www.linkedin.com/company/theralytics-software",status:"not-started",contacts:[
+    {id:"ct_theralytics_1",name:"Zohaib R.",title:"Founder and CEO",type:"executive",status:"not-contacted",email:"",phone:"",linkedin:"",notes:""},
+    {id:"ct_theralytics_2",name:"Jay Mazza",title:"Chief Strategy Officer",type:"strategy",status:"not-contacted",email:"jmazza@theralytics.net",phone:"+1 866-710-3590",linkedin:"https://www.linkedin.com/in/jay-mazza-23942235b",notes:""},
+    {id:"ct_theralytics_3",name:"Imran Haq",title:"COO",type:"executive",status:"not-contacted",email:"imran@kwiteconsulting.com",phone:"+1 866-710-3590",linkedin:"",notes:""}
+  ],investors:[],activities:[],notes:"Miami, FL. Founded by BCBAs. ONC Certified and SOC 2 Type II. Award-winning ABA practice management software. No publicly disclosed VC/PE funding — appears bootstrapped."},
+  {id:12,name:"drchrono",website:"drchrono.com",linkedin:"https://www.linkedin.com/company/drchrono",status:"not-started",contacts:[
+    {id:"ct_drchrono_1",name:"Jayme Faletti",title:"Product Owner",type:"product",status:"not-contacted",email:"jfaletti@everhealth.com",phone:"+1 720-647-4948",linkedin:"https://www.linkedin.com/in/jaymefaletti",notes:""},
+    {id:"ct_drchrono_2",name:"Kareem Davies",title:"Partner Solution Consultant",type:"partnerships",status:"not-contacted",email:"kareem.davies@drchrono.com",phone:"+1 844-569-8628",linkedin:"https://www.linkedin.com/in/kareem-davies-15346137",notes:""}
+  ],investors:[
     {id:"inv_drchrono_1",name:"EverCommerce",type:"strategic",round:"Acquisition",amount:"~$180M",year:"2021",website:"https://www.evercommerce.com",contact:"",notes:"EverCommerce (NASDAQ: EVCM) acquired drchrono for ~$180M in November 2021. EverCommerce is a publicly traded vertical SaaS platform company. Reach their Corporate Development team for warm intro to drchrono leadership."},
     {id:"inv_drchrono_2",name:"General Catalyst",type:"vc",round:"Series B Lead (pre-acquisition)",amount:"Undisclosed",year:"2015",website:"https://www.generalcatalyst.com",contact:"",notes:"Led drchrono's Series B before the EverCommerce acquisition. One of the top VCs globally (Airbnb, Stripe, Snap, Hubspot). Strong healthcare IT portfolio — good relationship to develop for broader EMR introductions."},
     {id:"inv_drchrono_3",name:"ORIX Growth Capital",type:"debt",round:"Venture Debt (pre-acquisition)",amount:"Undisclosed",year:"2018",website:"https://www.orix.com",contact:"",notes:"Provided venture debt to drchrono before EverCommerce acquisition. Part of ORIX Corporation (Japanese financial conglomerate)."}
   ],activities:[],notes:"Acquired by EverCommerce (NASDAQ: EVCM) for ~$180M in Nov 2021. Previously backed by General Catalyst."},
-  {id:13,name:"Notable Health",website:"notablehealth.com",linkedin:"https://www.linkedin.com/company/notablehealth",status:"not-started",contacts:[],investors:[
+  {id:13,name:"Notable Health",website:"notablehealth.com",linkedin:"https://www.linkedin.com/company/notablehealth",status:"not-started",contacts:[
+    {id:"ct_notable_1",name:"Christopher Daniels",title:"Head of Partnerships, Growth & Sales",type:"partnerships",status:"not-contacted",email:"",phone:"+1 800-450-1304",linkedin:"https://www.linkedin.com/in/chrisdaniels",notes:""},
+    {id:"ct_notable_2",name:"JZ Zhang",title:"Partnership Director",type:"partnerships",status:"not-contacted",email:"",phone:"+1 800-450-1304",linkedin:"https://www.linkedin.com/in/jaysonzhang",notes:""},
+    {id:"ct_notable_3",name:"Jon Debonis",title:"Head of Security / CISO",type:"executive",status:"not-contacted",email:"jon@notablehealth.com",phone:"+1 800-450-1304",linkedin:"https://www.linkedin.com/in/jondebonis",notes:""},
+    {id:"ct_notable_4",name:"Renee Cambre",title:"Managing Director, Enterprise Partnerships",type:"partnerships",status:"not-contacted",email:"",phone:"+1 800-450-1304",linkedin:"https://www.linkedin.com/in/renee-cambre-mba",notes:""},
+    {id:"ct_notable_5",name:"Justin White",title:"Co-Founder & CTO",type:"executive",status:"not-contacted",email:"justin@notablehealth.com",phone:"+1 800-450-1304",linkedin:"https://www.linkedin.com/in/justin-white-97072021",notes:""},
+    {id:"ct_notable_6",name:"Pranay Kapadia",title:"Co-Founder & CEO",type:"executive",status:"not-contacted",email:"pranay@notablehealth.com",phone:"+1 800-450-1304",linkedin:"https://www.linkedin.com/in/pranaykapadia",notes:""},
+    {id:"ct_notable_7",name:"Aida C-Mendelson",title:"Head of GTM Operations & Growth",type:"other",status:"not-contacted",email:"aida@notablehealth.com",phone:"+1 800-450-1304",linkedin:"https://www.linkedin.com/in/aida-c-mendelson",notes:""},
+    {id:"ct_notable_8",name:"Lindsey Voigt",title:"Head of Strategic Sales",type:"sales",status:"not-contacted",email:"",phone:"+1 800-450-1304",linkedin:"https://www.linkedin.com/in/voigtlindsey",notes:""}
+  ],investors:[
     {id:"inv_notable_1",name:"ICONIQ Growth",type:"vc",round:"Series B Lead",amount:"$100M at ~$600M valuation",year:"2022",website:"https://iconiqcapital.com",contact:"",notes:"ICONIQ Growth led Notable Health's $100M Series B at a ~$600M valuation. ICONIQ manages wealth for tech luminaries including Mark Zuckerberg and Jack Dorsey. One of the most influential growth-stage VCs. Priority target for warm intro outreach."},
     {id:"inv_notable_2",name:"Oak HC/FT",type:"vc",round:"Series B Participant",amount:"Undisclosed",year:"2022",website:"https://www.oakhcft.com",contact:"",notes:"Co-invested in Notable Health Series B. ALSO invested in Ensora/Therapy Brands. Dedicated healthcare and fintech VC — one fund with portfolio in TWO companies on this list. High-value relationship for warm intros."},
     {id:"inv_notable_3",name:"Greylock Partners",type:"vc",round:"Series B Participant",amount:"Undisclosed",year:"2022",website:"https://greylock.com",contact:"",notes:"Top-tier VC (LinkedIn, Airbnb, Workday). Participated in Notable Health Series B."},
@@ -510,9 +591,33 @@ const DEFAULT_COMPANIES = [
     {id:"inv_jane_3",name:"Tidemark",type:"vc",round:"Co-Investor",amount:"Undisclosed",year:"2021",website:"https://www.tidemarkcap.com",contact:"",notes:"Growth equity co-investor in Jane App's 2021 round. Focus on profitable, high-growth SaaS."},
     {id:"inv_jane_4",name:"Frontier Growth",type:"pe",round:"Co-Investor",amount:"Undisclosed",year:"2021",website:"https://www.frontiergrowth.com",contact:"",notes:"Co-investor in Jane App's 2021 growth round. Focused on bootstrapped or capital-efficient B2B SaaS companies."}
   ],activities:[],notes:"Practice management platform. JMI Equity and TCV-backed at ~$600M valuation. TCV also backs Kipu — same investor in 2 list companies."},
-  {id:15,name:"Pimsy EHR",website:"pimsyehr.com",linkedin:"https://www.linkedin.com/company/pimsyehr",status:"not-started",contacts:[],investors:[],activities:[],notes:"Founded 2007 under Smoky Mountain Information Systems. Waynesville, NC. 6,000+ clinicians, $2.1B+ claims processed. No publicly disclosed VC/PE funding — appears bootstrapped."},
-  {id:16,name:"TherapyNotes",website:"therapynotes.com",linkedin:"https://www.linkedin.com/company/therapynotes-llc",status:"not-started",contacts:[],investors:[],activities:[],notes:"Founded 2010 by Dr. Debra Pliner (psychologist) and Brad Pliner (tech). Willow Grove, PA. No publicly disclosed VC or PE investors — appears fully bootstrapped and family-operated. One of the most widely used behavioral health EHRs."},
-  {id:17,name:"Tebra",website:"tebra.com",linkedin:"https://www.linkedin.com/company/tebra",status:"not-started",contacts:[],investors:[
+  {id:15,name:"Pimsy EHR",website:"pimsyehr.com",linkedin:"https://www.linkedin.com/company/pimsyehr",status:"not-started",contacts:[
+    {id:"ct_pimsy_1",name:"Nathan Boyd",title:"CEO",type:"executive",status:"not-contacted",email:"nathan@pimsyehr.com",phone:"+1 877-334-8512",linkedin:"https://www.linkedin.com/in/nathandboyd",notes:""},
+    {id:"ct_pimsy_2",name:"Marisa Thompson",title:"COO",type:"executive",status:"not-contacted",email:"marisa@pimsyehr.com",phone:"+1 877-334-8512",linkedin:"https://www.linkedin.com/in/marisa-thompson-99593362",notes:""},
+    {id:"ct_pimsy_3",name:"Chris Collier",title:"Director of Operations",type:"other",status:"not-contacted",email:"",phone:"+1 877-334-8512",linkedin:"https://www.linkedin.com/in/chris-collier-51ba0a15",notes:""},
+    {id:"ct_pimsy_4",name:"Lance Carroll",title:"Sales Director",type:"sales",status:"not-contacted",email:"lance@pimsyehr.com",phone:"+1 877-334-8512",linkedin:"https://www.linkedin.com/in/lancecarrollserves",notes:""},
+    {id:"ct_pimsy_5",name:"Ian Macdonald",title:"CEO",type:"executive",status:"not-contacted",email:"ian@pimsyehr.com",phone:"+1 828-507-1563",linkedin:"https://www.linkedin.com/in/ian-macdonald12",notes:""}
+  ],investors:[],activities:[],notes:"Founded 2007 under Smoky Mountain Information Systems. Waynesville, NC. 6,000+ clinicians, $2.1B+ claims processed. No publicly disclosed VC/PE funding — appears bootstrapped."},
+  {id:16,name:"TherapyNotes",website:"therapynotes.com",linkedin:"https://www.linkedin.com/company/therapynotes-llc",status:"not-started",contacts:[
+    {id:"ct_therapynotes_1",name:"Heather Lapergola",title:"Director of Sales and Marketing",type:"sales",status:"not-contacted",email:"heatherl@therapynotes.com",phone:"+1 215-658-4550",linkedin:"https://www.linkedin.com/in/heather-lapergola-51031287",notes:""},
+    {id:"ct_therapynotes_2",name:"Chris W.",title:"COO",type:"executive",status:"not-contacted",email:"",phone:"",linkedin:"",notes:""},
+    {id:"ct_therapynotes_3",name:"Brad Pliner",title:"CEO",type:"executive",status:"not-contacted",email:"brad@therapynotes.com",phone:"+1 215-658-4550",linkedin:"https://www.linkedin.com/in/pliner",notes:""},
+    {id:"ct_therapynotes_4",name:"Mandy Davis",title:"Director of Product Management",type:"product",status:"not-contacted",email:"mandy.davis@therapynotes.com",phone:"+1 215-658-4550",linkedin:"https://www.linkedin.com/in/mandyseremetdavis",notes:""},
+    {id:"ct_therapynotes_5",name:"Mark Perri",title:"Director of Information Technology",type:"other",status:"not-contacted",email:"markp@therapynotes.com",phone:"+1 215-658-4550",linkedin:"https://www.linkedin.com/in/markaperri",notes:""},
+    {id:"ct_therapynotes_6",name:"Nicholas Cipriano",title:"Director of Product and Software Development",type:"product",status:"not-contacted",email:"",phone:"+1 215-658-4550",linkedin:"https://www.linkedin.com/in/nick-cipriano",notes:""}
+  ],investors:[],activities:[],notes:"Founded 2010 by Dr. Debra Pliner (psychologist) and Brad Pliner (tech). Willow Grove, PA. No publicly disclosed VC or PE investors — appears fully bootstrapped and family-operated. One of the most widely used behavioral health EHRs."},
+  {id:17,name:"Tebra",website:"tebra.com",linkedin:"https://www.linkedin.com/company/tebra",status:"not-started",contacts:[
+    {id:"ct_tebra_1",name:"Rob Stefanovic",title:"Sr. Director GTM Strategy & Monetization",type:"strategy",status:"not-contacted",email:"",phone:"",linkedin:"https://www.linkedin.com/in/robstefanovic",notes:""},
+    {id:"ct_tebra_2",name:"Toby Stewart",title:"Director, AI & Automation",type:"other",status:"not-contacted",email:"toby.stewart@tebra.com",phone:"+1 866-938-3272",linkedin:"https://www.linkedin.com/in/tobymstewart",notes:""},
+    {id:"ct_tebra_3",name:"Gordon Atkin",title:"VP, Business Systems",type:"executive",status:"not-contacted",email:"gordon.atkin@tebra.com",phone:"+1 866-938-3272",linkedin:"https://www.linkedin.com/in/gmanatkin",notes:""},
+    {id:"ct_tebra_4",name:"Dan Rodrigues",title:"CEO, Co-Founder",type:"executive",status:"not-contacted",email:"dan@tebra.com",phone:"+1 866-938-3272",linkedin:"https://www.linkedin.com/in/danrodrigueskareo",notes:""},
+    {id:"ct_tebra_5",name:"Kevin Marasco",title:"Chief Growth Officer",type:"executive",status:"not-contacted",email:"kevin.marasco@tebra.com",phone:"+1 866-938-3272",linkedin:"https://www.linkedin.com/in/kmarasco",notes:""},
+    {id:"ct_tebra_6",name:"Kyle Ryan",title:"Chief Product & Technology Officer",type:"executive",status:"not-contacted",email:"kyle.ryan@tebra.com",phone:"+1 866-938-3272",linkedin:"https://www.linkedin.com/in/kyle-ryan-sd",notes:""},
+    {id:"ct_tebra_7",name:"Sabrina Kahlane",title:"Chief Commercial Officer",type:"executive",status:"not-contacted",email:"",phone:"",linkedin:"",notes:""},
+    {id:"ct_tebra_8",name:"Brian Cafferty",title:"VP - RPA Development",type:"executive",status:"not-contacted",email:"brian.cafferty@tebra.com",phone:"+1 866-938-3272",linkedin:"https://www.linkedin.com/in/brian-cafferty-a84a9132",notes:""},
+    {id:"ct_tebra_9",name:"Mike Doktorczyk",title:"Chief Financial Officer",type:"executive",status:"not-contacted",email:"",phone:"",linkedin:"https://www.linkedin.com/in/mike-doktorczyk",notes:""},
+    {id:"ct_tebra_10",name:"Catarina Tsang",title:"VP of Product Design + Research",type:"product",status:"not-contacted",email:"catarina.tsang@tebra.com",phone:"+1 866-938-3272",linkedin:"https://www.linkedin.com/in/catarina-tsang-21ba094",notes:""}
+  ],investors:[
     {id:"inv_tebra_1",name:"Golub Capital",type:"debt",round:"Lead Investor (x2 rounds)",amount:"$65M (2021) + $72M (2022) = $137M total",year:"2022",website:"https://www.golubcapital.com",contact:"",notes:"Golub Capital led BOTH of Tebra's major funding rounds ($65M in 2021 and $72M in 2022). Golub is one of the largest BDC/credit investors in the US. Key anchor relationship for Tebra's growth strategy."},
     {id:"inv_tebra_2",name:"Toba Capital",type:"vc",round:"Co-Investor",amount:"Undisclosed",year:"2021",website:"https://www.tobacapital.com",contact:"",notes:"VC co-investor in Tebra's 2021 round. Focus: software and internet companies."},
     {id:"inv_tebra_3",name:"Stripes Group",type:"pe",round:"Co-Investor",amount:"Undisclosed",year:"2021",website:"https://www.stripesgrowth.com",contact:"",notes:"Growth equity co-investor. Focus: tech-enabled healthcare and SaaS."},
@@ -520,18 +625,52 @@ const DEFAULT_COMPANIES = [
     {id:"inv_tebra_5",name:"Transformation Capital",type:"vc",round:"Co-Investor",amount:"Undisclosed",year:"2021",website:"https://www.transformationcap.com",contact:"",notes:"Healthcare-focused VC co-investor in Tebra."},
     {id:"inv_tebra_6",name:"Vivo Capital",type:"vc",round:"Co-Investor",amount:"Undisclosed",year:"2021",website:"https://www.vivocapital.com",contact:"",notes:"Healthcare and life sciences VC co-investor in Tebra."}
   ],activities:[],notes:"Formed by merger of Kareo and PatientPop. Golub Capital-led with $137M total across 2 rounds. Ambulatory care practice management platform."},
-  {id:18,name:"eMedical Practice",website:"emedpractice.com",linkedin:"https://www.linkedin.com/company/emedical-group",status:"not-started",contacts:[],investors:[],activities:[],notes:"Founded 2008 by Nandu Dhanekula (CEO). Delray Beach, FL. 201-500 employees. Revenue ~$5M. No confirmed public VC/PE investment — appears bootstrapped or self-funded. Partnership with Juno Health announced 2022."},
-  {id:19,name:"Lightning Step",website:"lightningstep.com",linkedin:"https://www.linkedin.com/company/lightningstep",status:"not-started",contacts:[],investors:[
+  {id:18,name:"eMedical Practice",website:"emedpractice.com",linkedin:"https://www.linkedin.com/company/emedical-group",status:"not-started",contacts:[
+    {id:"ct_emedical_1",name:"Nandu Dhanekula",title:"CEO & Founder",type:"executive",status:"not-contacted",email:"",phone:"",linkedin:"https://www.linkedin.com/in/nandu-dhanekula-13355a2",notes:""},
+    {id:"ct_emedical_2",name:"Rich Scorsone",title:"Director of Sales and Marketing",type:"sales",status:"not-contacted",email:"",phone:"",linkedin:"https://www.linkedin.com/in/richscorsone",notes:""},
+    {id:"ct_emedical_3",name:"Jim Henderson",title:"Sales and Marketing Specialist",type:"sales",status:"not-contacted",email:"james.henderson@emedpractice.com",phone:"",linkedin:"https://www.linkedin.com/in/jim-henderson-4ab08225",notes:""}
+  ],investors:[],activities:[],notes:"Founded 2008 by Nandu Dhanekula (CEO). Delray Beach, FL. 201-500 employees. Revenue ~$5M. No confirmed public VC/PE investment — appears bootstrapped or self-funded. Partnership with Juno Health announced 2022."},
+  {id:19,name:"Lightning Step",website:"lightningstep.com",linkedin:"https://www.linkedin.com/company/lightningstep",status:"not-started",contacts:[
+    {id:"ct_lightning_1",name:"Brent Michael",title:"CEO",type:"executive",status:"not-contacted",email:"",phone:"",linkedin:"",notes:""},
+    {id:"ct_lightning_2",name:"Jason Usilton",title:"Director of Customer Success",type:"sales",status:"not-contacted",email:"jason.usilton@lightningstep.com",phone:"+1 833-908-3317",linkedin:"https://www.linkedin.com/in/jason-usilton-501441187",notes:""},
+    {id:"ct_lightning_3",name:"Tina Boushehri",title:"VP Enterprise Solutions",type:"executive",status:"not-contacted",email:"tina@lightningstep.com",phone:"+1 833-908-3317",linkedin:"https://www.linkedin.com/in/tina-boushehri",notes:""},
+    {id:"ct_lightning_4",name:"Josh Steinbaum",title:"CFO",type:"executive",status:"not-contacted",email:"josh@lightningstep.com",phone:"+1 845-548-9752",linkedin:"https://www.linkedin.com/in/josh-steinbaum",notes:""},
+    {id:"ct_lightning_5",name:"Martin Ignatovski",title:"CTO / CPO / CIO",type:"executive",status:"not-contacted",email:"",phone:"+1 561-922-9034",linkedin:"https://www.linkedin.com/in/martintakev",notes:""},
+    {id:"ct_lightning_6",name:"Morganne Rudd",title:"VP Operations, Technology & Strategic Programs",type:"executive",status:"not-contacted",email:"morganne.rudd@lightningstep.com",phone:"+1 801-637-4376",linkedin:"https://www.linkedin.com/in/morganne-rudd-328a2285",notes:""}
+  ],investors:[
     {id:"inv_lightning_1",name:"Gallant Capital Partners",type:"pe",round:"Growth Investment",amount:"Undisclosed",year:"2022",website:"https://www.gallantcapital.com",contact:"",notes:"Gallant Capital Partners made a growth investment in Lightning Step in November 2022. Confirmed via BusinessWire. Gallant focuses on lower middle-market technology and SaaS businesses. Good target for warm intro outreach to Lightning Step leadership."}
   ],activities:[],notes:"Behavioral health and addiction treatment EMR. Backed by Gallant Capital Partners (growth investment, Nov 2022)."},
-  {id:20,name:"AlohaABA",website:"alohaaba.com",linkedin:"https://www.linkedin.com/company/alohaaba",status:"not-started",contacts:[],investors:[],activities:[],notes:"Small ABA practice management software. ~3 employees as of 2024. Founded 2016. No publicly disclosed investors — appears bootstrapped."},
-  {id:21,name:"MeasurePM",website:"measurepm.com",linkedin:"",status:"not-started",contacts:[],investors:[],activities:[],notes:"Founded 2020 by ABA professionals. Corona, CA. 12,000+ clients, 10,000+ providers, 270,000+ sessions/month, 40+ US states and 7 Canadian provinces. No publicly disclosed VC/PE funding — appears bootstrapped. Integration partnership with Motivity."},
-  {id:22,name:"Artemis ABA",website:"artemissp.com",linkedin:"https://www.linkedin.com/company/artemissp",status:"not-started",contacts:[],investors:[],activities:[],notes:"Founded 2017, Dallas TX. AI-driven ABA scheduling and clinic management platform. GetLatka noted an M&A Offer in April 2025 but no confirmed VC/PE investors publicly disclosed prior to that."},
-  {id:23,name:"Raven Health",website:"ravenhealth.com",linkedin:"https://www.linkedin.com/company/theravenbank",status:"not-started",contacts:[],investors:[
+  {id:20,name:"AlohaABA",website:"alohaaba.com",linkedin:"https://www.linkedin.com/company/alohaaba",status:"not-started",contacts:[
+    {id:"ct_aloha_1",name:"Sydney Singer",title:"Director of Clinical Solutions",type:"other",status:"not-contacted",email:"sydney@alohaaba.com",phone:"+1 602-451-9413",linkedin:"https://www.linkedin.com/in/sydney-singer-6659b570",notes:""},
+    {id:"ct_aloha_2",name:"Jimmy Ma",title:"Chief Executive Officer",type:"executive",status:"not-contacted",email:"jimmy@alohaaba.com",phone:"+1 602-451-9413",linkedin:"https://www.linkedin.com/in/jimmy-ma-2672a28",notes:""},
+    {id:"ct_aloha_3",name:"Brook Joyce",title:"Vice President of Sales",type:"sales",status:"not-contacted",email:"brook@alohaaba.com",phone:"+1 602-451-9413",linkedin:"https://www.linkedin.com/in/brookjoyce",notes:""}
+  ],investors:[],activities:[],notes:"Small ABA practice management software. ~3 employees as of 2024. Founded 2016. No publicly disclosed investors — appears bootstrapped."},
+  {id:21,name:"MeasurePM",website:"measurepm.com",linkedin:"",status:"not-started",contacts:[
+    {id:"ct_measure_1",name:"Marco Esposito",title:"Business Development Manager",type:"sales",status:"not-contacted",email:"marco@measurepm.com",phone:"+1 818-900-0741",linkedin:"https://www.linkedin.com/in/marco-a-esposito",notes:""},
+    {id:"ct_measure_2",name:"Rajneesh Sharma",title:"Chief Executive Officer",type:"executive",status:"not-contacted",email:"raj@measurepm.com",phone:"+1 818-900-0741",linkedin:"https://www.linkedin.com/in/rajneesh-sharma-8945561",notes:""},
+    {id:"ct_measure_3",name:"Ujvala Sharma",title:"Chief Technology Officer",type:"executive",status:"not-contacted",email:"ujvala@measurepm.com",phone:"+1 818-900-0741",linkedin:"https://www.linkedin.com/in/ujvala-k-sharma-3a80b17",notes:""}
+  ],investors:[],activities:[],notes:"Founded 2020 by ABA professionals. Corona, CA. 12,000+ clients, 10,000+ providers, 270,000+ sessions/month, 40+ US states and 7 Canadian provinces. No publicly disclosed VC/PE funding — appears bootstrapped. Integration partnership with Motivity."},
+  {id:22,name:"Artemis ABA",website:"artemissp.com",linkedin:"https://www.linkedin.com/company/artemissp",status:"not-started",contacts:[
+    {id:"ct_artemis_1",name:"Senthil Sadhasivan",title:"Product Manager",type:"product",status:"not-contacted",email:"senthil.sadhasivan@artemisaba.com",phone:"+1 800-209-6185",linkedin:"https://www.linkedin.com/in/senthil-sadhasivan",notes:""},
+    {id:"ct_artemis_2",name:"Solomon Brown",title:"Senior Business Development Consultant",type:"sales",status:"not-contacted",email:"solomon.brown@artemisaba.com",phone:"+1 800-209-6185",linkedin:"https://www.linkedin.com/in/solomon-brown-442014361",notes:""},
+    {id:"ct_artemis_3",name:"James Vrtis",title:"Chief Executive Officer",type:"executive",status:"not-contacted",email:"jim.vrtis@artemisaba.com",phone:"+1 847-863-6726",linkedin:"https://www.linkedin.com/in/jamesvrtis",notes:""},
+    {id:"ct_artemis_4",name:"Thomas John",title:"Founder & CEO",type:"executive",status:"not-contacted",email:"",phone:"",linkedin:"",notes:""}
+  ],investors:[],activities:[],notes:"Founded 2017, Dallas TX. AI-driven ABA scheduling and clinic management platform. GetLatka noted an M&A Offer in April 2025 but no confirmed VC/PE investors publicly disclosed prior to that."},
+  {id:23,name:"Raven Health",website:"ravenhealth.com",linkedin:"https://www.linkedin.com/company/theravenbank",status:"not-started",contacts:[
+    {id:"ct_raven_1",name:"Annette Traylor",title:"Director, Revenue Cycle Management",type:"other",status:"not-contacted",email:"annette.traylor@ravenhealth.com",phone:"+1 929-955-1323",linkedin:"https://www.linkedin.com/in/annettetraylor",notes:""},
+    {id:"ct_raven_2",name:"Beth Sullivan",title:"Vice President Operations",type:"executive",status:"not-contacted",email:"beth.sullivan@ravenhealth.com",phone:"+1 929-955-1323",linkedin:"https://www.linkedin.com/in/beth-sullivan-5864276",notes:""}
+  ],investors:[
     {id:"inv_raven_1",name:"Walton Capital Management",type:"vc",round:"Seed",amount:"Undisclosed",year:"2022",website:"",contact:"",notes:"Walton Capital Management made a Seed investment in Raven Health in January 2022. Confirmed via Crunchbase. Raven Health was founded 2020 in Wilmington, DE. Provides ABA data collection, treatment plans, and billing tools."}
   ],activities:[],notes:"ABA data collection and practice management. Founded 2020. Seed-backed by Walton Capital Management (Jan 2022)."},
   {id:24,name:"ABA Desk",website:"abadesk.com",linkedin:"https://www.linkedin.com/company/g-latas-consultoria-e-servi-os-de-seguran-a",status:"not-started",contacts:[],investors:[],activities:[],notes:"WARNING: LinkedIn URL in source data (g-latas-consultoria) appears to be incorrect — points to an unrelated Brazilian security consultancy. Verify correct LinkedIn before outreach. No public investor data found."},
-  {id:25,name:"Office Puzzle",website:"officepuzzle.com",linkedin:"https://www.linkedin.com/company/officepuzzle",status:"not-started",contacts:[],investors:[
+  {id:25,name:"Office Puzzle",website:"officepuzzle.com",linkedin:"https://www.linkedin.com/company/officepuzzle",status:"not-started",contacts:[
+    {id:"ct_officepuzzle_1",name:"Lauren Quevedo",title:"Co-Founder",type:"executive",status:"not-contacted",email:"lauren@officepuzzle.com",phone:"+1 877-678-9953",linkedin:"https://www.linkedin.com/in/lauren-quevedo-2b24184b",notes:""},
+    {id:"ct_officepuzzle_2",name:"Jonathan Latour",title:"Product Specialist",type:"product",status:"not-contacted",email:"jonathan@officepuzzle.com",phone:"+1 877-678-9953",linkedin:"https://www.linkedin.com/in/jonathan-latour-42446a1ab",notes:""},
+    {id:"ct_officepuzzle_3",name:"Harold Jardines",title:"Founder",type:"executive",status:"not-contacted",email:"harold@officepuzzle.com",phone:"+1 305-846-0818",linkedin:"https://www.linkedin.com/in/hjardines",notes:""},
+    {id:"ct_officepuzzle_4",name:"Charlene Kurth",title:"COO",type:"executive",status:"not-contacted",email:"charlene@officepuzzle.com",phone:"+1 877-678-9953",linkedin:"https://www.linkedin.com/in/charlenekurth",notes:""},
+    {id:"ct_officepuzzle_5",name:"Hailu Jardines",title:"CEO",type:"executive",status:"not-contacted",email:"hailu@officepuzzle.com",phone:"+1 877-678-9953",linkedin:"https://www.linkedin.com/in/hailu-jardines-cpa-6b771147",notes:""},
+    {id:"ct_officepuzzle_6",name:"Kevin Escobar",title:"Product Specialist",type:"product",status:"not-contacted",email:"kevin@officepuzzle.com",phone:"+1 877-678-9953",linkedin:"https://www.linkedin.com/in/kevin-escobar-055677135",notes:""}
+  ],investors:[
     {id:"inv_officepuzzle_1",name:"Arthur Ventures",type:"vc",round:"Venture",amount:"Undisclosed",year:"Undisclosed",website:"https://arthurventures.com",contact:"",notes:"Arthur Ventures is a confirmed investor in Office Puzzle. Arthur Ventures is a Fargo, ND-based VC focused on B2B SaaS companies outside Silicon Valley. They actively partner with portcos — good target for a warm intro to Office Puzzle leadership."}
   ],activities:[],notes:"ABA practice management platform. Founded 2018 by Harold Jardines, Hollywood FL. Backed by Arthur Ventures. Member of CASP (Council of Autism Service Providers)."},
   {id:26,name:"Lumary ABA",website:"lumary.com",linkedin:"https://www.linkedin.com/company/lumaryau",status:"not-started",contacts:[],investors:[
@@ -540,9 +679,19 @@ const DEFAULT_COMPANIES = [
     {id:"inv_lumary_3",name:"SAVCF (SA Venture Capital Fund)",type:"vc",round:"Series A Participant",amount:"Undisclosed",year:"2022",website:"",contact:"",notes:"South Australian Venture Capital Fund — co-invested in Lumary Series A."},
     {id:"inv_lumary_4",name:"EVP (Equity Venture Partners)",type:"vc",round:"Seed",amount:"$2M",year:"2020",website:"https://evp.vc",contact:"",notes:"Australian early-stage VC that led Lumary's $2M seed round in 2020. Based in Sydney."}
   ],activities:[],notes:"Australian NDIS and disability care management platform built on Salesforce. OneVentures-led $17M Series A. Salesforce Ventures-backed."},
-  {id:27,name:"Portia Pro",website:"portiapro.com",linkedin:"https://www.linkedin.com/company/portia-productions",status:"not-started",contacts:[],investors:[],activities:[],notes:"Founded 2012. Kanata, Ontario, Canada. Family-owned business, 15 employees, BCBAs on team. Self-described as 'therapy-first.' No public VC/PE investment — fully bootstrapped."},
-  {id:28,name:"Skills Global",website:"skillsforautism.com",linkedin:"https://www.linkedin.com/company/skills-global-the-online-autism-solution",status:"not-started",contacts:[],investors:[],activities:[],notes:"Online autism and ABA solution. No publicly disclosed VC/PE investors found. Appears to be independent/bootstrapped."},
-  {id:29,name:"Spectrum AI",website:"spectrumai.tech",linkedin:"https://www.linkedin.com/company/spectrum-ai-ltd",status:"not-started",contacts:[],investors:[
+  {id:27,name:"Portia Pro",website:"portiapro.com",linkedin:"https://www.linkedin.com/company/portia-productions",status:"not-started",contacts:[
+    {id:"ct_portia_1",name:"Bradley Powell",title:"Director of Business Development",type:"partnerships",status:"not-contacted",email:"bradley@portiapro.com",phone:"+1 855-297-6431",linkedin:"https://www.linkedin.com/in/bradley-powell-93212826",notes:""},
+    {id:"ct_portia_2",name:"Paul McArthur",title:"Founder, VP Business Development",type:"executive",status:"not-contacted",email:"paul@portiapro.com",phone:"+1 855-297-6431",linkedin:"https://www.linkedin.com/in/paul-mcarthur-0494047a",notes:""},
+    {id:"ct_portia_3",name:"Christy Tallman",title:"Director of Billing / Revenue Cycle",type:"other",status:"not-contacted",email:"",phone:"+1 855-297-6431",linkedin:"https://www.linkedin.com/in/christy-tallman-cca-cpc-cpb-approved-instructor-0463b766",notes:""},
+    {id:"ct_portia_4",name:"Charlene Gervais",title:"Director of Clinical Innovation and Curriculum Development",type:"other",status:"not-contacted",email:"",phone:"+1 855-297-6431",linkedin:"https://www.linkedin.com/in/charlene-gervais-m-ads-bcba-rba-ont-1b264bb8",notes:""}
+  ],investors:[],activities:[],notes:"Founded 2012. Kanata, Ontario, Canada. Family-owned business, 15 employees, BCBAs on team. Self-described as 'therapy-first.' No public VC/PE investment — fully bootstrapped."},
+  {id:28,name:"Skills Global",website:"skillsforautism.com",linkedin:"https://www.linkedin.com/company/skills-global-the-online-autism-solution",status:"not-started",contacts:[
+    {id:"ct_skills_1",name:"Vanessa Alvarez",title:"Director of Operations",type:"other",status:"not-contacted",email:"v.alvarez@skillsglobal.com",phone:"+1 877-975-4559",linkedin:"https://www.linkedin.com/in/vanessa-m-alvarez",notes:""}
+  ],investors:[],activities:[],notes:"Online autism and ABA solution. No publicly disclosed VC/PE investors found. Appears to be independent/bootstrapped."},
+  {id:29,name:"Spectrum AI",website:"spectrumai.tech",linkedin:"https://www.linkedin.com/company/spectrum-ai-ltd",status:"not-started",contacts:[
+    {id:"ct_spectrum_1",name:"Selina Bernal",title:"Customer Implementation Manager",type:"sales",status:"not-contacted",email:"selina.bernal@spectrumai.com",phone:"",linkedin:"https://www.linkedin.com/in/selina-bernal-805b48132",notes:""},
+    {id:"ct_spectrum_2",name:"Ling Shao",title:"CEO",type:"executive",status:"not-contacted",email:"ling.shao@spectrumai.com",phone:"+1 646-226-1919",linkedin:"https://www.linkedin.com/in/lingshao1",notes:""}
+  ],investors:[
     {id:"inv_spectrum_1",name:"CVS Health Ventures",type:"strategic",round:"Series A Lead",amount:"$20M",year:"2023",website:"https://www.cvshealth.com",contact:"Vijay Patel (Managing Partner)",notes:"CVS Health Ventures led SpectrumAi's $20M Series A in March 2023. NOTE: SpectrumAi was acquired by CentralReach in August 2025. CVS Health Ventures is a top strategic warm intro channel for ABA/behavioral health companies."},
     {id:"inv_spectrum_2",name:"F-Prime Capital",type:"vc",round:"Seed Co-Lead + Series A",amount:"$9M seed (co-lead)",year:"2022",website:"https://www.fprimecapital.com",contact:"",notes:"Fidelity's VC arm. Co-led SpectrumAi's $9M seed round with Frist Cressey Ventures. Also participated in Notable Health Series B — active across 2 companies on this list."},
     {id:"inv_spectrum_3",name:"Frist Cressey Ventures",type:"vc",round:"Seed Co-Lead + Series A",amount:"Undisclosed",year:"2022",website:"https://fcventures.com",contact:"Navid Farzad (Partner & Board Director)",notes:"Nashville-based healthcare-focused VC. Co-led SpectrumAi seed round. Navid Farzad sat on SpectrumAi's board. Strong healthcare IT expertise and network."},
@@ -583,108 +732,6 @@ const STATUS_MAP = {
 };
 const CS_MAP = { 'not-contacted':['b-ns','Not Contacted'],'contacted':['b-co','Contacted'],'responded':['b-rs','Responded'],'meeting':['b-me','Meeting Set'] };
 const TYPE_LABELS = { executive:'👔 Executive', partnerships:'🤝 Partnerships', product:'📦 Product', strategy:'♟ Strategy', sales:'💼 Sales/BD', other:'👤 Other', vc:'🏦 VC', pe:'🏛 PE', angel:'👼 Angel', strategic:'🤝 Strategic', debt:'💳 Debt' };
-
-// ============================================================
-// BRELLIUM INVESTOR CONNECTIONS
-// Brellium investors: First Round Capital (lead), Left Lane Capital (co-lead),
-// Menlo Ventures, Digital Health Venture Partners, Kearny Jackson, Necessary Ventures
-// Angels: Andrew Adams (Headway CEO), Fiat Ventures, Cory Levy (Z Fellows)
-// Left Lane also backs: Talkiatry (behavioral health), Mindbloom (mental health)
-// First Round also backs: Alma (behavioral health), Rupa Health, PatientPing
-// KEY: TCV backed Headway (behavioral health) → Headway CEO is Brellium angel → 3-hop chain
-// ============================================================
-const BRELLIUM_CONNECTIONS = {
-  "tcv (technology crossover ventures)": {
-    label: "🔗 Direct Ecosystem Link",
-    via: "TCV → Headway CEO → Brellium",
-    detail: "STRONGEST CONNECTION: TCV (investor in Kipu + Jane App) also backed Headway (behavioral health platform). Headway's CEO Andrew Adams is a direct Brellium angel investor. This creates a 3-hop warm intro chain: you → TCV portfolio company → Headway → Brellium angel → Brellium. Highest-value relationship on this entire list."
-  },
-  "general catalyst": {
-    label: "🔗 Tier-1 VC Peers",
-    via: "First Round Capital",
-    detail: "General Catalyst and First Round Capital (Brellium Series A lead) are tier-1 VC peers with deeply overlapping health AI and enterprise software portfolios. Both have backed AI-powered healthcare platforms. GC backed drchrono; First Round backed Brellium, Alma (behavioral health), Rupa Health, PatientPing. Warm intro likely through shared LP and co-investor networks."
-  },
-  "greylock partners": {
-    label: "🔗 Tier-1 VC Peers",
-    via: "Menlo Ventures",
-    detail: "Greylock Partners and Menlo Ventures (Brellium investor) are both legacy Silicon Valley tier-1 VCs with enterprise SaaS and health tech portfolios. Shared LP base and co-investment history creates strong warm intro pathways into each other's networks."
-  },
-  "f-prime capital": {
-    label: "🔗 Healthcare VC Peers",
-    via: "Digital Health Venture Partners",
-    detail: "F-Prime Capital (Fidelity's VC arm) is a direct sector peer of Digital Health Venture Partners (Brellium investor). Both are dedicated healthcare VCs backing behavioral health and clinical AI platforms. F-Prime invests in 2 companies on this list (Notable Health + Spectrum AI) — extremely high-value intro pathway."
-  },
-  "transformation capital": {
-    label: "🔗 Healthcare VC Peers",
-    via: "Digital Health Venture Partners",
-    detail: "Transformation Capital and Digital Health Venture Partners (Brellium investor) are both dedicated healthcare VCs investing in digital health and compliance SaaS tools. They operate in the same deal circuits — HLTH, HIMSS, JPMorgan Healthcare Conference — creating strong warm intro potential."
-  },
-  "frist cressey ventures": {
-    label: "🔗 Healthcare VC Peers",
-    via: "Kearny Jackson + Digital Health VP",
-    detail: "Frist Cressey Ventures is a direct sector peer of both Kearny Jackson and Digital Health Venture Partners (Brellium investors). All three are healthcare-focused VCs investing in clinical software and compliance tools. Very tight, interconnected Nashville/health IT VC network — ideal for warm intros."
-  },
-  "autism impact fund": {
-    label: "🔗 ABA Sector Direct",
-    via: "Brellium Customer Base",
-    detail: "Autism Impact Fund backs ABA tech companies — Brellium's primary customer vertical. Brellium's ABA clients include Hopebridge, Action Behavior Centers, Compass ABA, Thrive ABA. Brellium's investors (Digital Health VP, Kearny Jackson) are direct sector peers of Autism Impact Fund. Intro through Brellium itself may be the most direct path."
-  },
-  "cvs health ventures": {
-    label: "🔗 Strategic Health Peers",
-    via: "Digital Health Venture Partners",
-    detail: "CVS Health Ventures and Digital Health Venture Partners (Brellium investor) are both strategic healthcare investors backing AI-powered clinical compliance and quality management tools. Near-identical investment theses in behavioral health AI and documentation automation."
-  },
-  "openview venture partners": {
-    label: "🔗 SaaS Growth Peers",
-    via: "Left Lane Capital",
-    detail: "OpenView Venture Partners and Left Lane Capital (Brellium Series A co-lead) are both PLG and SaaS-focused growth investors. Left Lane has a proven behavioral health thesis — backing Talkiatry ($245M raised), Mindbloom, and Brellium. Shared SaaS portfolio networks create warm intro pathways."
-  },
-  "psg (providence strategic growth)": {
-    label: "🔗 Vertical SaaS Peers",
-    via: "Left Lane Capital",
-    detail: "PSG and Left Lane Capital (Brellium Series A co-lead) both specialize in vertical software and SaaS growth investments. Left Lane's behavioral health thesis (Talkiatry, Brellium) overlaps directly with PSG-backed Ensora's behavioral health EMR market."
-  },
-  "oak hc/ft": {
-    label: "🔗 Healthcare VC Peers",
-    via: "Digital Health Venture Partners",
-    detail: "Oak HC/FT is a direct sector peer of Digital Health Venture Partners (Brellium investor). Both are dedicated healthcare & fintech VCs with behavioral health portfolio companies. Oak HC/FT invests in 2 companies on this list (Ensora + Notable Health) — very high-value relationship to build for warm intros."
-  },
-  "vivo capital": {
-    label: "🔗 Healthcare VC Peers",
-    via: "Digital Health Venture Partners",
-    detail: "Vivo Capital and Digital Health Venture Partners (Brellium investor) are both healthcare-dedicated investors with overlapping sector focus in digital health and healthcare IT. Shared conference circuits and LP networks create warm intro potential."
-  },
-  "stripes group": {
-    label: "🔗 Health SaaS Peers",
-    via: "Left Lane Capital",
-    detail: "Stripes Group focuses on tech-enabled healthcare SaaS — the same segment Left Lane Capital (Brellium Series A co-lead) invests in. Left Lane's active behavioral health portfolio (Talkiatry, Mindbloom, Brellium) directly overlaps with Stripes-backed Tebra's ambulatory care market."
-  },
-  "8vc": {
-    label: "🔗 Enterprise Tech Peers",
-    via: "Menlo Ventures",
-    detail: "8VC (Joe Lonsdale, Palantir co-founder) and Menlo Ventures (Brellium investor) both focus on enterprise tech-enabled services with health and compliance software portfolios. Warm intro potential through enterprise software co-investor networks."
-  },
-  "jmi equity": {
-    label: "🔗 Software Growth Peers",
-    via: "Left Lane Capital",
-    detail: "JMI Equity and Left Lane Capital (Brellium Series A co-lead) are both pure-play software growth investors that operate in the same deal circuits and co-invest regularly. Warm intro potential through shared SaaS portfolio networks."
-  },
-  "iconiq growth": {
-    label: "🔗 Health AI Peers",
-    via: "First Round Capital",
-    detail: "ICONIQ Growth and First Round Capital (Brellium Series A lead) both back AI-powered health tech platforms at scale. ICONIQ's Notable Health and Brellium are both in clinical AI automation — potential co-sell ecosystem. First Round's healthcare portfolio (Alma, Rupa Health, Brellium) creates mutual intro potential."
-  },
-  "tidemark": {
-    label: "🔗 SaaS Growth Peers",
-    via: "Left Lane Capital",
-    detail: "Tidemark and Left Lane Capital (Brellium Series A co-lead) both invest in profitable, capital-efficient SaaS businesses with recurring revenue models. Warm intro potential through shared software growth co-investor networks."
-  },
-  "maverick ventures": {
-    label: "🔗 Growth VC Peers",
-    via: "Left Lane Capital",
-    detail: "Maverick Ventures is a growth equity peer of Left Lane Capital (Brellium Series A co-lead). Both invest in high-growth SaaS and digital health platforms, creating warm intro potential through shared portfolio networks and co-investment relationships."
-  }
-};
 
 function badge(status, map){ const [c,l]=map[status]||map[Object.keys(map)[0]]; return `<span class="badge ${c}">${l}</span>`; }
 function statusBadge(s){ return badge(s, STATUS_MAP); }
@@ -799,7 +846,7 @@ function renderContacts(){
 }
 
 // ============================================================
-// INVESTORS VIEW — with Brellium Connection column
+// INVESTORS VIEW
 // ============================================================
 function renderInvestors(){
   const q=(document.getElementById('inv-search')?.value||'').toLowerCase();
@@ -813,37 +860,16 @@ function renderInvestors(){
   });
   let rows=Object.values(map);
   if(q) rows=rows.filter(r=>r.name.toLowerCase().includes(q)||r.companies.join(' ').toLowerCase().includes(q));
-
-  // Count connections for banner
-  const connCount = rows.filter(r=>BRELLIUM_CONNECTIONS[r.name.toLowerCase()]).length;
-  const banner = document.getElementById('inv-brellium-banner');
-  if(banner && connCount > 0){
-    banner.innerHTML=`<div style="background:#ecfdf5;border:1px solid #6ee7b7;border-radius:10px;padding:12px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px;">
-      <span style="font-size:20px">🔗</span>
-      <div>
-        <div style="font-size:13px;font-weight:700;color:#047857">${connCount} investor${connCount!==1?'s':''} linked to Brellium's network</div>
-        <div style="font-size:12px;color:#065f46;margin-top:2px;">Hover the green badges below for full connection details. Sorted by intro warmth. TCV = strongest chain (TCV → Headway CEO → Brellium angel).</div>
-      </div>
-    </div>`;
-  } else if(banner){ banner.innerHTML=''; }
-
-  document.getElementById('investors-tbody').innerHTML=rows.length?rows.map(inv=>{
-    const conn=BRELLIUM_CONNECTIONS[inv.name.toLowerCase()];
-    return `
+  document.getElementById('investors-tbody').innerHTML=rows.length?rows.map(inv=>`
     <tr>
       <td><strong>${inv.name}</strong></td>
       <td style="font-size:12px">${tLabel(inv.type)}</td>
       <td style="font-size:12px;color:var(--text-light)">${inv.companies.join(', ')}</td>
       <td>${inv.website?`<a href="${inv.website}" target="_blank" style="color:var(--primary);font-size:12px">${inv.website.replace(/https?:\/\//,'')}</a>`:'—'}</td>
       <td style="font-size:12px">${inv.contact||'—'}</td>
-      <td style="font-size:12px;color:var(--text-light);max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${inv.notes||'—'}</td>
-      <td style="min-width:140px">${conn?`
-        <span class="badge b-br" title="Via: ${conn.via}&#10;&#10;${conn.detail}">${conn.label}</span>
-        <div style="font-size:10px;color:#047857;margin-top:3px;font-weight:600;">via ${conn.via}</div>
-      `:`<span style="color:#cbd5e1;font-size:12px">—</span>`}</td>
-    </tr>`;
-  }).join(''):
-  `<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">💰</div><div class="empty-text">No investors tracked yet</div><div class="empty-sub">Add investors from each company's detail page</div></div></td></tr>`;
+      <td style="font-size:12px;color:var(--text-light);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${inv.notes||'—'}</td>
+    </tr>`).join(''):
+    `<tr><td colspan="6"><div class="empty-state"><div class="empty-icon">💰</div><div class="empty-text">No investors tracked yet</div><div class="empty-sub">Add investors from each company's detail page</div></div></td></tr>`;
 }
 
 // ============================================================
@@ -904,9 +930,7 @@ function tabInvestors(c){
   return `<div class="card"><div class="card-header"><div class="card-title">Investors & Backers</div><button class="btn btn-primary btn-sm" onclick="openInvestorModal()">+ Add Investor</button></div>
   <div style="padding:16px">
   ${!c.investors?.length?`<div class="empty-state"><div class="empty-icon">💰</div><div class="empty-text">No investors tracked</div><div class="empty-sub">Add known investors to map warm intro paths</div></div>`:`
-  <div class="item-list">${c.investors.map(inv=>{
-    const conn=BRELLIUM_CONNECTIONS[inv.name.toLowerCase()];
-    return `
+  <div class="item-list">${c.investors.map(inv=>`
     <div class="item-card">
       <div class="item-info">
         <div class="item-name">${inv.name}</div>
@@ -916,14 +940,12 @@ function tabInvestors(c){
           ${inv.contact?`<span>👤 ${inv.contact}</span>`:''}
         </div>
         ${inv.notes?`<div class="item-note">${inv.notes}</div>`:''}
-        ${conn?`<div class="brellium-link-badge" title="Via: ${conn.via}&#10;&#10;${conn.detail}">${conn.label} <span style="font-weight:400;opacity:0.8">· via ${conn.via}</span></div>`:''}
       </div>
       <div class="item-actions">
         <button class="btn btn-ghost btn-sm" onclick="openInvestorModal('${inv.id}')">Edit</button>
         <button class="btn btn-danger btn-sm" onclick="deleteInvestor('${inv.id}')">×</button>
       </div>
-    </div>`;
-  }).join('')}</div>`}
+    </div>`).join('')}</div>`}
   </div></div>`;
 }
 
@@ -1061,262 +1083,4 @@ function saveActivity(){
   save(); closeModal('modal-activity'); renderDetail();
 }
 
-function logAct(c,type,description,contact,rawType){
-  c.activities.push({id:uid(),date:new Date().toISOString(),type,description,contact:contact||'',rawType:rawType||'note'});
-}
-
-// ============================================================
-// MODALS
-// ============================================================
-function openModal(id){ document.getElementById(id).classList.add('open'); }
-function closeModal(id){ document.getElementById(id).classList.remove('open'); }
-document.addEventListener('click',e=>{ if(e.target.classList.contains('modal-overlay')) e.target.classList.remove('open'); });
-
-// ============================================================
-// IDEAS
-// ============================================================
-function renderIdeas(){
-  const ideas1=[
-    {t:"The Investor Opener",b:`Research who invested in the EMR. Find that investor on LinkedIn. Open with: "I saw [Fund X] backed you in [round] — I'm reaching out because I think what you're building fits perfectly with why they invested." Investor backing = credibility + instant relevance.`},
-    {t:"Warm Intro via the Fund",b:`Go to each VC/PE fund's team page. Find the partner or associate who covers health IT or sits on the board. Email or DM them: "Do you think it makes sense to intro me to the team at [portfolio company]?" Investors love making connections that add value to their portfolio.`},
-    {t:"The Fund's LP Network",b:`Many funds have LP newsletters or events. Attend or engage with the fund's content publicly (comments, shares). Build a relationship with the fund first — they become a distribution channel into their portfolio.`},
-    {t:"Crunchbase / PitchBook Reverse Lookup",b:`Find every fund that has invested in this specific EMR vertical (behavioral health, ABA, home health). Then approach the fund with a portfolio framing: "You've invested in X, Y, Z EMRs — we're working with all of them and would love to be introduced across your portfolio."`},
-  ];
-  const ideas2=[
-    {t:"The Revenue Hook (Subject: 'Adding revenue to [Company]')",b:`Never pitch features — pitch dollars. Lead with ROI: "We've helped 3 behavioral health EMRs each add $2M+ in net new revenue annually by..." Executives skip vendor emails but open revenue emails.`},
-    {t:"Loom Video Outreach",b:`Record a 90-second personalized Loom video for each exec. Reference their recent LinkedIn post, company news, or something specific. Video DMs on LinkedIn get 3–5x the reply rate of text. Rare = memorable.`},
-    {t:"The '2-Sentence' LinkedIn DM",b:`"[Name] — I've been following [Company]'s growth in the ABA space. Do you have 15 minutes this week? I think I can show you something that would matter to your product roadmap." Short, curious, no pitch. Reply bait.`},
-    {t:"The Competitor Name-Drop",b:`"I just had a conversation with [competitor] — ultimately wasn't a fit for them, but as I learned more I actually think you'd be the better home for what we're doing." Creates FOMO and curiosity simultaneously.`},
-    {t:"Integration / Partnership Frame",b:`Instead of a sales email, frame as a partnership or integration exploration. "We have significant overlap in customers — would love to explore a co-sell or integration." Gets past spam filters AND sales skeptics.`},
-  ];
-  const ideas3=[
-    {t:"Publish a State of the Market Report",b:`Write a free 'ABA & Behavioral Health EMR Market Report' that features and quotes these companies. Send each company their mention with a personal note. Decision-makers love being cited. Doors open.`},
-    {t:"LinkedIn Engagement Before Outreach",b:`Spend 2 weeks before cold outreach commenting thoughtfully (3–5 sentences, not just 'Great post!') on posts from target executives. When you DM them, they recognize your name. Warm cold outreach.`},
-    {t:"Host a Roundtable / Invite Them to Speak",b:`Host a virtual EMR leadership roundtable and invite these execs as panelists or speakers. No pitch, just connection. You become the connector in the industry. They come to you.`},
-    {t:"Conference Attack Plan",b:`Map which executives from each company are attending HIMSS, ViVE, HLTH, or BCBA conferences. Book meetings 3 weeks before. In-person conversations convert at 10x cold email. Show up where they are.`},
-    {t:"Use Apollo + Clay + Smartlead at Scale",b:`Pull verified emails for all Partnerships, Product, Strategy, and C-suite at these 30 companies using Apollo.io or Clay. Build a personalized email sequence in Smartlead or Instantly. 30 companies × ~5 targets = 150 contacts. At 5% reply rate = 7–8 real conversations.`},
-  ];
-  const seq=[
-    {d:'Day 1',a:"Connect on LinkedIn with a personalized note — don't pitch yet. Just a genuine reason for connecting."},
-    {d:'Day 3',a:"Like or comment thoughtfully on their most recent LinkedIn post. Build name recognition."},
-    {d:'Day 5',a:"Cold email. Subject: 'Quick question about [Company]'. 3 sentences max. No attachments."},
-    {d:'Day 8',a:"LinkedIn DM follow-up: 'Sent you an email a few days ago — did it land in spam?'"},
-    {d:'Day 12',a:"Try a different contact at the company (Product, Partnerships, or Strategy lead)."},
-    {d:'Day 18',a:"Breakup email: 'I'll stop following up after this — last chance to connect if the timing is right.'"},
-    {d:'Day 30+',a:"Re-engage with a news hook: their funding, product launch, hiring, or industry news."},
-  ];
-
-  document.getElementById('ideas-content').innerHTML=`
-    <div style="max-width:820px;display:flex;flex-direction:column;gap:20px">
-      <div class="card">
-        <div class="card-header"><div class="card-title">💰 Investor-Angle Strategies</div></div>
-        <div style="padding:16px 20px;display:flex;flex-direction:column;gap:14px">
-          ${ideas1.map(i=>`<div style="border-left:3px solid var(--primary);padding-left:14px"><div class="idea-title">${i.t}</div><div class="idea-body">${i.b}</div></div>`).join('')}
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header"><div class="card-title">📧 Direct Outreach Angles</div></div>
-        <div style="padding:16px 20px;display:flex;flex-direction:column;gap:14px">
-          ${ideas2.map(i=>`<div style="border-left:3px solid var(--success);padding-left:14px"><div class="idea-title">${i.t}</div><div class="idea-body">${i.b}</div></div>`).join('')}
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header"><div class="card-title">🏆 High-Effort, High-Return Plays</div></div>
-        <div style="padding:16px 20px;display:flex;flex-direction:column;gap:14px">
-          ${ideas3.map(i=>`<div style="border-left:3px solid var(--warning);padding-left:14px"><div class="idea-title">${i.t}</div><div class="idea-body">${i.b}</div></div>`).join('')}
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header"><div class="card-title">📋 Recommended Outreach Sequence</div></div>
-        <div style="padding:16px 20px">
-          ${seq.map(s=>`<div class="sequence-step"><div class="step-day">${s.d}</div><div class="step-action">${s.a}</div></div>`).join('')}
-        </div>
-      </div>
-    </div>`;
-}
-
-// ============================================================
-// EXPORT
-// ============================================================
-function exportCSV(){
-  const rows=[['Company','Website','LinkedIn','Status','Contacts','Investors','Notes']];
-  S.companies.forEach(c=>{
-    rows.push([c.name,c.website,c.linkedin,c.status,
-      (c.contacts||[]).map(x=>x.name+' ('+x.title+')').join('; '),
-      (c.investors||[]).map(x=>x.name).join('; '),
-      c.notes||''
-    ]);
-  });
-  const csv=rows.map(r=>r.map(v=>`"${String(v||'').replace(/"/g,'""')}"`).join(',')).join('\n');
-  const a=document.createElement('a');
-  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
-  a.download='emr-outreach-'+new Date().toISOString().slice(0,10)+'.csv';
-  a.click();
-}
-
-// ============================================================
-// GITHUB SYNC
-// ============================================================
-const GH_DATA_FILE = 'tracker-data.json';
-
-function getGHConfig(){
-  return {
-    token: localStorage.getItem('gh_token')||'',
-    owner: localStorage.getItem('gh_owner')||'',
-    repo:  localStorage.getItem('gh_repo')||'',
-    auto:  localStorage.getItem('gh_autosync')==='true'
-  };
-}
-
-function renderSettings(){
-  const cfg = getGHConfig();
-  const ti = document.getElementById('gh-token'); if(ti) ti.value = cfg.token;
-  const oi = document.getElementById('gh-owner'); if(oi) oi.value = cfg.owner;
-  const ri = document.getElementById('gh-repo');  if(ri) ri.value = cfg.repo;
-  const ai = document.getElementById('gh-autosync'); if(ai) ai.checked = cfg.auto;
-  updateSyncUI();
-}
-
-function saveGHSettings(){
-  const token = (document.getElementById('gh-token')?.value||'').trim();
-  const owner = (document.getElementById('gh-owner')?.value||'').trim();
-  const repo  = (document.getElementById('gh-repo')?.value||'').trim();
-  const auto  = document.getElementById('gh-autosync')?.checked||false;
-  localStorage.setItem('gh_token', token);
-  localStorage.setItem('gh_owner', owner);
-  localStorage.setItem('gh_repo',  repo);
-  localStorage.setItem('gh_autosync', auto);
-  updateSyncUI();
-  const btn = document.getElementById('gh-save-btn');
-  if(btn){ const o=btn.textContent; btn.textContent='✓ Saved!'; btn.style.background='#10b981'; setTimeout(()=>{btn.textContent=o;btn.style.background='';},1800); }
-}
-
-function updateSyncUI(){
-  const cfg = getGHConfig();
-  const configured = !!(cfg.token && cfg.owner && cfg.repo);
-  const syncBtn = document.getElementById('sync-btn');
-  if(syncBtn) syncBtn.style.display = configured ? 'inline-flex' : 'none';
-  const statusEl = document.getElementById('sidebar-sync-status');
-  if(statusEl) statusEl.innerHTML = configured
-    ? `<span style="color:#10b981">● GitHub sync ON</span><br><span style="color:#475569">${cfg.owner}/${cfg.repo}${cfg.auto?' · auto':''}</span>`
-    : 'Data saved locally.<br>Configure GitHub Sync →';
-}
-
-async function ghRequest(method, path, body){
-  const {token, owner, repo} = getGHConfig();
-  const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
-  const opts = { method, headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'} };
-  if(body) opts.body = JSON.stringify(body);
-  return fetch(url, opts);
-}
-
-async function getFileSHA(){
-  try{
-    const r = await ghRequest('GET', GH_DATA_FILE);
-    if(r.ok){ const d=await r.json(); return d.sha||null; }
-  }catch(e){}
-  return null;
-}
-
-function setGHStatus(msg, color='var(--text-light)'){
-  const el = document.getElementById('gh-status-msg');
-  if(el) el.innerHTML = `<span style="color:${color}">${msg}</span>`;
-}
-
-async function pushToGitHub(showFeedback=true){
-  const cfg = getGHConfig();
-  if(!cfg.token||!cfg.owner||!cfg.repo){
-    if(showFeedback) { showView('settings'); setGHStatus('⚠️ Please fill in all GitHub settings and save.','#b45309'); } return false;
-  }
-  const syncBtn = document.getElementById('sync-btn');
-  if(syncBtn){ syncBtn.textContent='⏳ Syncing…'; syncBtn.disabled=true; }
-  const content = JSON.stringify({companies:S.companies,lastUpdated:new Date().toISOString()}, null, 2);
-  const encoded = btoa(unescape(encodeURIComponent(content)));
-  const sha = await getFileSHA();
-  const body = { message:'EMR Tracker update '+new Date().toISOString().slice(0,16).replace('T',' '), content:encoded, ...(sha?{sha}:{}) };
-  try{
-    const r = await ghRequest('PUT', GH_DATA_FILE, body);
-    if(r.ok){
-      if(showFeedback){
-        setGHStatus('✅ Synced to GitHub at '+new Date().toLocaleTimeString(),'#10b981');
-        if(syncBtn){syncBtn.textContent='✓ Synced!';syncBtn.style.background='#10b981';syncBtn.style.color='white';}
-        setTimeout(()=>{ if(syncBtn){syncBtn.textContent='⬆ Sync to GitHub';syncBtn.style.background='';syncBtn.style.color='';syncBtn.disabled=false;} },2500);
-      } else if(syncBtn){ syncBtn.disabled=false; }
-      return true;
-    } else {
-      const err=await r.json().catch(()=>({}));
-      const msg='GitHub error: '+(err.message||r.status);
-      if(showFeedback) setGHStatus('❌ '+msg,'#b91c1c');
-      if(syncBtn){ syncBtn.textContent='⬆ Sync to GitHub'; syncBtn.disabled=false; }
-      return false;
-    }
-  }catch(e){
-    if(showFeedback) setGHStatus('❌ Network error: '+e.message,'#b91c1c');
-    if(syncBtn){ syncBtn.textContent='⬆ Sync to GitHub'; syncBtn.disabled=false; }
-    return false;
-  }
-}
-
-async function pullFromGitHub(){
-  const cfg = getGHConfig();
-  if(!cfg.token||!cfg.owner||!cfg.repo){ setGHStatus('⚠️ Please fill in all GitHub settings first.','#b45309'); return; }
-  setGHStatus('⏳ Pulling from GitHub…','var(--text-light)');
-  try{
-    const r = await ghRequest('GET', GH_DATA_FILE);
-    if(!r.ok){ setGHStatus('ℹ️ No data file found on GitHub yet — push first.','var(--text-light)'); return; }
-    const d = await r.json();
-    const content = JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g,'')))));
-    if(content && content.companies){
-      S.companies = content.companies; save();
-      setGHStatus('✅ Pulled latest data from GitHub at '+new Date().toLocaleTimeString(),'#10b981');
-      renderDashboard(); updateBadges();
-    }
-  }catch(e){ setGHStatus('❌ Pull error: '+e.message,'#b91c1c'); }
-}
-
-async function testGitHubConnection(){
-  const btn = document.getElementById('gh-test-btn');
-  if(btn){ const o=btn.textContent; btn.textContent='Testing…'; btn.disabled=true;
-    setTimeout(()=>{btn.textContent=o;btn.disabled=false;},4000); }
-  const cfg = getGHConfig();
-  if(!cfg.token||!cfg.owner||!cfg.repo){ setGHStatus('⚠️ Fill in all three fields and Save first.','#b45309'); return; }
-  try{
-    const r = await fetch(`https://api.github.com/repos/${cfg.owner}/${cfg.repo}`,
-      {headers:{'Authorization':'token '+cfg.token,'Accept':'application/vnd.github.v3+json'}});
-    if(r.ok){ const d=await r.json(); setGHStatus(`✅ Connected! Repo: ${d.full_name} (${d.visibility})`,'#10b981'); }
-    else if(r.status===401) setGHStatus('❌ Invalid token — check your PAT.','#b91c1c');
-    else if(r.status===404) setGHStatus('❌ Repo not found — check username and repo name.','#b91c1c');
-    else setGHStatus('❌ Error '+r.status,'#b91c1c');
-  }catch(e){ setGHStatus('❌ Network error: '+e.message,'#b91c1c'); }
-}
-
-function resetData(){
-  if(!confirm('This will erase all your tracker data and reload defaults. Are you sure?')) return;
-  localStorage.removeItem('emr-v2');
-  S.companies = JSON.parse(JSON.stringify(DEFAULT_COMPANIES));
-  save(); showView('dashboard');
-}
-
-// ============================================================
-// INIT
-// ============================================================
-async function init(){
-  load();
-  updateSyncUI();
-  const cfg = getGHConfig();
-  if(cfg.token && cfg.owner && cfg.repo){
-    try{
-      const r = await ghRequest('GET', GH_DATA_FILE);
-      if(r.ok){
-        const d = await r.json();
-        const content = JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g,'')))));
-        if(content && content.companies){ S.companies = content.companies; save(); }
-      }
-    }catch(e){}
-  }
-  showView('dashboard');
-}
-init();
-</script>
-</body>
-</html>
+function
