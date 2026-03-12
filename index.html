@@ -1,865 +1,100 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EMR Outreach Tracker</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{--primary:#2563eb;--primary-dark:#1d4ed8;--sidebar:#0f172a;--text:#1e293b;--text-light:#64748b;--border:#e2e8f0;--bg:#f1f5f9;--white:#fff;--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--purple:#8b5cf6;}
-body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
-.app{display:flex;height:100vh;overflow:hidden;}
-.sidebar{width:240px;background:var(--sidebar);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;}
-.sidebar-brand{padding:20px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,0.08);}
-.brand-icon{width:36px;height:36px;background:var(--primary);border-radius:10px;display:flex;align-items:center;justify-content:center;color:white;font-size:18px;flex-shrink:0;}
-.brand-name{color:white;font-weight:700;font-size:15px;line-height:1.2;}
-.brand-sub{color:#475569;font-size:11px;}
-.sidebar-section{padding:16px 8px 4px;}
-.sidebar-label{color:#475569;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:0 8px;margin-bottom:6px;}
-.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;color:#94a3b8;font-size:13px;font-weight:500;transition:all .15s;user-select:none;}
-.nav-item:hover{background:rgba(255,255,255,0.07);color:#e2e8f0;}
-.nav-item.active{background:var(--primary);color:white;}
-.nav-icon{font-size:15px;width:18px;text-align:center;flex-shrink:0;}
-.nav-badge{margin-left:auto;background:rgba(255,255,255,0.12);color:inherit;font-size:11px;padding:1px 7px;border-radius:20px;font-weight:600;}
-.nav-item.active .nav-badge{background:rgba(255,255,255,0.25);}
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;}
-.topbar{background:white;border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:12px;}
-.topbar-title{font-size:17px;font-weight:700;white-space:nowrap;}
-.topbar-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
-.view{flex:1;overflow-y:auto;display:none;flex-direction:column;}
-.view.active{display:flex;}
-.content{padding:24px;flex:1;}
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:24px;}
-.stat-card{background:white;border-radius:12px;padding:18px 20px;box-shadow:0 1px 3px rgba(0,0,0,.06);display:flex;flex-direction:column;gap:8px;}
-.stat-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;}
-.stat-value{font-size:28px;font-weight:800;line-height:1;}
-.stat-label{font-size:12px;color:var(--text-light);font-weight:500;}
-.card{background:white;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden;}
-.card-header{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.card-title{font-size:14px;font-weight:700;}
-.table-wrap{overflow-x:auto;}
-table{width:100%;border-collapse:collapse;}
-th{padding:10px 16px;text-align:left;font-size:11px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.05em;background:#f8fafc;border-bottom:1px solid var(--border);white-space:nowrap;}
-td{padding:11px 16px;border-bottom:1px solid #f1f5f9;vertical-align:middle;}
-tr:last-child td{border-bottom:none;}
-tbody tr{cursor:pointer;transition:background .1s;}
-tbody tr:hover td{background:#f8fafc;}
-.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap;}
-.b-ns{background:#f1f5f9;color:#64748b;}
-.b-re{background:#fef3c7;color:#b45309;}
-.b-co{background:#dbeafe;color:#1d4ed8;}
-.b-rs{background:#d1fae5;color:#065f46;}
-.b-me{background:#ede9fe;color:#6d28d9;}
-.b-wo{background:#d1fae5;color:#065f46;}
-.b-lo{background:#fee2e2;color:#b91c1c;}
-.btn{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s;white-space:nowrap;font-family:inherit;}
-.btn-primary{background:var(--primary);color:white;}
-.btn-primary:hover{background:var(--primary-dark);}
-.btn-ghost{background:white;color:var(--text-light);border:1px solid var(--border);}
-.btn-ghost:hover{background:#f8fafc;color:var(--text);}
-.btn-danger{background:#fee2e2;color:#b91c1c;border:none;}
-.btn-danger:hover{background:#fecaca;}
-.btn-sm{padding:5px 10px;font-size:12px;border-radius:6px;}
-.search-wrap{position:relative;}
-.search-input{padding:8px 12px 8px 34px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;width:220px;font-family:inherit;}
-.search-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1);}
-.filter-select,.status-select{padding:7px 10px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;background:white;cursor:pointer;font-family:inherit;}
-.filter-select:focus,.status-select:focus{border-color:var(--primary);}
-.detail-header{background:white;border-radius:12px;padding:22px 24px;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
-.detail-company-name{font-size:22px;font-weight:800;}
-.detail-meta{display:flex;gap:18px;margin-top:10px;flex-wrap:wrap;}
-.detail-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-light);}
-.detail-meta-item a{color:var(--primary);text-decoration:none;}
-.detail-meta-item a:hover{text-decoration:underline;}
-.tabs{display:flex;gap:4px;background:white;border-radius:12px;padding:6px;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
-.tab{flex:1;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text-light);text-align:center;transition:all .15s;user-select:none;}
-.tab:hover{background:#f1f5f9;color:var(--text);}
-.tab.active{background:var(--primary);color:white;}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.fg{margin-bottom:0;}
-.fg.full{grid-column:1/-1;}
-.form-label{display:block;font-size:11px;font-weight:700;color:var(--text-light);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em;}
-.form-input,.form-select,.form-textarea{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;background:white;font-family:inherit;transition:border-color .15s;}
-.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1);}
-.form-textarea{resize:vertical;min-height:80px;}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:1000;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(3px);}
-.modal-overlay.open{display:flex;}
-.modal{background:white;border-radius:16px;padding:24px;width:100%;max-width:540px;max-height:88vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.18);}
-.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;}
-.modal-title{font-size:17px;font-weight:700;}
-.modal-close{cursor:pointer;color:var(--text-light);font-size:24px;line-height:1;padding:2px 6px;border-radius:6px;}
-.modal-close:hover{background:#f1f5f9;color:var(--text);}
-.modal-footer{margin-top:20px;display:flex;justify-content:flex-end;gap:8px;padding-top:16px;border-top:1px solid var(--border);}
-.item-list{display:flex;flex-direction:column;gap:10px;}
-.item-card{background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
-.item-info{flex:1;min-width:0;}
-.item-name{font-size:14px;font-weight:700;}
-.item-role{font-size:12px;color:var(--text-light);margin-top:2px;}
-.item-detail{font-size:12px;color:var(--text-light);margin-top:6px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
-.item-actions{display:flex;gap:6px;flex-shrink:0;}
-.item-note{font-size:12px;color:var(--text-light);margin-top:6px;font-style:italic;}
-.activity-list{display:flex;flex-direction:column;}
-.activity-item{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid #f1f5f9;}
-.activity-item:last-child{border-bottom:none;}
-.activity-dot{width:8px;height:8px;border-radius:50%;background:var(--primary);margin-top:6px;flex-shrink:0;}
-.activity-text{font-size:13px;line-height:1.5;}
-.activity-time{font-size:11px;color:var(--text-light);margin-top:2px;}
-.notes-area{width:100%;min-height:220px;padding:14px;border:1px solid var(--border);border-radius:10px;font-size:14px;line-height:1.7;font-family:inherit;outline:none;resize:vertical;}
-.notes-area:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1);}
-.idea-card{border-radius:10px;padding:16px;margin-bottom:12px;}
-.idea-title{font-size:14px;font-weight:700;margin-bottom:5px;}
-.idea-body{font-size:13px;color:var(--text-light);line-height:1.65;}
-.sequence-step{display:flex;gap:14px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #f1f5f9;}
-.sequence-step:last-child{border-bottom:none;}
-.step-day{background:var(--primary);color:white;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap;flex-shrink:0;}
-.step-action{font-size:13px;color:var(--text-light);padding-top:3px;line-height:1.5;}
-.empty-state{text-align:center;padding:44px 24px;}
-.empty-icon{font-size:36px;margin-bottom:10px;}
-.empty-text{font-size:15px;font-weight:600;margin-bottom:4px;}
-.empty-sub{font-size:13px;color:var(--text-light);}
-::-webkit-scrollbar{width:5px;height:5px;}
-::-webkit-scrollbar-track{background:transparent;}
-::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px;}
-::-webkit-scrollbar-thumb:hover{background:#94a3b8;}
-@keyframes fadeSlide{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
-.fade-in{animation:fadeSlide .2s ease;}
-</style>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.7">
+  <style type="text/css">
+    body {background-color: #eef2f7}
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px '.Apple Color Emoji UI'; color: #ffffff; -webkit-text-stroke: #ffffff}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 15.0px '.SF NS'; color: #ffffff; -webkit-text-stroke: #ffffff}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px '.SF NS'; color: #374356; -webkit-text-stroke: #374356}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px '.SF NS'; color: #374356; -webkit-text-stroke: #374356}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 15.0px '.Apple Color Emoji UI'; color: #ffffff; -webkit-text-stroke: #ffffff}
+    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px '.SF NS'; color: #ffffff; -webkit-text-stroke: #ffffff}
+    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 15.0px '.Apple Color Emoji UI'; color: #8291a9; -webkit-text-stroke: #8291a9}
+    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px '.SF NS'; color: #8291a9; -webkit-text-stroke: #8291a9; background-color: #0d121f}
+    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px '.Apple Color Emoji UI'; color: #8291a9; -webkit-text-stroke: #8291a9; background-color: #ffffff; background-color: rgba(255, 255, 255, 0.12)}
+    p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px '.SF NS'; color: #8291a9; -webkit-text-stroke: #8291a9}
+    p.p11 {margin: 0.0px 0.0px 0.0px 0.0px; font: 17.0px '.SF NS'; color: #171e2d; -webkit-text-stroke: #171e2d}
+    p.p12 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px '.SF NS'; color: #ffffff; -webkit-text-stroke: #ffffff}
+    p.p13 {margin: 0.0px 0.0px 0.0px 0.0px; font: 15.0px '.SF NS'; color: #171e2d; -webkit-text-stroke: #171e2d}
+    p.p14 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px '.SF NS'; color: #526078; -webkit-text-stroke: #526078}
+    p.p15 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px '.SF NS'; color: #526078; -webkit-text-stroke: #526078}
+    p.p16 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px '.Apple Color Emoji UI'; color: #171e2d; -webkit-text-stroke: #171e2d; min-height: 17.0px}
+    span.s1 {font-kerning: none; background-color: #1d48e6}
+    span.s2 {font-kerning: none; background-color: #0d121f}
+    span.s3 {font: 15.0px '.Apple Color Emoji UI'; font-kerning: none; background-color: #0d121f}
+    span.s4 {font: 11.0px '.Apple Color Emoji UI'; font-kerning: none; background-color: #0d121f}
+    span.s5 {font-kerning: none}
+    span.s6 {font: 13.0px '.Apple Color Emoji UI'; font-kerning: none; background-color: #0d121f}
+    span.s7 {font-kerning: none; background-color: #ffffff}
+    span.s8 {font: 12.0px '.Apple Color Emoji UI'; font-kerning: none; color: #526078; background-color: #ffffff; -webkit-text-stroke: 0px #526078}
+    span.s9 {font-kerning: none; color: #526078; background-color: #ffffff; -webkit-text-stroke: 0px #526078}
+    span.s10 {font: 14.0px '.Apple Color Emoji UI'; font-kerning: none; color: #171e2d; background-color: #ffffff; -webkit-text-stroke: 0px #171e2d}
+    span.s11 {font: 12.0px '.Apple Color Emoji UI'; font-kerning: none; background-color: #1d48e6}
+    span.s12 {font: 15.0px '.Apple Color Emoji UI'; font-kerning: none}
+    span.s13 {font: 12.0px '.Apple Color Emoji UI'; font-kerning: none}
+    span.s14 {font: 11.0px '.Apple Color Emoji UI'; font-kerning: none; background-color: #ffffff}
+    table.t1 {border-collapse: collapse}
+    td.td1 {width: 95.5px; background-color: #f6f9fb; border-style: solid; border-width: 0.0px 0.0px 1.0px 0.0px; border-color: #526078 #526078 #dbe2ec #526078; padding: 10.0px 16.0px 10.0px 16.0px}
+    td.td2 {width: 80.9px; background-color: #f6f9fb; border-style: solid; border-width: 0.0px 0.0px 1.0px 0.0px; border-color: #526078 #526078 #dbe2ec #526078; padding: 10.0px 16.0px 10.0px 16.0px}
+    td.td3 {width: 100.3px; background-color: #f6f9fb; border-style: solid; border-width: 0.0px 0.0px 1.0px 0.0px; border-color: #526078 #526078 #dbe2ec #526078; padding: 10.0px 16.0px 10.0px 16.0px}
+    td.td4 {width: 103.7px; background-color: #f6f9fb; border-style: solid; border-width: 0.0px 0.0px 1.0px 0.0px; border-color: #526078 #526078 #dbe2ec #526078; padding: 10.0px 16.0px 10.0px 16.0px}
+    td.td5 {width: 126.7px; background-color: #f6f9fb; border-style: solid; border-width: 0.0px 0.0px 1.0px 0.0px; border-color: #526078 #526078 #dbe2ec #526078; padding: 10.0px 16.0px 10.0px 16.0px}
+  </style>
 </head>
 <body>
-<div class="app">
-<nav class="sidebar">
-  <div class="sidebar-brand">
-    <div class="brand-icon">🏥</div>
-    <div><div class="brand-name">EMR Outreach</div><div class="brand-sub">Tracker v1.0</div></div>
-  </div>
-  <div class="sidebar-section">
-    <div class="sidebar-label">Overview</div>
-    <div class="nav-item active" id="nav-dashboard" onclick="showView('dashboard')"><span class="nav-icon">📊</span> Dashboard</div>
-  </div>
-  <div class="sidebar-section">
-    <div class="sidebar-label">Outreach</div>
-    <div class="nav-item" id="nav-companies" onclick="showView('companies')"><span class="nav-icon">🏢</span> Companies <span class="nav-badge" id="badge-companies">29</span></div>
-    <div class="nav-item" id="nav-contacts" onclick="showView('contacts')"><span class="nav-icon">👤</span> Contacts <span class="nav-badge" id="badge-contacts">0</span></div>
-    <div class="nav-item" id="nav-investors" onclick="showView('investors')"><span class="nav-icon">💰</span> Investors <span class="nav-badge" id="badge-investors">0</span></div>
-  </div>
-  <div class="sidebar-section">
-    <div class="sidebar-label">Strategy</div>
-    <div class="nav-item" id="nav-ideas" onclick="showView('ideas')"><span class="nav-icon">💡</span> Outreach Playbook</div>
-  </div>
-  <div class="sidebar-section">
-    <div class="sidebar-label">Config</div>
-    <div class="nav-item" id="nav-settings" onclick="showView('settings')"><span class="nav-icon">⚙️</span> GitHub Sync</div>
-  </div>
-  <div style="margin-top:auto;padding:16px;border-top:1px solid rgba(255,255,255,.08);">
-    <div id="sidebar-sync-status" style="font-size:11px;color:#475569;line-height:1.6;">Data saved locally in browser.</div>
-  </div>
-</nav>
-<div class="main">
-  <div id="view-dashboard" class="view active">
-    <div class="topbar">
-      <div class="topbar-title">Dashboard</div>
-      <div class="topbar-actions">
-        <button class="btn btn-ghost btn-sm" onclick="exportCSV()">⬇ Export CSV</button>
-        <button class="btn btn-ghost btn-sm" id="sync-btn" onclick="pushToGitHub(true)" style="display:none">⬆ Sync to GitHub</button>
-        <button class="btn btn-primary btn-sm" onclick="showView('companies')">View All Companies →</button>
-      </div>
-    </div>
-    <div class="content fade-in">
-      <div class="stats-grid" id="stats-grid"></div>
-      <div style="margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;">
-        <div style="font-size:15px;font-weight:700;">Company Pipeline</div>
-        <div style="font-size:12px;color:var(--text-light);">Click a row to open company details</div>
-      </div>
-      <div class="card">
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Company</th><th>Status</th><th>Contacts</th><th>Investors</th><th>Last Activity</th></tr></thead>
-            <tbody id="dashboard-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div id="view-companies" class="view">
-    <div class="topbar">
-      <div class="topbar-title">Companies</div>
-      <div class="topbar-actions">
-        <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" class="search-input" id="co-search" placeholder="Search..." oninput="renderCompanies()"></div>
-        <select class="filter-select" id="co-filter" onchange="renderCompanies()">
-          <option value="">All Statuses</option>
-          <option value="not-started">Not Started</option>
-          <option value="researching">Researching</option>
-          <option value="contacted">Contacted</option>
-          <option value="responded">Responded</option>
-          <option value="meeting">Meeting Set</option>
-          <option value="won">Won</option>
-          <option value="lost">Lost</option>
-        </select>
-      </div>
-    </div>
-    <div class="content fade-in">
-      <div class="card">
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Company</th><th>Website</th><th>Status</th><th>Contacts</th><th>Investors</th><th>Notes Preview</th></tr></thead>
-            <tbody id="companies-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div id="view-detail" class="view">
-    <div class="topbar">
-      <div class="topbar-title" id="detail-topbar-title">Company</div>
-      <div class="topbar-actions">
-        <button class="btn btn-ghost btn-sm" onclick="showView('companies')">← Back</button>
-        <select class="status-select" id="detail-status-select" onchange="updateStatus(this.value)">
-          <option value="not-started">○ Not Started</option>
-          <option value="researching">◐ Researching</option>
-          <option value="contacted">✉ Contacted</option>
-          <option value="responded">↩ Responded</option>
-          <option value="meeting">📅 Meeting Set</option>
-          <option value="won">✓ Won</option>
-          <option value="lost">✗ Lost</option>
-        </select>
-      </div>
-    </div>
-    <div class="content fade-in" id="detail-content"></div>
-  </div>
-  <div id="view-contacts" class="view">
-    <div class="topbar">
-      <div class="topbar-title">All Contacts</div>
-      <div class="topbar-actions">
-        <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" class="search-input" id="ct-search" placeholder="Search contacts..." oninput="renderContacts()"></div>
-      </div>
-    </div>
-    <div class="content fade-in">
-      <div class="card">
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Name</th><th>Title</th><th>Company</th><th>Type</th><th>Email</th><th>Status</th><th></th></tr></thead>
-            <tbody id="contacts-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div id="view-investors" class="view">
-    <div class="topbar">
-      <div class="topbar-title">Investors</div>
-      <div class="topbar-actions">
-        <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" class="search-input" id="inv-search" placeholder="Search investors..." oninput="renderInvestors()"></div>
-      </div>
-    </div>
-    <div class="content fade-in">
-      <div class="card">
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Investor / Fund</th><th>Type</th><th>Portfolio Companies</th><th>Website</th><th>Key Contact</th><th>Notes</th></tr></thead>
-            <tbody id="investors-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div id="view-ideas" class="view">
-    <div class="topbar"><div class="topbar-title">Outreach Playbook</div></div>
-    <div class="content fade-in" id="ideas-content"></div>
-  </div>
-  <div id="view-settings" class="view">
-    <div class="topbar">
-      <div class="topbar-title">GitHub Sync Settings</div>
-      <div class="topbar-actions">
-        <button class="btn btn-ghost btn-sm" id="gh-test-btn" onclick="testGitHubConnection()">🔌 Test Connection</button>
-        <button class="btn btn-primary btn-sm" id="gh-save-btn" onclick="saveGHSettings()">Save Settings</button>
-      </div>
-    </div>
-    <div class="content fade-in">
-      <div style="max-width:600px;display:flex;flex-direction:column;gap:18px;">
-        <div class="card" style="padding:20px 24px;">
-          <div style="font-size:15px;font-weight:700;margin-bottom:6px;">How it works</div>
-          <div style="font-size:13px;color:var(--text-light);line-height:1.7;">Enter your GitHub credentials below. The tracker will save all your data to a <code style="background:#f1f5f9;padding:1px 5px;border-radius:4px;">tracker-data.json</code> file in your GitHub repo. When you hit <strong>⬆ Sync to GitHub</strong> (or enable auto-sync), your live GitHub Pages tracker always stays up to date.</div>
-        </div>
-        <div class="card" style="padding:20px 24px;">
-          <div style="font-size:14px;font-weight:700;margin-bottom:16px;">GitHub Configuration</div>
-          <div class="form-grid">
-            <div class="fg full">
-              <label class="form-label">Personal Access Token (PAT) *</label>
-              <input type="password" class="form-input" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
-              <div style="font-size:11px;color:var(--text-light);margin-top:5px;">Create one at <a href="https://github.com/settings/tokens/new?scopes=repo&description=EMR+Tracker+Sync" target="_blank" style="color:var(--primary)">github.com/settings/tokens</a> — enable the <strong>repo</strong> scope.</div>
-            </div>
-            <div class="fg"><label class="form-label">GitHub Username *</label><input type="text" class="form-input" id="gh-owner" placeholder="your-github-username"></div>
-            <div class="fg"><label class="form-label">Repository Name *</label><input type="text" class="form-input" id="gh-repo" placeholder="emr-tracker"></div>
-            <div class="fg full" style="display:flex;align-items:center;gap:10px;padding-top:4px;">
-              <input type="checkbox" id="gh-autosync" style="width:16px;height:16px;cursor:pointer;">
-              <label for="gh-autosync" style="font-size:13px;font-weight:600;cursor:pointer;">Auto-sync on every save</label>
-            </div>
-          </div>
-        </div>
-        <div class="card" style="padding:20px 24px;">
-          <div style="font-size:14px;font-weight:700;margin-bottom:12px;">Sync Actions</div>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;">
-            <button class="btn btn-primary" onclick="pushToGitHub(true)">⬆ Push Data to GitHub Now</button>
-            <button class="btn btn-ghost" onclick="pullFromGitHub()">⬇ Pull Data from GitHub</button>
-          </div>
-          <div id="gh-status-msg" style="margin-top:12px;font-size:13px;"></div>
-        </div>
-        <div class="card" style="padding:20px 24px;">
-          <div style="font-size:14px;font-weight:700;margin-bottom:8px;color:#b91c1c;">⚠️ Reset Data</div>
-          <div style="font-size:13px;color:var(--text-light);margin-bottom:12px;">This will wipe all your local tracker data and reload the original company list. Use with caution.</div>
-          <button class="btn btn-danger" onclick="resetData()">Reset to Default Data</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-
-<!-- CONTACT MODAL -->
-<div class="modal-overlay" id="modal-contact">
-  <div class="modal">
-    <div class="modal-header"><div class="modal-title" id="contact-modal-title">Add Contact</div><span class="modal-close" onclick="closeModal('modal-contact')">×</span></div>
-    <div class="form-grid">
-      <div class="fg"><label class="form-label">Full Name *</label><input type="text" class="form-input" id="c-name" placeholder="Jane Smith"></div>
-      <div class="fg"><label class="form-label">Title / Role</label><input type="text" class="form-input" id="c-title" placeholder="CEO"></div>
-      <div class="fg"><label class="form-label">Contact Type</label>
-        <select class="form-select" id="c-type">
-          <option value="executive">👔 Executive (C-Suite / VP)</option>
-          <option value="partnerships">🤝 Partnerships / BD</option>
-          <option value="product">📦 Product</option>
-          <option value="strategy">♟ Strategy</option>
-          <option value="sales">💼 Sales</option>
-          <option value="other">👤 Other</option>
-        </select>
-      </div>
-      <div class="fg"><label class="form-label">Outreach Status</label>
-        <select class="form-select" id="c-status">
-          <option value="not-contacted">Not Contacted</option>
-          <option value="contacted">Contacted</option>
-          <option value="responded">Responded</option>
-          <option value="meeting">Meeting Set</option>
-        </select>
-      </div>
-      <div class="fg"><label class="form-label">Email</label><input type="email" class="form-input" id="c-email" placeholder="jane@company.com"></div>
-      <div class="fg"><label class="form-label">Phone</label><input type="text" class="form-input" id="c-phone" placeholder="+1 555-000-0000"></div>
-      <div class="fg full"><label class="form-label">LinkedIn URL</label><input type="url" class="form-input" id="c-linkedin" placeholder="https://linkedin.com/in/..."></div>
-      <div class="fg full"><label class="form-label">Notes</label><textarea class="form-textarea" id="c-notes" placeholder="Best way to reach, relationship context..."></textarea></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modal-contact')">Cancel</button>
-      <button class="btn btn-primary" onclick="saveContact()">Save Contact</button>
-    </div>
-  </div>
-</div>
-
-<!-- INVESTOR MODAL -->
-<div class="modal-overlay" id="modal-investor">
-  <div class="modal">
-    <div class="modal-header"><div class="modal-title" id="investor-modal-title">Add Investor</div><span class="modal-close" onclick="closeModal('modal-investor')">×</span></div>
-    <div class="form-grid">
-      <div class="fg full"><label class="form-label">Investor / Fund Name *</label><input type="text" class="form-input" id="i-name" placeholder="General Catalyst"></div>
-      <div class="fg"><label class="form-label">Type</label>
-        <select class="form-select" id="i-type">
-          <option value="vc">🏦 Venture Capital</option>
-          <option value="pe">🏛 Private Equity</option>
-          <option value="angel">👼 Angel Investor</option>
-          <option value="strategic">🤝 Strategic Investor</option>
-          <option value="debt">💳 Debt / Lending</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-      <div class="fg"><label class="form-label">Round / Stage</label><input type="text" class="form-input" id="i-round" placeholder="Series A, Seed..."></div>
-      <div class="fg"><label class="form-label">Amount (optional)</label><input type="text" class="form-input" id="i-amount" placeholder="$10M"></div>
-      <div class="fg"><label class="form-label">Year</label><input type="text" class="form-input" id="i-year" placeholder="2022"></div>
-      <div class="fg full"><label class="form-label">Website</label><input type="url" class="form-input" id="i-website" placeholder="https://..."></div>
-      <div class="fg full"><label class="form-label">Key Contact at Fund</label><input type="text" class="form-input" id="i-contact" placeholder="Managing Partner name"></div>
-      <div class="fg full"><label class="form-label">Intro Strategy / Notes</label><textarea class="form-textarea" id="i-notes" placeholder="Mutual connections, warm intro path..."></textarea></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modal-investor')">Cancel</button>
-      <button class="btn btn-primary" onclick="saveInvestor()">Save Investor</button>
-    </div>
-  </div>
-</div>
-
-<!-- ACTIVITY MODAL -->
-<div class="modal-overlay" id="modal-activity">
-  <div class="modal">
-    <div class="modal-header"><div class="modal-title">Log Activity</div><span class="modal-close" onclick="closeModal('modal-activity')">×</span></div>
-    <div class="form-grid">
-      <div class="fg"><label class="form-label">Activity Type</label>
-        <select class="form-select" id="a-type">
-          <option value="email">📧 Email Sent</option>
-          <option value="linkedin">💼 LinkedIn Message</option>
-          <option value="call">📞 Phone Call</option>
-          <option value="meeting">🤝 Meeting / Demo</option>
-          <option value="note">📝 Note</option>
-          <option value="research">🔍 Research</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-      <div class="fg"><label class="form-label">Contact (optional)</label><input type="text" class="form-input" id="a-contact" placeholder="Name of person"></div>
-      <div class="fg full"><label class="form-label">Description *</label><textarea class="form-textarea" id="a-desc" placeholder="What happened?"></textarea></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modal-activity')">Cancel</button>
-      <button class="btn btn-primary" onclick="saveActivity()">Log Activity</button>
-    </div>
-  </div>
-</div>
-
-<script>
-const DEFAULT_COMPANIES = [
-  {id:1,name:"HiRasmus",website:"hirasmus.com",linkedin:"https://www.linkedin.com/company/hi-rasmus",status:"not-started",contacts:[
-    {id:"ct_hirasmus_1",name:"Rachel Dowse",title:"Chief Commercial Officer & Advocate for 1 Million Kids",type:"executive",status:"not-contacted",email:"rachel@hirasmus.com",phone:"+1 615-972-3555",linkedin:"https://www.linkedin.com/in/rachel-dowse-aa823410",notes:""},
-    {id:"ct_hirasmus_2",name:"Jenna Simard",title:"Director, Customer Success",type:"sales",status:"not-contacted",email:"jenna@hirasmus.com",phone:"+1 734-276-5106",linkedin:"https://www.linkedin.com/in/jennalsimard",notes:""},
-    {id:"ct_hirasmus_3",name:"Nikolaj Hendriksen",title:"Founder & CEO",type:"executive",status:"not-contacted",email:"nikolaj@hirasmus.com",phone:"+45 42 42 45 45",linkedin:"https://www.linkedin.com/in/nhendriksen",notes:""},
-    {id:"ct_hirasmus_4",name:"Mark Rosenvinge",title:"Chief Technology Officer",type:"executive",status:"not-contacted",email:"mark@hirasmus.com",phone:"+45 27 51 38 10",linkedin:"https://www.linkedin.com/in/mark-rosenvinge-788408b8",notes:""},
-    {id:"ct_hirasmus_5",name:"Cate Davis",title:"Director of Research and Outcomes",type:"other",status:"not-contacted",email:"cate@hirasmus.com",phone:"",linkedin:"https://www.linkedin.com/in/cate-davis-phd-bcba-d-lba-413274207",notes:""},
-    {id:"ct_hirasmus_6",name:"Christine Danh",title:"Lead Product Designer",type:"product",status:"not-contacted",email:"christine@hirasmus.com",phone:"",linkedin:"https://www.linkedin.com/in/cdanh",notes:""}
-  ],investors:[
-    {id:"inv_hirasmus_1",name:"Undisclosed Grant Investor",type:"other",round:"Grant / Prize Money",amount:"Undisclosed",year:"2020",website:"",contact:"",notes:"1 institutional investor + 1 angel investor. Grant/prize money round on Jun 2, 2020. Founded 2019 in Copenhagen, Denmark."}
-  ],activities:[],notes:"Copenhagen-based ABA/autism telehealth. Founded 2019 by Nikolaj Hendriksen. 44 employees. Grant-funded only."},
-  {id:2,name:"Behavioral Health Connect",website:"behavioralhealthconnect.com",linkedin:"https://www.linkedin.com/company/behavioral-health-connections",status:"not-started",contacts:[],investors:[],activities:[],notes:"No publicly disclosed VC/PE investors found. Appears to be bootstrapped or privately held."},
-  {id:3,name:"Ensora",website:"ensora.co",linkedin:"https://www.linkedin.com/company/ensora",status:"not-started",contacts:[
-    {id:"ct_ensora_1",name:"Robin Fisher",title:"Sr. Director CX Strategy & Ops",type:"other",status:"not-contacted",email:"robin.fisher@therapybrands.com",phone:"+1 888-478-4711",linkedin:"https://www.linkedin.com/in/fisherrrobin",notes:""},
-    {id:"ct_ensora_2",name:"John Damgaard",title:"CEO",type:"executive",status:"not-contacted",email:"john.damgaard@ensorahealth.com",phone:"+1 888-478-4711",linkedin:"https://www.linkedin.com/in/john-damgaard-5876814",notes:""},
-    {id:"ct_ensora_3",name:"Lynn Carroll",title:"VP of Product Management",type:"product",status:"not-contacted",email:"lynn.carroll@ensorahealth.com",phone:"+1 888-478-4711",linkedin:"https://www.linkedin.com/in/lynntcarroll",notes:""},
-    {id:"ct_ensora_4",name:"Fred Varpahovsky",title:"VP Engineering Operations",type:"executive",status:"not-contacted",email:"fred.varpahovsky@ensorahealth.com",phone:"+1 800-840-9152",linkedin:"https://www.linkedin.com/in/fvarpaho",notes:""},
-    {id:"ct_ensora_5",name:"Aaron Bruneau",title:"CIO",type:"executive",status:"not-contacted",email:"aaron.bruneau@therapybrands.com",phone:"+1 800-840-9152",linkedin:"https://www.linkedin.com/in/aaron-bruneau",notes:""},
-    {id:"ct_ensora_6",name:"Danielle Shelley",title:"Director of Strategic Partnerships",type:"partnerships",status:"not-contacted",email:"",phone:"+1 888-478-4711",linkedin:"https://www.linkedin.com/in/danishelley",notes:""},
-    {id:"ct_ensora_7",name:"Thuong Le",title:"CTO",type:"executive",status:"not-contacted",email:"",phone:"+1 888-478-4711",linkedin:"https://www.linkedin.com/in/thuongvanle",notes:""}
-  ],investors:[
-    {id:"inv_ensora_1",name:"KKR",type:"pe",round:"Acquisition",amount:"$1.25B",year:"2021",website:"https://www.kkr.com",contact:"",notes:"KKR acquired Therapy Brands (now rebranded as Ensora) for $1.25B in May 2021."},
-    {id:"inv_ensora_2",name:"Lightyear Capital",type:"pe",round:"Growth Equity (pre-KKR)",amount:"Undisclosed",year:"2019",website:"https://www.lightyearcapital.com",contact:"",notes:"Led pre-KKR growth round for Therapy Brands."},
-    {id:"inv_ensora_3",name:"Oak HC/FT",type:"vc",round:"Co-Investor (pre-KKR)",amount:"Undisclosed",year:"2019",website:"https://www.oakhcft.com",contact:"",notes:"Co-invested in Therapy Brands. Also invested in Notable Health."},
-    {id:"inv_ensora_4",name:"PSG (Providence Strategic Growth)",type:"pe",round:"Early Growth (pre-KKR)",amount:"Undisclosed",year:"2018",website:"https://www.psg.co",contact:"",notes:"Early growth investor in Therapy Brands."}
-  ],activities:[],notes:"Formerly Therapy Brands. KKR acquired for $1.25B in May 2021. Behavioral health and ABA software portfolio company."},
-  {id:4,name:"HCHB",website:"hchb.com",linkedin:"https://www.linkedin.com/company/hchb-llc",status:"not-started",contacts:[],investors:[
-    {id:"inv_hchb_1",name:"Hearst Corporation",type:"strategic",round:"Majority Acquisition (~85%)",amount:"Undisclosed",year:"2013",website:"https://www.hearst.com",contact:"",notes:"Hearst Corporation acquired an ~85% stake in HCHB in 2013 from Cressey & Company."},
-    {id:"inv_hchb_2",name:"Cressey & Company",type:"pe",round:"Prior PE Backer (pre-Hearst)",amount:"Undisclosed",year:"Pre-2013",website:"https://www.cressey.com",contact:"",notes:"Healthcare-focused PE firm that backed HCHB before Hearst acquisition."}
-  ],activities:[],notes:"Home health EMR. Majority owned by Hearst Corporation since 2013. Originally backed by Cressey & Company."},
-  {id:5,name:"ABA Matrix",website:"abamatrix.com",linkedin:"https://www.linkedin.com/company/aba-matrix",status:"not-started",contacts:[
-    {id:"ct_abamatrix_1",name:"Jorge Concepcion",title:"CEO",type:"executive",status:"not-contacted",email:"jorge@abamatrix.com",phone:"+1 850-391-4353",linkedin:"https://www.linkedin.com/in/jorge-concepcion-600b2914a",notes:""},
-    {id:"ct_abamatrix_2",name:"Ivett Herrera",title:"Software Developer",type:"other",status:"not-contacted",email:"",phone:"",linkedin:"",notes:""},
-    {id:"ct_abamatrix_3",name:"Ernesto Lopez",title:"Co-Founder",type:"executive",status:"not-contacted",email:"",phone:"",linkedin:"",notes:""},
-    {id:"ct_abamatrix_4",name:"Lisandra Cardoso",title:"Software Developer",type:"other",status:"not-contacted",email:"lisandra@abamatrix.com",phone:"+1 888-383-4630",linkedin:"https://www.linkedin.com/in/lisandra-cardoso-2b22401b9",notes:""},
-    {id:"ct_abamatrix_5",name:"Victor Martinez",title:"CTO",type:"executive",status:"not-contacted",email:"victor@hexmatrix.net",phone:"",linkedin:"https://www.linkedin.com/in/victor-martinez-343074b3",notes:""},
-    {id:"ct_abamatrix_6",name:"Damaris Rodriguez",title:"Medical Billing Consultant",type:"other",status:"not-contacted",email:"damaris@abamatrix.com",phone:"+1 888-383-4630",linkedin:"https://www.linkedin.com/in/damaris-rodriguez-9a1442217",notes:""}
-  ],investors:[],activities:[],notes:"Owned by parent company Hex Matrix. Bootstrapped — no public VC/PE backing."},
-  {id:6,name:"Kipu Health",website:"kipu.com",linkedin:"https://www.linkedin.com/company/kipuhealth",status:"not-started",contacts:[
-    {id:"ct_kipu_1",name:"Cliff Levine",title:"SVP Business Development",type:"partnerships",status:"not-contacted",email:"cliff@kipuhealth.com",phone:"+1 561-349-5901",linkedin:"https://www.linkedin.com/in/cliff-levine-38580a41",notes:""},
-    {id:"ct_kipu_2",name:"Joan Leroux",title:"CRO",type:"executive",status:"not-contacted",email:"joan.leroux@kipuhealth.com",phone:"+1 561-349-5901",linkedin:"https://www.linkedin.com/in/joanleroux",notes:""},
-    {id:"ct_kipu_3",name:"Sally Abu-Moustafa",title:"EVP Product Management",type:"product",status:"not-contacted",email:"sally@kipuhealth.com",phone:"+1 267-566-5456",linkedin:"https://www.linkedin.com/in/sally-abu-moustafa-33067428",notes:""},
-    {id:"ct_kipu_4",name:"Prabhat Bhattarai",title:"Chief Architect & VP Engineering",type:"executive",status:"not-contacted",email:"prabhat.bhattarai@kipu.health",phone:"+1 561-349-5901",linkedin:"https://www.linkedin.com/in/pbhattarai",notes:""},
-    {id:"ct_kipu_5",name:"Rick Pharr",title:"COO",type:"executive",status:"not-contacted",email:"rick.pharr@kipuhealth.com",phone:"+1 561-349-5901",linkedin:"https://www.linkedin.com/in/rickpharr",notes:""},
-    {id:"ct_kipu_6",name:"Kurt Connolly",title:"SVP Corporate Development & Partnerships",type:"partnerships",status:"not-contacted",email:"kurt.connolly@kipuhealth.com",phone:"+1 816-885-4315",linkedin:"https://www.linkedin.com/in/kurt-connolly",notes:""},
-    {id:"ct_kipu_7",name:"Christina Rosenberg",title:"Director of Clinical Compliance",type:"other",status:"not-contacted",email:"christina.rosenberg@kipuhealth.com",phone:"+1 561-349-5901",linkedin:"https://www.linkedin.com/in/christinarosenberglmhc",notes:""},
-    {id:"ct_kipu_8",name:"Carina Edwards",title:"CEO",type:"executive",status:"not-contacted",email:"carina.edwards@kipuhealth.com",phone:"+1 561-349-5901",linkedin:"https://www.linkedin.com/in/carina-edwards",notes:""},
-    {id:"ct_kipu_9",name:"Russell Olsen",title:"Chief Product & Technology Officer",type:"executive",status:"not-contacted",email:"russell.olsen@kipuhealth.com",phone:"+1 561-349-5901",linkedin:"https://www.linkedin.com/in/russgolsen",notes:""},
-    {id:"ct_kipu_10",name:"Chris Duncombe",title:"CIO",type:"executive",status:"not-contacted",email:"chris.duncombe@kipuhealth.com",phone:"+1 561-349-5901",linkedin:"https://www.linkedin.com/in/chris-duncombe",notes:""}
-  ],investors:[
-    {id:"inv_kipu_1",name:"TCV (Technology Crossover Ventures)",type:"vc",round:"Strategic Investment",amount:"$108M total",year:"2021",website:"https://www.tcv.com",contact:"",notes:"TCV made a $108M strategic investment in Kipu Health in 2021. Also invested in Jane App."}
-  ],activities:[],notes:"Addiction treatment and behavioral health EMR. TCV-backed with $108M strategic investment."},
-  {id:7,name:"Catalyst",website:"ctlyst.id",linkedin:"https://www.linkedin.com/company/pci-geomatics",status:"not-started",contacts:[],investors:[],activities:[],notes:"WARNING: LinkedIn URL in source data (pci-geomatics) appears incorrect. Verify the correct Catalyst entity and LinkedIn before outreach."},
-  {id:8,name:"Credible",website:"crediblebh.com",linkedin:"https://www.linkedin.com/company/crediblelabs",status:"not-started",contacts:[
-    {id:"ct_credible_1",name:"John McPeak",title:"Vice President of Partner and Business Development",type:"partnerships",status:"not-contacted",email:"john.mcpeak@qualifacts.com",phone:"+1 866-386-6755",linkedin:"https://www.linkedin.com/in/john-mcpeak-9513266",notes:""},
-    {id:"ct_credible_2",name:"Carrie Lazorchak",title:"Chief Revenue Officer (CRO)",type:"executive",status:"not-contacted",email:"carrie.lazorchak@qualifacts.com",phone:"+1 866-386-6755",linkedin:"https://www.linkedin.com/in/carrie-lazorchak-153b0a12",notes:""},
-    {id:"ct_credible_3",name:"Jeremy Landa",title:"Chief Financial Officer",type:"executive",status:"not-contacted",email:"jeremy.landa@qualifacts.com",phone:"+1 866-386-6755",linkedin:"https://www.linkedin.com/in/jeremy-landa-6314224",notes:""},
-    {id:"ct_credible_4",name:"Josh Latta",title:"Director, Integration and Reporting Services",type:"other",status:"not-contacted",email:"josh.latta@qualifacts.com",phone:"+1 866-386-6755",linkedin:"https://www.linkedin.com/in/joshlatta",notes:""},
-    {id:"ct_credible_5",name:"Karen Baker",title:"CIO",type:"executive",status:"not-contacted",email:"karen.baker@qualifacts.com",phone:"+1 866-386-6755",linkedin:"https://www.linkedin.com/in/karen-baker-cio",notes:""},
-    {id:"ct_credible_6",name:"Nicholas Chepesiuk",title:"Vice President, Innovation",type:"executive",status:"not-contacted",email:"nicholas.chepesiuk@qualifacts.com",phone:"+1 866-386-6755",linkedin:"https://www.linkedin.com/in/nicholas-chepesiuk-29069432",notes:""},
-    {id:"ct_credible_7",name:"Josh Schoeller",title:"Chief Executive Officer",type:"executive",status:"not-contacted",email:"josh.schoeller@qualifacts.com",phone:"+1 866-386-6755",linkedin:"https://www.linkedin.com/in/josh-schoeller-8566a8",notes:""}
-  ],investors:[
-    {id:"inv_credible_1",name:"Martis Capital",type:"pe",round:"Growth Equity",amount:"Undisclosed",year:"2018",website:"https://www.martiscapital.com",contact:"",notes:"Martis Capital backed Credible BH before its acquisition by Qualifacts in Aug 2020."},
-    {id:"inv_credible_2",name:"Goldman Sachs (Asset Management)",type:"pe",round:"Co-Investor",amount:"Undisclosed",year:"2018",website:"https://www.goldmansachs.com",contact:"",notes:"Goldman Sachs Asset Management co-invested alongside Martis Capital in Credible BH."},
-    {id:"inv_credible_3",name:"Qualifacts / Warburg Pincus",type:"pe",round:"Acquisition",amount:"Undisclosed",year:"2020",website:"https://www.qualifacts.com",contact:"",notes:"Qualifacts (backed by Warburg Pincus) acquired Credible BH in August 2020."}
-  ],activities:[],notes:"Behavioral health EMR. Acquired by Qualifacts (Warburg Pincus) in Aug 2020. Part of same PE-backed roll-up as Care Logic and InSync."},
-  {id:9,name:"Care Logic",website:"qualifacts.com",linkedin:"https://www.linkedin.com/company/care-logic-inc.",status:"not-started",contacts:[],investors:[
-    {id:"inv_carelogic_1",name:"Warburg Pincus",type:"pe",round:"Acquisition (of Qualifacts)",amount:"Undisclosed",year:"2019",website:"https://www.warburgpincus.com",contact:"",notes:"Warburg Pincus acquired Qualifacts (parent of Care Logic) in September 2019."},
-    {id:"inv_carelogic_2",name:"Great Hill Partners",type:"pe",round:"Prior PE Backer (pre-Warburg)",amount:"Undisclosed",year:"Pre-2019",website:"https://www.greathillpartners.com",contact:"",notes:"Boston-based growth equity PE firm that backed Qualifacts before Warburg acquisition."}
-  ],activities:[],notes:"Part of Qualifacts platform (also includes Credible BH and InSync). All backed by Warburg Pincus since Sept 2019."},
-  {id:10,name:"InSync",website:"insync.com.au",linkedin:"https://www.linkedin.com/company/insyncau",status:"not-started",contacts:[],investors:[
-    {id:"inv_insync_1",name:"Qualifacts / Warburg Pincus",type:"pe",round:"Acquisition",amount:"Undisclosed",year:"2021",website:"https://www.qualifacts.com",contact:"",notes:"Qualifacts (Warburg Pincus) acquired InSync Healthcare Solutions in December 2021."}
-  ],activities:[],notes:"Acquired by Qualifacts (Warburg Pincus) in Dec 2021. Part of same PE-backed behavioral health EMR roll-up as Care Logic and Credible."},
-  {id:11,name:"Theralytics",website:"theralytics.net",linkedin:"https://www.linkedin.com/company/theralytics-software",status:"not-started",contacts:[
-    {id:"ct_theralytics_1",name:"Zohaib R.",title:"Founder and CEO",type:"executive",status:"not-contacted",email:"",phone:"",linkedin:"",notes:""},
-    {id:"ct_theralytics_2",name:"Jay Mazza",title:"Chief Strategy Officer",type:"strategy",status:"not-contacted",email:"jmazza@theralytics.net",phone:"+1 866-710-3590",linkedin:"https://www.linkedin.com/in/jay-mazza-23942235b",notes:""},
-    {id:"ct_theralytics_3",name:"Imran Haq",title:"COO",type:"executive",status:"not-contacted",email:"imran@kwiteconsulting.com",phone:"+1 866-710-3590",linkedin:"",notes:""}
-  ],investors:[],activities:[],notes:"Miami, FL. Founded by BCBAs. ONC Certified and SOC 2 Type II. No publicly disclosed VC/PE funding — appears bootstrapped."},
-  {id:12,name:"drchrono",website:"drchrono.com",linkedin:"https://www.linkedin.com/company/drchrono",status:"not-started",contacts:[
-    {id:"ct_drchrono_1",name:"Jayme Faletti",title:"Product Owner",type:"product",status:"not-contacted",email:"jfaletti@everhealth.com",phone:"+1 720-647-4948",linkedin:"https://www.linkedin.com/in/jaymefaletti",notes:""},
-    {id:"ct_drchrono_2",name:"Kareem Davies",title:"Partner Solution Consultant",type:"partnerships",status:"not-contacted",email:"kareem.davies@drchrono.com",phone:"+1 844-569-8628",linkedin:"https://www.linkedin.com/in/kareem-davies-15346137",notes:""}
-  ],investors:[
-    {id:"inv_drchrono_1",name:"EverCommerce",type:"strategic",round:"Acquisition",amount:"~$180M",year:"2021",website:"https://www.evercommerce.com",contact:"",notes:"EverCommerce (NASDAQ: EVCM) acquired drchrono for ~$180M in November 2021."},
-    {id:"inv_drchrono_2",name:"General Catalyst",type:"vc",round:"Series B Lead (pre-acquisition)",amount:"Undisclosed",year:"2015",website:"https://www.generalcatalyst.com",contact:"",notes:"Led drchrono's Series B before the EverCommerce acquisition."},
-    {id:"inv_drchrono_3",name:"ORIX Growth Capital",type:"debt",round:"Venture Debt (pre-acquisition)",amount:"Undisclosed",year:"2018",website:"https://www.orix.com",contact:"",notes:"Provided venture debt to drchrono before EverCommerce acquisition."}
-  ],activities:[],notes:"Acquired by EverCommerce (NASDAQ: EVCM) for ~$180M in Nov 2021. Previously backed by General Catalyst."},
-  {id:13,name:"Notable Health",website:"notablehealth.com",linkedin:"https://www.linkedin.com/company/notablehealth",status:"not-started",contacts:[
-    {id:"ct_notable_1",name:"Christopher Daniels",title:"Head of Partnerships, Growth & Sales",type:"partnerships",status:"not-contacted",email:"",phone:"+1 800-450-1304",linkedin:"https://www.linkedin.com/in/chrisdaniels",notes:""},
-    {id:"ct_notable_2",name:"JZ Zhang",title:"Partnership Director",type:"partnerships",status:"not-contacted",email:"",phone:"+1 800-450-1304",linkedin:"https://www.linkedin.com/in/jaysonzhang",notes:""},
-    {id:"ct_notable_3",name:"Jon Debonis",title:"Head of Security / CISO",type:"executive",status:"not-contacted",email:"jon@notablehealth.com",phone:"+1 800-450-1304",linkedin:"https://www.linkedin.com/in/jondebonis",notes:""},
-    {id:"ct_notable_4",name:"Renee Cambre",title:"Managing Director, Enterprise Partnerships",type:"partnerships",status:"not-contacted",email:"",phone:"+1 800-450-1304",linkedin:"https://www.linkedin.com/in/renee-cambre-mba",notes:""},
-    {id:"ct_notable_5",name:"Justin White",title:"Co-Founder & CTO",type:"executive",status:"not-contacted",email:"justin@notablehealth.com",phone:"+1 800-450-1304",linkedin:"https://www.linkedin.com/in/justin-white-97072021",notes:""},
-    {id:"ct_notable_6",name:"Pranay Kapadia",title:"Co-Founder & CEO",type:"executive",status:"not-contacted",email:"pranay@notablehealth.com",phone:"+1 800-450-1304",linkedin:"https://www.linkedin.com/in/pranaykapadia",notes:""},
-    {id:"ct_notable_7",name:"Aida C-Mendelson",title:"Head of GTM Operations & Growth",type:"other",status:"not-contacted",email:"aida@notablehealth.com",phone:"+1 800-450-1304",linkedin:"https://www.linkedin.com/in/aida-c-mendelson",notes:""},
-    {id:"ct_notable_8",name:"Lindsey Voigt",title:"Head of Strategic Sales",type:"sales",status:"not-contacted",email:"",phone:"+1 800-450-1304",linkedin:"https://www.linkedin.com/in/voigtlindsey",notes:""}
-  ],investors:[
-    {id:"inv_notable_1",name:"ICONIQ Growth",type:"vc",round:"Series B Lead",amount:"$100M at ~$600M valuation",year:"2022",website:"https://iconiqcapital.com",contact:"",notes:"ICONIQ Growth led Notable Health's $100M Series B at a ~$600M valuation."},
-    {id:"inv_notable_2",name:"Oak HC/FT",type:"vc",round:"Series B Participant",amount:"Undisclosed",year:"2022",website:"https://www.oakhcft.com",contact:"",notes:"Co-invested in Notable Health Series B. ALSO invested in Ensora/Therapy Brands."},
-    {id:"inv_notable_3",name:"Greylock Partners",type:"vc",round:"Series B Participant",amount:"Undisclosed",year:"2022",website:"https://greylock.com",contact:"",notes:"Top-tier VC. Participated in Notable Health Series B."},
-    {id:"inv_notable_4",name:"F-Prime Capital",type:"vc",round:"Series B Participant",amount:"Undisclosed",year:"2022",website:"https://www.fprimecapital.com",contact:"",notes:"Fidelity's VC arm. Also co-led SpectrumAi seed round."},
-    {id:"inv_notable_5",name:"Maverick Ventures",type:"vc",round:"Series B Participant",amount:"Undisclosed",year:"2022",website:"https://maverickventures.com",contact:"",notes:"Growth equity VC that participated in Notable Health Series B."},
-    {id:"inv_notable_6",name:"8VC",type:"vc",round:"Series B Participant",amount:"Undisclosed",year:"2022",website:"https://www.8vc.com",contact:"",notes:"Joe Lonsdale's VC firm. Participated in Notable Health Series B."}
-  ],activities:[],notes:"AI-enabled clinical automation platform. ICONIQ Growth-backed. $100M Series B at ~$600M valuation."},
-  {id:14,name:"Jane App",website:"jane.app",linkedin:"https://www.linkedin.com/company/jane-app",status:"not-started",contacts:[],investors:[
-    {id:"inv_jane_1",name:"JMI Equity",type:"pe",round:"Secondary / Growth Investment Lead",amount:"$100M+ at ~$600M valuation",year:"2021",website:"https://www.jmi.com",contact:"",notes:"JMI Equity led a secondary share purchase in Jane App at a ~$600M valuation in 2021."},
-    {id:"inv_jane_2",name:"TCV (Technology Crossover Ventures)",type:"vc",round:"Co-Investor",amount:"Undisclosed",year:"2021",website:"https://www.tcv.com",contact:"",notes:"Co-invested alongside JMI Equity in Jane App. TCV ALSO invested in Kipu Health."},
-    {id:"inv_jane_3",name:"Tidemark",type:"vc",round:"Co-Investor",amount:"Undisclosed",year:"2021",website:"https://www.tidemarkcap.com",contact:"",notes:"Growth equity co-investor in Jane App's 2021 round."},
-    {id:"inv_jane_4",name:"Frontier Growth",type:"pe",round:"Co-Investor",amount:"Undisclosed",year:"2021",website:"https://www.frontiergrowth.com",contact:"",notes:"Co-investor in Jane App's 2021 growth round."}
-  ],activities:[],notes:"Practice management platform. JMI Equity and TCV-backed at ~$600M valuation. TCV also backs Kipu."},
-  {id:15,name:"Pimsy EHR",website:"pimsyehr.com",linkedin:"https://www.linkedin.com/company/pimsyehr",status:"not-started",contacts:[
-    {id:"ct_pimsy_1",name:"Nathan Boyd",title:"CEO",type:"executive",status:"not-contacted",email:"nathan@pimsyehr.com",phone:"+1 877-334-8512",linkedin:"https://www.linkedin.com/in/nathandboyd",notes:""},
-    {id:"ct_pimsy_2",name:"Marisa Thompson",title:"COO",type:"executive",status:"not-contacted",email:"marisa@pimsyehr.com",phone:"+1 877-334-8512",linkedin:"https://www.linkedin.com/in/marisa-thompson-99593362",notes:""},
-    {id:"ct_pimsy_3",name:"Chris Collier",title:"Director of Operations",type:"other",status:"not-contacted",email:"",phone:"+1 877-334-8512",linkedin:"https://www.linkedin.com/in/chris-collier-51ba0a15",notes:""},
-    {id:"ct_pimsy_4",name:"Lance Carroll",title:"Sales Director",type:"sales",status:"not-contacted",email:"lance@pimsyehr.com",phone:"+1 877-334-8512",linkedin:"https://www.linkedin.com/in/lancecarrollserves",notes:""},
-    {id:"ct_pimsy_5",name:"Ian Macdonald",title:"CEO",type:"executive",status:"not-contacted",email:"ian@pimsyehr.com",phone:"+1 828-507-1563",linkedin:"https://www.linkedin.com/in/ian-macdonald12",notes:""}
-  ],investors:[],activities:[],notes:"Founded 2007 under Smoky Mountain Information Systems. Waynesville, NC. No publicly disclosed VC/PE funding — appears bootstrapped."},
-  {id:16,name:"TherapyNotes",website:"therapynotes.com",linkedin:"https://www.linkedin.com/company/therapynotes-llc",status:"not-started",contacts:[
-    {id:"ct_therapynotes_1",name:"Heather Lapergola",title:"Director of Sales and Marketing",type:"sales",status:"not-contacted",email:"heatherl@therapynotes.com",phone:"+1 215-658-4550",linkedin:"https://www.linkedin.com/in/heather-lapergola-51031287",notes:""},
-    {id:"ct_therapynotes_2",name:"Chris W.",title:"COO",type:"executive",status:"not-contacted",email:"",phone:"",linkedin:"",notes:""},
-    {id:"ct_therapynotes_3",name:"Brad Pliner",title:"CEO",type:"executive",status:"not-contacted",email:"brad@therapynotes.com",phone:"+1 215-658-4550",linkedin:"https://www.linkedin.com/in/pliner",notes:""},
-    {id:"ct_therapynotes_4",name:"Mandy Davis",title:"Director of Product Management",type:"product",status:"not-contacted",email:"mandy.davis@therapynotes.com",phone:"+1 215-658-4550",linkedin:"https://www.linkedin.com/in/mandyseremetdavis",notes:""},
-    {id:"ct_therapynotes_5",name:"Mark Perri",title:"Director of Information Technology",type:"other",status:"not-contacted",email:"markp@therapynotes.com",phone:"+1 215-658-4550",linkedin:"https://www.linkedin.com/in/markaperri",notes:""},
-    {id:"ct_therapynotes_6",name:"Nicholas Cipriano",title:"Director of Product and Software Development",type:"product",status:"not-contacted",email:"",phone:"+1 215-658-4550",linkedin:"https://www.linkedin.com/in/nick-cipriano",notes:""}
-  ],investors:[],activities:[],notes:"Founded 2010 by Dr. Debra Pliner and Brad Pliner. Willow Grove, PA. Fully bootstrapped and family-operated."},
-  {id:17,name:"Tebra",website:"tebra.com",linkedin:"https://www.linkedin.com/company/tebra",status:"not-started",contacts:[
-    {id:"ct_tebra_1",name:"Rob Stefanovic",title:"Sr. Director GTM Strategy & Monetization",type:"strategy",status:"not-contacted",email:"",phone:"",linkedin:"https://www.linkedin.com/in/robstefanovic",notes:""},
-    {id:"ct_tebra_2",name:"Toby Stewart",title:"Director, AI & Automation",type:"other",status:"not-contacted",email:"toby.stewart@tebra.com",phone:"+1 866-938-3272",linkedin:"https://www.linkedin.com/in/tobymstewart",notes:""},
-    {id:"ct_tebra_3",name:"Gordon Atkin",title:"VP, Business Systems",type:"executive",status:"not-contacted",email:"gordon.atkin@tebra.com",phone:"+1 866-938-3272",linkedin:"https://www.linkedin.com/in/gmanatkin",notes:""},
-    {id:"ct_tebra_4",name:"Dan Rodrigues",title:"CEO, Co-Founder",type:"executive",status:"not-contacted",email:"dan@tebra.com",phone:"+1 866-938-3272",linkedin:"https://www.linkedin.com/in/danrodrigueskareo",notes:""},
-    {id:"ct_tebra_5",name:"Kevin Marasco",title:"Chief Growth Officer",type:"executive",status:"not-contacted",email:"kevin.marasco@tebra.com",phone:"+1 866-938-3272",linkedin:"https://www.linkedin.com/in/kmarasco",notes:""},
-    {id:"ct_tebra_6",name:"Kyle Ryan",title:"Chief Product & Technology Officer",type:"executive",status:"not-contacted",email:"kyle.ryan@tebra.com",phone:"+1 866-938-3272",linkedin:"https://www.linkedin.com/in/kyle-ryan-sd",notes:""},
-    {id:"ct_tebra_7",name:"Sabrina Kahlane",title:"Chief Commercial Officer",type:"executive",status:"not-contacted",email:"",phone:"",linkedin:"",notes:""},
-    {id:"ct_tebra_8",name:"Brian Cafferty",title:"VP - RPA Development",type:"executive",status:"not-contacted",email:"brian.cafferty@tebra.com",phone:"+1 866-938-3272",linkedin:"https://www.linkedin.com/in/brian-cafferty-a84a9132",notes:""},
-    {id:"ct_tebra_9",name:"Mike Doktorczyk",title:"Chief Financial Officer",type:"executive",status:"not-contacted",email:"",phone:"",linkedin:"https://www.linkedin.com/in/mike-doktorczyk",notes:""},
-    {id:"ct_tebra_10",name:"Catarina Tsang",title:"VP of Product Design + Research",type:"product",status:"not-contacted",email:"catarina.tsang@tebra.com",phone:"+1 866-938-3272",linkedin:"https://www.linkedin.com/in/catarina-tsang-21ba094",notes:""}
-  ],investors:[
-    {id:"inv_tebra_1",name:"Golub Capital",type:"debt",round:"Lead Investor (x2 rounds)",amount:"$65M (2021) + $72M (2022) = $137M total",year:"2022",website:"https://www.golubcapital.com",contact:"",notes:"Golub Capital led BOTH of Tebra's major funding rounds."},
-    {id:"inv_tebra_2",name:"Toba Capital",type:"vc",round:"Co-Investor",amount:"Undisclosed",year:"2021",website:"https://www.tobacapital.com",contact:"",notes:"VC co-investor in Tebra's 2021 round."},
-    {id:"inv_tebra_3",name:"Stripes Group",type:"pe",round:"Co-Investor",amount:"Undisclosed",year:"2021",website:"https://www.stripesgrowth.com",contact:"",notes:"Growth equity co-investor."},
-    {id:"inv_tebra_4",name:"OpenView Venture Partners",type:"vc",round:"Co-Investor",amount:"Undisclosed",year:"2021",website:"https://openviewpartners.com",contact:"",notes:"Product-led growth focused VC. Co-invested in Tebra 2021 round."},
-    {id:"inv_tebra_5",name:"Transformation Capital",type:"vc",round:"Co-Investor",amount:"Undisclosed",year:"2021",website:"https://www.transformationcap.com",contact:"",notes:"Healthcare-focused VC co-investor in Tebra."},
-    {id:"inv_tebra_6",name:"Vivo Capital",type:"vc",round:"Co-Investor",amount:"Undisclosed",year:"2021",website:"https://www.vivocapital.com",contact:"",notes:"Healthcare and life sciences VC co-investor in Tebra."}
-  ],activities:[],notes:"Formed by merger of Kareo and PatientPop. Golub Capital-led with $137M total. Ambulatory care practice management platform."},
-  {id:18,name:"eMedical Practice",website:"emedpractice.com",linkedin:"https://www.linkedin.com/company/emedical-group",status:"not-started",contacts:[
-    {id:"ct_emedical_1",name:"Nandu Dhanekula",title:"CEO & Founder",type:"executive",status:"not-contacted",email:"",phone:"",linkedin:"https://www.linkedin.com/in/nandu-dhanekula-13355a2",notes:""},
-    {id:"ct_emedical_2",name:"Rich Scorsone",title:"Director of Sales and Marketing",type:"sales",status:"not-contacted",email:"",phone:"",linkedin:"https://www.linkedin.com/in/richscorsone",notes:""},
-    {id:"ct_emedical_3",name:"Jim Henderson",title:"Sales and Marketing Specialist",type:"sales",status:"not-contacted",email:"james.henderson@emedpractice.com",phone:"",linkedin:"https://www.linkedin.com/in/jim-henderson-4ab08225",notes:""}
-  ],investors:[],activities:[],notes:"Founded 2008 by Nandu Dhanekula. Delray Beach, FL. No confirmed public VC/PE investment — appears bootstrapped."},
-  {id:19,name:"Lightning Step",website:"lightningstep.com",linkedin:"https://www.linkedin.com/company/lightningstep",status:"not-started",contacts:[
-    {id:"ct_lightning_1",name:"Brent Michael",title:"CEO",type:"executive",status:"not-contacted",email:"",phone:"",linkedin:"",notes:""},
-    {id:"ct_lightning_2",name:"Jason Usilton",title:"Director of Customer Success",type:"sales",status:"not-contacted",email:"jason.usilton@lightningstep.com",phone:"+1 833-908-3317",linkedin:"https://www.linkedin.com/in/jason-usilton-501441187",notes:""},
-    {id:"ct_lightning_3",name:"Tina Boushehri",title:"VP Enterprise Solutions",type:"executive",status:"not-contacted",email:"tina@lightningstep.com",phone:"+1 833-908-3317",linkedin:"https://www.linkedin.com/in/tina-boushehri",notes:""},
-    {id:"ct_lightning_4",name:"Josh Steinbaum",title:"CFO",type:"executive",status:"not-contacted",email:"josh@lightningstep.com",phone:"+1 845-548-9752",linkedin:"https://www.linkedin.com/in/josh-steinbaum",notes:""},
-    {id:"ct_lightning_5",name:"Martin Ignatovski",title:"CTO / CPO / CIO",type:"executive",status:"not-contacted",email:"",phone:"+1 561-922-9034",linkedin:"https://www.linkedin.com/in/martintakev",notes:""},
-    {id:"ct_lightning_6",name:"Morganne Rudd",title:"VP Operations, Technology & Strategic Programs",type:"executive",status:"not-contacted",email:"morganne.rudd@lightningstep.com",phone:"+1 801-637-4376",linkedin:"https://www.linkedin.com/in/morganne-rudd-328a2285",notes:""}
-  ],investors:[
-    {id:"inv_lightning_1",name:"Gallant Capital Partners",type:"pe",round:"Growth Investment",amount:"Undisclosed",year:"2022",website:"https://www.gallantcapital.com",contact:"",notes:"Gallant Capital Partners made a growth investment in Lightning Step in November 2022."}
-  ],activities:[],notes:"Behavioral health and addiction treatment EMR. Backed by Gallant Capital Partners (growth investment, Nov 2022)."},
-  {id:20,name:"AlohaABA",website:"alohaaba.com",linkedin:"https://www.linkedin.com/company/alohaaba",status:"not-started",contacts:[
-    {id:"ct_aloha_1",name:"Sydney Singer",title:"Director of Clinical Solutions",type:"other",status:"not-contacted",email:"sydney@alohaaba.com",phone:"+1 602-451-9413",linkedin:"https://www.linkedin.com/in/sydney-singer-6659b570",notes:""},
-    {id:"ct_aloha_2",name:"Jimmy Ma",title:"Chief Executive Officer",type:"executive",status:"not-contacted",email:"jimmy@alohaaba.com",phone:"+1 602-451-9413",linkedin:"https://www.linkedin.com/in/jimmy-ma-2672a28",notes:""},
-    {id:"ct_aloha_3",name:"Brook Joyce",title:"Vice President of Sales",type:"sales",status:"not-contacted",email:"brook@alohaaba.com",phone:"+1 602-451-9413",linkedin:"https://www.linkedin.com/in/brookjoyce",notes:""}
-  ],investors:[],activities:[],notes:"Small ABA practice management software. ~3 employees as of 2024. Founded 2016. Appears bootstrapped."},
-  {id:21,name:"MeasurePM",website:"measurepm.com",linkedin:"",status:"not-started",contacts:[
-    {id:"ct_measure_1",name:"Marco Esposito",title:"Business Development Manager",type:"sales",status:"not-contacted",email:"marco@measurepm.com",phone:"+1 818-900-0741",linkedin:"https://www.linkedin.com/in/marco-a-esposito",notes:""},
-    {id:"ct_measure_2",name:"Rajneesh Sharma",title:"Chief Executive Officer",type:"executive",status:"not-contacted",email:"raj@measurepm.com",phone:"+1 818-900-0741",linkedin:"https://www.linkedin.com/in/rajneesh-sharma-8945561",notes:""},
-    {id:"ct_measure_3",name:"Ujvala Sharma",title:"Chief Technology Officer",type:"executive",status:"not-contacted",email:"ujvala@measurepm.com",phone:"+1 818-900-0741",linkedin:"https://www.linkedin.com/in/ujvala-k-sharma-3a80b17",notes:""}
-  ],investors:[],activities:[],notes:"Founded 2020 by ABA professionals. Corona, CA. No publicly disclosed VC/PE funding — appears bootstrapped."},
-  {id:22,name:"Artemis ABA",website:"artemissp.com",linkedin:"https://www.linkedin.com/company/artemissp",status:"not-started",contacts:[
-    {id:"ct_artemis_1",name:"Senthil Sadhasivan",title:"Product Manager",type:"product",status:"not-contacted",email:"senthil.sadhasivan@artemisaba.com",phone:"+1 800-209-6185",linkedin:"https://www.linkedin.com/in/senthil-sadhasivan",notes:""},
-    {id:"ct_artemis_2",name:"Solomon Brown",title:"Senior Business Development Consultant",type:"sales",status:"not-contacted",email:"solomon.brown@artemisaba.com",phone:"+1 800-209-6185",linkedin:"https://www.linkedin.com/in/solomon-brown-442014361",notes:""},
-    {id:"ct_artemis_3",name:"James Vrtis",title:"Chief Executive Officer",type:"executive",status:"not-contacted",email:"jim.vrtis@artemisaba.com",phone:"+1 847-863-6726",linkedin:"https://www.linkedin.com/in/jamesvrtis",notes:""},
-    {id:"ct_artemis_4",name:"Thomas John",title:"Founder & CEO",type:"executive",status:"not-contacted",email:"",phone:"",linkedin:"",notes:""}
-  ],investors:[],activities:[],notes:"Founded 2017, Dallas TX. AI-driven ABA scheduling and clinic management platform."},
-  {id:23,name:"Raven Health",website:"ravenhealth.com",linkedin:"https://www.linkedin.com/company/theravenbank",status:"not-started",contacts:[
-    {id:"ct_raven_1",name:"Annette Traylor",title:"Director, Revenue Cycle Management",type:"other",status:"not-contacted",email:"annette.traylor@ravenhealth.com",phone:"+1 929-955-1323",linkedin:"https://www.linkedin.com/in/annettetraylor",notes:""},
-    {id:"ct_raven_2",name:"Beth Sullivan",title:"Vice President Operations",type:"executive",status:"not-contacted",email:"beth.sullivan@ravenhealth.com",phone:"+1 929-955-1323",linkedin:"https://www.linkedin.com/in/beth-sullivan-5864276",notes:""}
-  ],investors:[
-    {id:"inv_raven_1",name:"Walton Capital Management",type:"vc",round:"Seed",amount:"Undisclosed",year:"2022",website:"",contact:"",notes:"Walton Capital Management made a Seed investment in Raven Health in January 2022."}
-  ],activities:[],notes:"ABA data collection and practice management. Founded 2020. Seed-backed by Walton Capital Management (Jan 2022)."},
-  {id:24,name:"ABA Desk",website:"abadesk.com",linkedin:"https://www.linkedin.com/company/g-latas-consultoria-e-servi-os-de-seguran-a",status:"not-started",contacts:[],investors:[],activities:[],notes:"WARNING: LinkedIn URL in source data appears to be incorrect. Verify correct LinkedIn before outreach. No public investor data found."},
-  {id:25,name:"Office Puzzle",website:"officepuzzle.com",linkedin:"https://www.linkedin.com/company/officepuzzle",status:"not-started",contacts:[
-    {id:"ct_officepuzzle_1",name:"Lauren Quevedo",title:"Co-Founder",type:"executive",status:"not-contacted",email:"lauren@officepuzzle.com",phone:"+1 877-678-9953",linkedin:"https://www.linkedin.com/in/lauren-quevedo-2b24184b",notes:""},
-    {id:"ct_officepuzzle_2",name:"Jonathan Latour",title:"Product Specialist",type:"product",status:"not-contacted",email:"jonathan@officepuzzle.com",phone:"+1 877-678-9953",linkedin:"https://www.linkedin.com/in/jonathan-latour-42446a1ab",notes:""},
-    {id:"ct_officepuzzle_3",name:"Harold Jardines",title:"Founder",type:"executive",status:"not-contacted",email:"harold@officepuzzle.com",phone:"+1 305-846-0818",linkedin:"https://www.linkedin.com/in/hjardines",notes:""},
-    {id:"ct_officepuzzle_4",name:"Charlene Kurth",title:"COO",type:"executive",status:"not-contacted",email:"charlene@officepuzzle.com",phone:"+1 877-678-9953",linkedin:"https://www.linkedin.com/in/charlenekurth",notes:""},
-    {id:"ct_officepuzzle_5",name:"Hailu Jardines",title:"CEO",type:"executive",status:"not-contacted",email:"hailu@officepuzzle.com",phone:"+1 877-678-9953",linkedin:"https://www.linkedin.com/in/hailu-jardines-cpa-6b771147",notes:""},
-    {id:"ct_officepuzzle_6",name:"Kevin Escobar",title:"Product Specialist",type:"product",status:"not-contacted",email:"kevin@officepuzzle.com",phone:"+1 877-678-9953",linkedin:"https://www.linkedin.com/in/kevin-escobar-055677135",notes:""}
-  ],investors:[
-    {id:"inv_officepuzzle_1",name:"Arthur Ventures",type:"vc",round:"Venture",amount:"Undisclosed",year:"Undisclosed",website:"https://arthurventures.com",contact:"",notes:"Arthur Ventures is a confirmed investor in Office Puzzle."}
-  ],activities:[],notes:"ABA practice management platform. Founded 2018 by Harold Jardines, Hollywood FL. Backed by Arthur Ventures."},
-  {id:26,name:"Lumary ABA",website:"lumary.com",linkedin:"https://www.linkedin.com/company/lumaryau",status:"not-started",contacts:[],investors:[
-    {id:"inv_lumary_1",name:"OneVentures",type:"vc",round:"Series A Lead",amount:"$17M",year:"2022",website:"https://www.oneventures.com.au",contact:"",notes:"OneVentures led Lumary's $17M Series A round."},
-    {id:"inv_lumary_2",name:"Salesforce Ventures",type:"strategic",round:"Series A Participant",amount:"Undisclosed",year:"2022",website:"https://www.salesforceventures.com",contact:"",notes:"Salesforce Ventures co-invested in Lumary's Series A."},
-    {id:"inv_lumary_3",name:"SAVCF (SA Venture Capital Fund)",type:"vc",round:"Series A Participant",amount:"Undisclosed",year:"2022",website:"",contact:"",notes:"South Australian Venture Capital Fund co-invested in Lumary Series A."},
-    {id:"inv_lumary_4",name:"EVP (Equity Venture Partners)",type:"vc",round:"Seed",amount:"$2M",year:"2020",website:"https://evp.vc",contact:"",notes:"Australian early-stage VC that led Lumary's $2M seed round in 2020."}
-  ],activities:[],notes:"Australian NDIS and disability care management platform built on Salesforce. OneVentures-led $17M Series A. Salesforce Ventures-backed."},
-  {id:27,name:"Portia Pro",website:"portiapro.com",linkedin:"https://www.linkedin.com/company/portia-productions",status:"not-started",contacts:[
-    {id:"ct_portia_1",name:"Bradley Powell",title:"Director of Business Development",type:"partnerships",status:"not-contacted",email:"bradley@portiapro.com",phone:"+1 855-297-6431",linkedin:"https://www.linkedin.com/in/bradley-powell-93212826",notes:""},
-    {id:"ct_portia_2",name:"Paul McArthur",title:"Founder, VP Business Development",type:"executive",status:"not-contacted",email:"paul@portiapro.com",phone:"+1 855-297-6431",linkedin:"https://www.linkedin.com/in/paul-mcarthur-0494047a",notes:""},
-    {id:"ct_portia_3",name:"Christy Tallman",title:"Director of Billing / Revenue Cycle",type:"other",status:"not-contacted",email:"",phone:"+1 855-297-6431",linkedin:"https://www.linkedin.com/in/christy-tallman-cca-cpc-cpb-approved-instructor-0463b766",notes:""},
-    {id:"ct_portia_4",name:"Charlene Gervais",title:"Director of Clinical Innovation and Curriculum Development",type:"other",status:"not-contacted",email:"",phone:"+1 855-297-6431",linkedin:"https://www.linkedin.com/in/charlene-gervais-m-ads-bcba-rba-ont-1b264bb8",notes:""}
-  ],investors:[],activities:[],notes:"Founded 2012. Kanata, Ontario, Canada. Family-owned, 15 employees. Fully bootstrapped."},
-  {id:28,name:"Skills Global",website:"skillsforautism.com",linkedin:"https://www.linkedin.com/company/skills-global-the-online-autism-solution",status:"not-started",contacts:[
-    {id:"ct_skills_1",name:"Vanessa Alvarez",title:"Director of Operations",type:"other",status:"not-contacted",email:"v.alvarez@skillsglobal.com",phone:"+1 877-975-4559",linkedin:"https://www.linkedin.com/in/vanessa-m-alvarez",notes:""}
-  ],investors:[],activities:[],notes:"Online autism and ABA solution. No publicly disclosed VC/PE investors found. Appears independent/bootstrapped."},
-  {id:29,name:"Spectrum AI",website:"spectrumai.tech",linkedin:"https://www.linkedin.com/company/spectrum-ai-ltd",status:"not-started",contacts:[
-    {id:"ct_spectrum_1",name:"Selina Bernal",title:"Customer Implementation Manager",type:"sales",status:"not-contacted",email:"selina.bernal@spectrumai.com",phone:"",linkedin:"https://www.linkedin.com/in/selina-bernal-805b48132",notes:""},
-    {id:"ct_spectrum_2",name:"Ling Shao",title:"CEO",type:"executive",status:"not-contacted",email:"ling.shao@spectrumai.com",phone:"+1 646-226-1919",linkedin:"https://www.linkedin.com/in/lingshao1",notes:""}
-  ],investors:[
-    {id:"inv_spectrum_1",name:"CVS Health Ventures",type:"strategic",round:"Series A Lead",amount:"$20M",year:"2023",website:"https://www.cvshealth.com",contact:"Vijay Patel (Managing Partner)",notes:"CVS Health Ventures led SpectrumAi's $20M Series A in March 2023. NOTE: SpectrumAi was acquired by CentralReach in August 2025."},
-    {id:"inv_spectrum_2",name:"F-Prime Capital",type:"vc",round:"Seed Co-Lead + Series A",amount:"$9M seed (co-lead)",year:"2022",website:"https://www.fprimecapital.com",contact:"",notes:"Fidelity's VC arm. Co-led SpectrumAi's $9M seed round. Also participated in Notable Health Series B."},
-    {id:"inv_spectrum_3",name:"Frist Cressey Ventures",type:"vc",round:"Seed Co-Lead + Series A",amount:"Undisclosed",year:"2022",website:"https://fcventures.com",contact:"Navid Farzad (Partner & Board Director)",notes:"Nashville-based healthcare-focused VC. Co-led SpectrumAi seed round."},
-    {id:"inv_spectrum_4",name:"Autism Impact Fund",type:"vc",round:"Seed + Series A",amount:"Undisclosed",year:"2022",website:"https://autismimpact.fund",contact:"Chris Male (Co-Founder/Managing Partner)",notes:"Dedicated autism-focused VC. Participated in both SpectrumAi seed and Series A."},
-    {id:"inv_spectrum_5",name:"Cobalt Ventures",type:"vc",round:"Series A Participant",amount:"Undisclosed",year:"2023",website:"",contact:"",notes:"Co-invested in SpectrumAi Series A alongside CVS Health Ventures."}
-  ],activities:[],notes:"NOTE: SpectrumAi was ACQUIRED BY CentralReach in August 2025. Confirm current status before outreach. Founded 2021, Los Angeles."}
-];
-
-let S = {companies:[],view:'dashboard',companyId:null,tab:'contacts',editContactId:null,editInvestorId:null};
-
-function load(){
-  try{
-    const d=JSON.parse(localStorage.getItem('emr-v2'));
-    if(d&&d.companies) S.companies=d.companies;
-    else S.companies=JSON.parse(JSON.stringify(DEFAULT_COMPANIES));
-  }catch(e){S.companies=JSON.parse(JSON.stringify(DEFAULT_COMPANIES));}
-}
-
-function save(){
-  try{localStorage.setItem('emr-v2',JSON.stringify({companies:S.companies}));}catch(e){}
-  if(getGHConfig().auto) pushToGitHub(false);
-}
-
-const STATUS_MAP={'not-started':['b-ns','○ Not Started'],'researching':['b-re','◐ Researching'],'contacted':['b-co','✉ Contacted'],'responded':['b-rs','↩ Responded'],'meeting':['b-me','📅 Meeting Set'],'won':['b-wo','✓ Won'],'lost':['b-lo','✗ Lost']};
-const CS_MAP={'not-contacted':['b-ns','Not Contacted'],'contacted':['b-co','Contacted'],'responded':['b-rs','Responded'],'meeting':['b-me','Meeting Set']};
-const TYPE_LABELS={executive:'👔 Executive',partnerships:'🤝 Partnerships',product:'📦 Product',strategy:'♟ Strategy',sales:'💼 Sales/BD',other:'👤 Other',vc:'🏦 VC',pe:'🏛 PE',angel:'👼 Angel',strategic:'🤝 Strategic',debt:'💳 Debt'};
-
-function badge(status,map){const [c,l]=map[status]||map[Object.keys(map)[0]];return `<span class="badge ${c}">${l}</span>`;}
-function statusBadge(s){return badge(s,STATUS_MAP);}
-function csBadge(s){return badge(s,CS_MAP);}
-function tLabel(t){return TYPE_LABELS[t]||t;}
-function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2);}
-function timeAgo(d){
-  if(!d) return '—';
-  const s=Math.floor((Date.now()-new Date(d))/1000);
-  if(s<60) return 'Just now';if(s<3600) return Math.floor(s/60)+'m ago';
-  if(s<86400) return Math.floor(s/3600)+'h ago';if(s<604800) return Math.floor(s/86400)+'d ago';
-  return new Date(d).toLocaleDateString();
-}
-function lastAct(c){return c.activities?.length?c.activities[c.activities.length-1].date:null;}
-function co(){return S.companies.find(c=>c.id===S.companyId);}
-
-function showView(v,id){
-  document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
-  S.view=v;
-  const vEl=document.getElementById('view-'+v);if(vEl) vEl.classList.add('active');
-  const navId=v==='detail'?'companies':v;
-  const nEl=document.getElementById('nav-'+navId);if(nEl) nEl.classList.add('active');
-  if(v==='detail'){S.companyId=id;S.tab='contacts';renderDetail();}
-  else if(v==='dashboard') renderDashboard();
-  else if(v==='companies') renderCompanies();
-  else if(v==='contacts') renderContacts();
-  else if(v==='investors') renderInvestors();
-  else if(v==='ideas') renderIdeas();
-  else if(v==='settings') renderSettings();
-  updateBadges();
-}
-
-function updateBadges(){
-  const cs=S.companies;
-  document.getElementById('badge-companies').textContent=cs.length;
-  document.getElementById('badge-contacts').textContent=cs.reduce((s,c)=>s+(c.contacts?.length||0),0);
-  document.getElementById('badge-investors').textContent=cs.reduce((s,c)=>s+(c.investors?.length||0),0);
-}
-
-function renderDashboard(){
-  const cs=S.companies;
-  const reached=cs.filter(c=>['contacted','responded','meeting','won'].includes(c.status)).length;
-  const totC=cs.reduce((s,c)=>s+(c.contacts?.length||0),0);
-  const totI=cs.reduce((s,c)=>s+(c.investors?.length||0),0);
-  document.getElementById('stats-grid').innerHTML=`
-    <div class="stat-card"><div class="stat-icon" style="background:#dbeafe">🏢</div><div class="stat-value">${cs.length}</div><div class="stat-label">Total Companies</div></div>
-    <div class="stat-card"><div class="stat-icon" style="background:#d1fae5">📬</div><div class="stat-value">${reached}</div><div class="stat-label">Reached Out To</div></div>
-    <div class="stat-card"><div class="stat-icon" style="background:#ede9fe">👥</div><div class="stat-value">${totC}</div><div class="stat-label">Contacts Added</div></div>
-    <div class="stat-card"><div class="stat-icon" style="background:#fef3c7">💰</div><div class="stat-value">${totI}</div><div class="stat-label">Investors Tracked</div></div>
-  `;
-  document.getElementById('dashboard-tbody').innerHTML=cs.map(c=>`
-    <tr onclick="showView('detail',${c.id})">
-      <td><strong>${c.name}</strong></td>
-      <td>${statusBadge(c.status)}</td>
-      <td>${c.contacts?.length||0}</td>
-      <td>${c.investors?.length||0}</td>
-      <td style="color:var(--text-light);font-size:12px">${timeAgo(lastAct(c))}</td>
-    </tr>`).join('');
-}
-
-function renderCompanies(){
-  const q=(document.getElementById('co-search')?.value||'').toLowerCase();
-  const sf=document.getElementById('co-filter')?.value||'';
-  let cs=S.companies;
-  if(q) cs=cs.filter(c=>c.name.toLowerCase().includes(q)||c.website.toLowerCase().includes(q));
-  if(sf) cs=cs.filter(c=>c.status===sf);
-  document.getElementById('companies-tbody').innerHTML=cs.length?cs.map(c=>`
-    <tr onclick="showView('detail',${c.id})">
-      <td><strong>${c.name}</strong></td>
-      <td><a href="https://${c.website}" target="_blank" onclick="event.stopPropagation()" style="color:var(--primary);font-size:12px">${c.website}</a></td>
-      <td>${statusBadge(c.status)}</td>
-      <td style="font-size:13px">${c.contacts?.length||0}</td>
-      <td style="font-size:13px">${c.investors?.length||0}</td>
-      <td style="color:var(--text-light);font-size:12px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.notes||'—'}</td>
-    </tr>`).join(''):
-    `<tr><td colspan="6"><div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">No matches</div></div></td></tr>`;
-}
-
-function renderContacts(){
-  const q=(document.getElementById('ct-search')?.value||'').toLowerCase();
-  let rows=[];
-  S.companies.forEach(company=>{
-    (company.contacts||[]).forEach(c=>{
-      if(!q||c.name.toLowerCase().includes(q)||company.name.toLowerCase().includes(q)||(c.title||'').toLowerCase().includes(q))
-        rows.push({...c,companyName:company.name,companyId:company.id});
-    });
-  });
-  document.getElementById('contacts-tbody').innerHTML=rows.length?rows.map(c=>`
+<p class="p1"><span class="s1">🏥</span></p>
+<p class="p2"><span class="s2">EMR</span><span class="s3"> </span><span class="s2">Outreach</span></p>
+<p class="p3"><span class="s2">Tracker</span><span class="s4"> </span><span class="s2">v</span><span class="s4">1</span><span class="s2">.</span><span class="s4">0</span></p>
+<p class="p4"><span class="s2">OVERVIEW</span></p>
+<p class="p5"><span class="s1">📊</span></p>
+<p class="p6"><span class="s1">Dashboard</span></p>
+<p class="p4"><span class="s2">OUTREACH</span></p>
+<p class="p7"><span class="s2">🏢</span></p>
+<p class="p8"><span class="s5">Companies</span></p>
+<p class="p9"><span class="s5">29</span></p>
+<p class="p7"><span class="s2">👤</span></p>
+<p class="p8"><span class="s5">Contacts</span></p>
+<p class="p9"><span class="s5">0</span></p>
+<p class="p7"><span class="s2">💰</span></p>
+<p class="p8"><span class="s5">Investors</span></p>
+<p class="p9"><span class="s5">0</span></p>
+<p class="p4"><span class="s2">STRATEGY</span></p>
+<p class="p7"><span class="s2">💡</span></p>
+<p class="p10"><span class="s2">Outreach</span><span class="s6"> </span><span class="s2">Playbook</span></p>
+<p class="p4"><span class="s2">CONFIG</span></p>
+<p class="p7"><span class="s2">⚙️</span></p>
+<p class="p10"><span class="s2">GitHub</span><span class="s6"> </span><span class="s2">Sync</span></p>
+<p class="p3"><span class="s2">Data</span><span class="s4"> </span><span class="s2">saved</span><span class="s4"> </span><span class="s2">locally</span><span class="s4"> </span><span class="s2">in</span><span class="s4"> </span><span class="s2">browser.</span></p>
+<p class="p11"><span class="s7">Dashboard</span></p>
+<p class="p12"><span class="s8">⬇ </span><span class="s9">Export</span><span class="s8"> </span><span class="s9">CSV</span><span class="s10"> </span><span class="s1">View</span><span class="s11"> </span><span class="s1">All</span><span class="s11"> </span><span class="s1">Companies</span><span class="s11"> </span><span class="s1">→</span></p>
+<p class="p13"><span class="s5">Company</span><span class="s12"> </span><span class="s5">Pipeline</span></p>
+<p class="p14"><span class="s5">Click</span><span class="s13"> </span><span class="s5">a</span><span class="s13"> </span><span class="s5">row</span><span class="s13"> </span><span class="s5">to</span><span class="s13"> </span><span class="s5">open</span><span class="s13"> </span><span class="s5">company</span><span class="s13"> </span><span class="s5">details</span></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
     <tr>
-      <td><strong>${c.name}</strong></td>
-      <td style="color:var(--text-light)">${c.title||'—'}</td>
-      <td><span style="color:var(--primary);cursor:pointer" onclick="showView('detail',${c.companyId})">${c.companyName}</span></td>
-      <td style="font-size:12px">${tLabel(c.type)}</td>
-      <td>${c.email?`<a href="mailto:${c.email}" style="color:var(--primary)">${c.email}</a>`:'—'}</td>
-      <td>${csBadge(c.status)}</td>
-      <td><button class="btn btn-ghost btn-sm" onclick="showView('detail',${c.companyId})">Open →</button></td>
-    </tr>`).join(''):
-    `<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">👤</div><div class="empty-text">No contacts yet</div><div class="empty-sub">Add contacts from company detail pages</div></div></td></tr>`;
-}
-
-function renderInvestors(){
-  const q=(document.getElementById('inv-search')?.value||'').toLowerCase();
-  const map={};
-  S.companies.forEach(co=>{
-    (co.investors||[]).forEach(inv=>{
-      const k=inv.name.toLowerCase();
-      if(!map[k]) map[k]={...inv,companies:[]};
-      map[k].companies.push(co.name);
-    });
-  });
-  let rows=Object.values(map);
-  if(q) rows=rows.filter(r=>r.name.toLowerCase().includes(q)||r.companies.join(' ').toLowerCase().includes(q));
-  document.getElementById('investors-tbody').innerHTML=rows.length?rows.map(inv=>`
-    <tr>
-      <td><strong>${inv.name}</strong></td>
-      <td style="font-size:12px">${tLabel(inv.type)}</td>
-      <td style="font-size:12px;color:var(--text-light)">${inv.companies.join(', ')}</td>
-      <td>${inv.website?`<a href="${inv.website}" target="_blank" style="color:var(--primary);font-size:12px">${inv.website.replace(/https?:\/\//,'')}</a>`:'—'}</td>
-      <td style="font-size:12px">${inv.contact||'—'}</td>
-      <td style="font-size:12px;color:var(--text-light);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${inv.notes||'—'}</td>
-    </tr>`).join(''):
-    `<tr><td colspan="6"><div class="empty-state"><div class="empty-icon">💰</div><div class="empty-text">No investors tracked yet</div><div class="empty-sub">Add investors from each company's detail page</div></div></td></tr>`;
-}
-
-function renderDetail(){
-  const c=co();if(!c) return;
-  document.getElementById('detail-topbar-title').textContent=c.name;
-  document.getElementById('detail-status-select').value=c.status;
-  document.getElementById('detail-content').innerHTML=`
-    <div class="detail-header">
-      <div class="detail-company-name">${c.name}</div>
-      <div class="detail-meta">
-        <div class="detail-meta-item">🌐 <a href="https://${c.website}" target="_blank">${c.website}</a></div>
-        ${c.linkedin?`<div class="detail-meta-item">💼 <a href="${c.linkedin}" target="_blank">LinkedIn</a></div>`:''}
-        <div class="detail-meta-item">${statusBadge(c.status)}</div>
-      </div>
-    </div>
-    <div class="tabs">
-      <div class="tab ${S.tab==='contacts'?'active':''}" onclick="switchTab('contacts')">👤 Contacts (${c.contacts?.length||0})</div>
-      <div class="tab ${S.tab==='investors'?'active':''}" onclick="switchTab('investors')">💰 Investors (${c.investors?.length||0})</div>
-      <div class="tab ${S.tab==='activity'?'active':''}" onclick="switchTab('activity')">📋 Activity (${c.activities?.length||0})</div>
-      <div class="tab ${S.tab==='notes'?'active':''}" onclick="switchTab('notes')">📝 Notes</div>
-    </div>
-    ${S.tab==='contacts'?tabContacts(c):S.tab==='investors'?tabInvestors(c):S.tab==='activity'?tabActivity(c):tabNotes(c)}
-  `;
-}
-
-function switchTab(t){S.tab=t;renderDetail();}
-function updateStatus(v){const c=co();if(c){c.status=v;save();renderDetail();}}
-
-function tabContacts(c){
-  return `<div class="card"><div class="card-header"><div class="card-title">Contacts</div><button class="btn btn-primary btn-sm" onclick="openContactModal()">+ Add Contact</button></div>
-  <div style="padding:16px">
-  ${!c.contacts?.length?`<div class="empty-state"><div class="empty-icon">👤</div><div class="empty-text">No contacts yet</div><div class="empty-sub">Add executives, partnership leads, product heads</div></div>`:`
-  <div class="item-list">${c.contacts.map(ct=>`
-    <div class="item-card">
-      <div class="item-info">
-        <div class="item-name">${ct.name}</div>
-        <div class="item-role">${ct.title||''} ${ct.title&&ct.type?'·':''} ${tLabel(ct.type)}</div>
-        <div class="item-detail">
-          ${ct.email?`<span>✉ <a href="mailto:${ct.email}" style="color:var(--primary)">${ct.email}</a></span>`:''}
-          ${ct.phone?`<span>📞 ${ct.phone}</span>`:''}
-          ${ct.linkedin?`<span>💼 <a href="${ct.linkedin}" target="_blank" style="color:var(--primary)">LinkedIn</a></span>`:''}
-          <span>${csBadge(ct.status)}</span>
-        </div>
-        ${ct.notes?`<div class="item-note">${ct.notes}</div>`:''}
-      </div>
-      <div class="item-actions">
-        <button class="btn btn-ghost btn-sm" onclick="openContactModal('${ct.id}')">Edit</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteContact('${ct.id}')">×</button>
-      </div>
-    </div>`).join('')}</div>`}
-  </div></div>`;
-}
-
-function tabInvestors(c){
-  return `<div class="card"><div class="card-header"><div class="card-title">Investors & Backers</div><button class="btn btn-primary btn-sm" onclick="openInvestorModal()">+ Add Investor</button></div>
-  <div style="padding:16px">
-  ${!c.investors?.length?`<div class="empty-state"><div class="empty-icon">💰</div><div class="empty-text">No investors tracked</div><div class="empty-sub">Add known investors to map warm intro paths</div></div>`:`
-  <div class="item-list">${c.investors.map(inv=>`
-    <div class="item-card">
-      <div class="item-info">
-        <div class="item-name">${inv.name}</div>
-        <div class="item-role">${tLabel(inv.type)}${inv.round?' · '+inv.round:''}${inv.amount?' · '+inv.amount:''}${inv.year?' ('+inv.year+')':''}</div>
-        <div class="item-detail">
-          ${inv.website?`<span>🌐 <a href="${inv.website}" target="_blank" style="color:var(--primary)">${inv.website.replace(/https?:\/\//,'')}</a></span>`:''}
-          ${inv.contact?`<span>👤 ${inv.contact}</span>`:''}
-        </div>
-        ${inv.notes?`<div class="item-note">${inv.notes}</div>`:''}
-      </div>
-      <div class="item-actions">
-        <button class="btn btn-ghost btn-sm" onclick="openInvestorModal('${inv.id}')">Edit</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteInvestor('${inv.id}')">×</button>
-      </div>
-    </div>`).join('')}</div>`}
-  </div></div>`;
-}
-
-function tabActivity(c){
-  const acts=[...(c.activities||[])].reverse();
-  const typeEmoji={email:'📧',linkedin:'💼',call:'📞',meeting:'🤝',note:'📝',research:'🔍',other:'•'};
-  return `<div class="card"><div class="card-header"><div class="card-title">Activity Log</div><button class="btn btn-primary btn-sm" onclick="openActivityModal()">+ Log Activity</button></div>
-  <div style="padding:16px">
-  ${!acts.length?`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">No activity yet</div><div class="empty-sub">Log emails, calls, meetings as you do them</div></div>`:`
-  <div class="activity-list">${acts.map(a=>`
-    <div class="activity-item">
-      <div class="activity-dot"></div>
-      <div>
-        <div class="activity-text">${typeEmoji[a.rawType]||'📝'} <strong>${a.type}</strong>${a.contact?' — with '+a.contact:''}: ${a.description}</div>
-        <div class="activity-time">${timeAgo(a.date)}</div>
-      </div>
-    </div>`).join('')}</div>`}
-  </div></div>`;
-}
-
-function tabNotes(c){
-  return `<div class="card"><div class="card-header"><div class="card-title">Notes</div><button class="
+      <td valign="middle" class="td1">
+        <p class="p15"><span class="s7">COMPANY</span></p>
+      </td>
+      <td valign="middle" class="td2">
+        <p class="p15"><span class="s7">STATUS</span></p>
+      </td>
+      <td valign="middle" class="td3">
+        <p class="p15"><span class="s7">CONTACTS</span></p>
+      </td>
+      <td valign="middle" class="td4">
+        <p class="p15"><span class="s7">INVESTORS</span></p>
+      </td>
+      <td valign="middle" class="td5">
+        <p class="p15"><span class="s7">LAST</span><span class="s14"> </span><span class="s7">ACTIVITY</span></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p16"><span class="s5"></span><br></p>
+</body>
+</html>
